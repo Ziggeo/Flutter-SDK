@@ -1,4 +1,4 @@
-group 'com.ziggeo.ziggeo'
+group 'com.ziggeo.flutterplugin'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
     }
 }
 
@@ -31,4 +31,9 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+}
+
+dependencies {
+    implementation 'com.github.ZiggeoJitpackService:Android-SDK:0.79.1'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

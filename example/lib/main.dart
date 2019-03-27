@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:ziggeo/ziggeo.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  Ziggeo _ziggeo;
 
   @override
   void initState() {
@@ -22,13 +21,8 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await Ziggeo.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+    final String appToken = "";
+    _ziggeo = new Ziggeo(appToken);
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -36,8 +30,28 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
     });
+  }
+
+  Future<void> testAppToken() async {
+    final String testToken = "tt";
+    _ziggeo.setAppToken(testToken);
+    var token = await _ziggeo.appToken;
+    assert(token == testToken);
+  }
+
+  Future<void> testServerAuthToken() async {
+    final String testToken = "tt";
+    _ziggeo.setServerAuthToken(testToken);
+    var token = await _ziggeo.serverAuthToken;
+    assert(token == testToken);
+  }
+
+  Future<void> testClientAuthToken() async {
+    final String testToken = "tt";
+    _ziggeo.setClientAuthToken(testToken);
+    var token = await _ziggeo.clientAuthToken;
+    assert(token == testToken);
   }
 
   @override
@@ -48,9 +62,16 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+            child: new GestureDetector(
+          onTap: _onPressed,
+          child: new Text("Press me"),
+        )),
       ),
     );
+  }
+
+  void _onPressed() {
+    var args = {"tags": "bla"};
+    _ziggeo.uploadFromFileSelector(args);
   }
 }
