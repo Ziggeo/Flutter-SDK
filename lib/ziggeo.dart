@@ -26,10 +26,6 @@ class Ziggeo {
     return await _channel.invokeMethod('getClientAuthToken');
   }
 
-  Future<String> get sessionKey async {
-    return await _channel.invokeMethod('getSessionKey');
-  }
-
   Future<void> setServerAuthToken(String token) async {
     return await _channel
         .invokeMethod('setServerAuthToken', {'serverAuthToken': token});
