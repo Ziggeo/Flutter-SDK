@@ -1,4 +1,4 @@
-## 1.0.0_alpha0
+## 0.0.1
 
 * Android: added initialisation and basic features like
   * set/get the application token
