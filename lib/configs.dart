@@ -10,7 +10,7 @@ abstract class BaseConfig {
 }
 
 class RecorderConfig extends BaseConfig {
-  static const _defaultStartDelay = 3; // seconds
+  static const defaultStartDelay = 3; // seconds
   static const qualityHigh = 0;
   static const qualityMedium = 1;
   static const qualityLow = 2;
@@ -19,8 +19,8 @@ class RecorderConfig extends BaseConfig {
   static const facingFront = 1;
 
   var showFaceOutline = false;
-  var autostart = false;
-  var startDelay = _defaultStartDelay;
+  var isAutostart = false;
+  var startDelay = defaultStartDelay;
   var sendImmediately = true;
   var disableCameraSwitch = false;
   var videoQuality = 0;
@@ -33,7 +33,7 @@ class RecorderConfig extends BaseConfig {
   Map<String, dynamic> convertToMap() {
     var map = super.convertToMap();
     map["showFaceOutline"] = showFaceOutline;
-    map["autostart"] = autostart;
+    map["isAutostart"] = isAutostart;
     map["startDelay"] = startDelay;
     map["sendImmediately"] = sendImmediately;
     map["disableCameraSwitch"] = disableCameraSwitch;
