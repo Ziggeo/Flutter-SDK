@@ -2,16 +2,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ziggeo/configs.dart';
 
 void main() {
-  var playerStyle;
-  var cameraRecorderStyle;
-  var recorderConfig;
-  var playerConfig;
+  PlayerStyle playerStyle;
+  CameraRecorderStyle cameraRecorderStyle;
+  RecorderConfig recorderConfig;
+  PlayerConfig playerConfig;
 
   setUp(() {
-    playerConfig = new PlayerConfig();
-    playerStyle = new PlayerStyle();
-    recorderConfig = new RecorderConfig();
-    cameraRecorderStyle = new CameraRecorderStyle();
+    playerConfig = PlayerConfig();
+    playerStyle = PlayerStyle();
+    recorderConfig = RecorderConfig();
+    cameraRecorderStyle = CameraRecorderStyle();
   });
 
   tearDown(() {});
@@ -30,13 +30,13 @@ void main() {
 
   test('playerConfig_style', () async {
     expect(playerConfig.convertToMap()["style"], null);
-    playerConfig.style = new PlayerStyle();
+    playerConfig.style = PlayerStyle();
     expect(playerConfig.convertToMap()["style"], isNotNull);
   });
 
   test('playerConfig_extraArgs', () async {
     expect(playerConfig.convertToMap()["extraArgs"]["tags"], null);
-    playerConfig.extraArgs = {"tags":"test_tag"};
+    playerConfig.extraArgs = {"tags": "test_tag"};
     expect(playerConfig.convertToMap()["extraArgs"]["tags"], "test_tag");
   });
 
@@ -115,13 +115,13 @@ void main() {
 
   test('recorderConfig_style', () async {
     expect(recorderConfig.convertToMap()["style"], null);
-    recorderConfig.style = new CameraRecorderStyle();
+    recorderConfig.style = CameraRecorderStyle();
     expect(recorderConfig.convertToMap()["style"], isNotNull);
   });
 
   test('recorderConfig_extraArgs', () async {
     expect(recorderConfig.convertToMap()["extraArgs"]["tags"], null);
-    recorderConfig.extraArgs = {"tags":"test_tag"};
+    recorderConfig.extraArgs = {"tags": "test_tag"};
     expect(recorderConfig.convertToMap()["extraArgs"]["tags"], "test_tag");
   });
 }

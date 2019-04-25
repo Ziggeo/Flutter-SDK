@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/tests/channel_tests.dart';
 
-void main() => runApp(new MaterialApp(home: new MyApp()));
+void main() => runApp(MaterialApp(home: MyApp()));
 
 class MyApp extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     final String appToken = "TOKEN_HERE";
-    _ziggeo = new Ziggeo(appToken);
+    _ziggeo = Ziggeo(appToken);
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -55,7 +55,7 @@ class TestRunnerPage extends StatelessWidget {
     return Center(
       child: RaisedButton(
         onPressed: () async {
-          var tester = new ChannelTest(_ziggeo);
+          var tester = ChannelTest(_ziggeo);
           var success = await tester.runTests();
           var text;
           if (success) {
