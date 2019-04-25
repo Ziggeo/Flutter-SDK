@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:ziggeo/configs.dart';
 
 class Ziggeo {
   static const MethodChannel _channel = const MethodChannel('ziggeo');
@@ -66,5 +67,15 @@ class Ziggeo {
 
   Future<void> cancelRequest() async {
     return await _channel.invokeMethod('cancelRequest');
+  }
+
+  Future<void> setRecorderConfig(RecorderConfig config) async {
+    return await _channel
+        .invokeMethod('setRecorderConfig', {"config": config.convertToMap()});
+  }
+
+  Future<void> setPlayerConfig(PlayerConfig config) async {
+    return await _channel
+        .invokeMethod('setPlayerConfig', {"config": config.convertToMap()});
   }
 }

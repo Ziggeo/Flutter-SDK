@@ -5,6 +5,7 @@ abstract class BaseConfig {
   Map<String, dynamic> convertToMap() {
     var map = new Map<String, dynamic>();
     map["style"] = style;
+    map["extraArgs"] = extraArgs;
     return map;
   }
 }
@@ -19,7 +20,7 @@ class RecorderConfig extends BaseConfig {
   static const facingFront = 1;
 
   var showFaceOutline = false;
-  var isAutostart = false;
+  var autostart = false;
   var startDelay = defaultStartDelay;
   var sendImmediately = true;
   var disableCameraSwitch = false;
@@ -33,7 +34,7 @@ class RecorderConfig extends BaseConfig {
   Map<String, dynamic> convertToMap() {
     var map = super.convertToMap();
     map["showFaceOutline"] = showFaceOutline;
-    map["isAutostart"] = isAutostart;
+    map["autostart"] = autostart;
     map["startDelay"] = startDelay;
     map["sendImmediately"] = sendImmediately;
     map["disableCameraSwitch"] = disableCameraSwitch;
@@ -48,13 +49,13 @@ class RecorderConfig extends BaseConfig {
 
 class PlayerConfig extends BaseConfig {
   var showSubtitles = false;
-  var isMuted = false;
+  var muted = false;
 
   @override
   Map<String, dynamic> convertToMap() {
     var map = super.convertToMap();
     map["showSubtitles"] = showSubtitles;
-    map["isMuted"] = isMuted;
+    map["muted"] = muted;
     return map;
   }
 }

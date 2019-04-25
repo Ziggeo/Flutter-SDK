@@ -17,9 +17,9 @@ void main() {
   tearDown(() {});
 
   test('playerConfig_isMuted', () async {
-    expect(playerConfig.convertToMap()["isMuted"], false);
-    playerConfig.isMuted = true;
-    expect(playerConfig.convertToMap()["isMuted"], true);
+    expect(playerConfig.convertToMap()["muted"], false);
+    playerConfig.muted = true;
+    expect(playerConfig.convertToMap()["muted"], true);
   });
 
   test('playerConfig_showSubtitles', () async {
@@ -32,6 +32,12 @@ void main() {
     expect(playerConfig.convertToMap()["style"], null);
     playerConfig.style = new PlayerStyle();
     expect(playerConfig.convertToMap()["style"], isNotNull);
+  });
+
+  test('playerConfig_extraArgs', () async {
+    expect(playerConfig.convertToMap()["extraArgs"]["tags"], null);
+    playerConfig.extraArgs = {"tags":"test_tag"};
+    expect(playerConfig.convertToMap()["extraArgs"]["tags"], "test_tag");
   });
 
   test('playerStyle_hideControls', () async {
@@ -52,10 +58,10 @@ void main() {
     expect(recorderConfig.convertToMap()["showFaceOutline"], true);
   });
 
-  test('recorderConfig_isAutostart', () async {
-    expect(recorderConfig.convertToMap()["isAutostart"], false);
-    recorderConfig.isAutostart = true;
-    expect(recorderConfig.convertToMap()["isAutostart"], true);
+  test('recorderConfig_autostart', () async {
+    expect(recorderConfig.convertToMap()["autostart"], false);
+    recorderConfig.autostart = true;
+    expect(recorderConfig.convertToMap()["autostart"], true);
   });
 
   test('recorderConfig_startDelay', () async {
@@ -111,5 +117,11 @@ void main() {
     expect(recorderConfig.convertToMap()["style"], null);
     recorderConfig.style = new CameraRecorderStyle();
     expect(recorderConfig.convertToMap()["style"], isNotNull);
+  });
+
+  test('recorderConfig_extraArgs', () async {
+    expect(recorderConfig.convertToMap()["extraArgs"]["tags"], null);
+    recorderConfig.extraArgs = {"tags":"test_tag"};
+    expect(recorderConfig.convertToMap()["extraArgs"]["tags"], "test_tag");
   });
 }
