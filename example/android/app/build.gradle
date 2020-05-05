@@ -37,7 +37,8 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -53,9 +54,22 @@ flutter {
 }
 
 dependencies {
-    implementation 'com.android.support:design:28.0.0'
+    //JUnit
+    testImplementation "junit:junit:4.12"
+    //Mockito
+    testImplementation "org.mockito:mockito-core:3.0.0"
+    //Mockito Kotlin
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    //Kakao
+    androidTestImplementation "com.agoda.kakao:kakao:2.3.0"
+    androidTestImplementation "androidx.annotation:annotation:1.1.0"
+    def rulesAndRunner = "1.2.0"
+    androidTestImplementation "androidx.test:runner:$rulesAndRunner"
+    androidTestImplementation "androidx.test:rules:$rulesAndRunner"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //Espresso
+    def espresso = "3.2.0"
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso"
 }

@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    final String appToken = "";
+    final String appToken = "tt";
     _ziggeo = new Ziggeo(appToken);
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -72,6 +72,6 @@ class _MyAppState extends State<MyApp> {
 
   void _onPressed() {
     var args = {"tags": "bla"};
-    _ziggeo.uploadFromFileSelector(args);
+    _ziggeo.startCameraRecorder();
   }
 }

@@ -88,12 +88,6 @@ public class ZiggeoPlugin implements MethodCallHandler {
             case "startScreenRecorder":
                 ziggeo.startScreenRecorder(null);
                 break;
-            case "clearRecorded":
-                result.success(ziggeo.clearRecorded());
-                break;
-            case "cancelRequest":
-                ziggeo.cancelRequest();
-                break;
             default:
                 result.notImplemented();
         }

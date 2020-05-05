@@ -63,8 +63,4 @@ class Ziggeo {
   Future<void> clearRecorded() async {
     return await _channel.invokeMethod('clearRecorded');
   }
-
-  Future<void> cancelRequest() async {
-    return await _channel.invokeMethod('cancelRequest');
-  }
 }
