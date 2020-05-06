@@ -21,6 +21,8 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -32,9 +34,17 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
     implementation 'com.github.ZiggeoJitpackService:Android-SDK:rc10_1.0.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
