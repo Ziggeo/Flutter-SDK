@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:ziggeo/callbacks.dart';
 
 class Ziggeo {
   static const MethodChannel _channel = const MethodChannel('ziggeo');
 
   Ziggeo(String token) {
     setAppToken(token);
+    startListening();
   }
 
   Future<String> get appToken async {

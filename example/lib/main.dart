@@ -29,8 +29,7 @@ class _MyAppState extends State<MyApp> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() {
-    });
+    setState(() {});
   }
 
   Future<void> testAppToken() async {
@@ -58,20 +57,35 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-            child: new GestureDetector(
-          onTap: _onPressed,
-          child: new Text("Press me"),
-        )),
-      ),
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: Center(
+              child: Column(
+            children: <Widget>[
+              RaisedButton(
+                  child: Text("Start camera recorder"),
+                  onPressed: startCameraRecorder),
+              RaisedButton(
+                  child: Text("Start screen recorder"),
+                  onPressed: startScreenRecorder),
+              RaisedButton(
+                  child: Text("Start file selector"),
+                  onPressed: startFileSelector)
+            ],
+          ))),
     );
   }
 
-  void _onPressed() {
-    var args = {"tags": "bla"};
+  void startCameraRecorder() {
     _ziggeo.startCameraRecorder();
+  }
+
+  void startScreenRecorder() {
+    _ziggeo.startScreenRecorder();
+  }
+
+  void startFileSelector() {
+    _ziggeo.uploadFromFileSelector(null);
   }
 }
