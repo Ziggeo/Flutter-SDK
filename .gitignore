@@ -9,6 +9,8 @@
 build/
 
 # Android related
+.gradle
+local.properties
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/

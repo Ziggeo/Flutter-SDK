@@ -8,13 +8,14 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.6.3'
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
+        maven { url 'https://jitpack.io' }
         jcenter()
     }
 }
@@ -26,7 +27,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -34,6 +35,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.ZiggeoJitpackService:Android-SDK:0.79.1'
+    implementation 'com.github.ZiggeoJitpackService:Android-SDK:rc10_1.0.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 }

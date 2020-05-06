@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ziggeo/ziggeo.dart';
-import 'package:ziggeo_example/tests/channel_tests.dart';
 
-void main() => runApp(MaterialApp(home: MyApp()));
+void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
@@ -22,14 +21,37 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    final String appToken = "TOKEN_HERE";
-    _ziggeo = Ziggeo(appToken);
+    final String appToken = "tt";
+    _ziggeo = new Ziggeo(appToken);
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-    setState(() {});
+
+    setState(() {
+    });
+  }
+
+  Future<void> testAppToken() async {
+    final String testToken = "tt";
+    _ziggeo.setAppToken(testToken);
+    var token = await _ziggeo.appToken;
+    assert(token == testToken);
+  }
+
+  Future<void> testServerAuthToken() async {
+    final String testToken = "tt";
+    _ziggeo.setServerAuthToken(testToken);
+    var token = await _ziggeo.serverAuthToken;
+    assert(token == testToken);
+  }
+
+  Future<void> testClientAuthToken() async {
+    final String testToken = "tt";
+    _ziggeo.setClientAuthToken(testToken);
+    var token = await _ziggeo.clientAuthToken;
+    assert(token == testToken);
   }
 
   @override
@@ -37,41 +59,19 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin test app'),
+          title: const Text('Plugin example app'),
         ),
-        body: TestRunnerPage(_ziggeo),
+        body: Center(
+            child: new GestureDetector(
+          onTap: _onPressed,
+          child: new Text("Press me"),
+        )),
       ),
     );
   }
-}
 
-class TestRunnerPage extends StatelessWidget {
-  final Ziggeo _ziggeo;
-
-  TestRunnerPage(this._ziggeo);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        onPressed: () async {
-          var tester = ChannelTest(_ziggeo);
-          var success = await tester.runTests();
-          var text;
-          if (success) {
-            text = "Success";
-          } else {
-            text = "Error";
-          }
-          final snackBar = SnackBar(
-            content: Text(text),
-          );
-
-          // Find the Scaffold in the Widget tree and use it to show a SnackBar!
-          Scaffold.of(context).showSnackBar(snackBar);
-        },
-        child: Text('Run tests'),
-      ),
-    );
+  void _onPressed() {
+    var args = {"tags": "bla"};
+    _ziggeo.startCameraRecorder();
   }
 }
