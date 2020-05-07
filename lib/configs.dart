@@ -1,3 +1,5 @@
+import 'package:ziggeo/listeners.dart';
+
 abstract class BaseConfig {
   var style;
   var extraArgs = Map<String, dynamic>();
@@ -29,6 +31,8 @@ class RecorderConfig extends BaseConfig {
   var maxDuration = 0;
   var enableCoverShot = true;
   var confirmStopRecording = false;
+
+  RecorderEventsListener eventsListener;
 
   @override
   Map<String, dynamic> convertToMap() {

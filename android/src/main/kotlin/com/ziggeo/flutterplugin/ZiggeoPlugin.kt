@@ -6,7 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import com.ziggeo.androidsdk.IZiggeo
 import com.ziggeo.androidsdk.Ziggeo
-import com.ziggeo.androidsdk.callbacks.IRecorderCallback
+import com.ziggeo.androidsdk.callbacks.RecorderCallback
+import com.ziggeo.androidsdk.log.ZLog
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -22,6 +23,10 @@ class ZiggeoPlugin(private val context: Context,
                    private val recorderCallbackChannel: MethodChannel,
                    private val mainThread: Handler
 ) : MethodCallHandler {
+
+    init {
+        prepareCallback()
+    }
 
     companion object {
         @JvmStatic
@@ -56,7 +61,6 @@ class ZiggeoPlugin(private val context: Context,
             }
             "getServerAuthToken" -> result.success(ziggeo.serverAuthToken)
             "startCameraRecorder" -> {
-                prepareCallback()
                 ziggeo.startCameraRecorder()
             }
             "startAudioRecorder" -> ziggeo.startAudioRecorder()
@@ -78,7 +82,7 @@ class ZiggeoPlugin(private val context: Context,
             }
             "uploadFromFileSelector" -> {
                 ziggeo.uploadFromFileSelector(
-                        call.argument<HashMap<String, String>>("args")?
+                        call.argument<HashMap<String, String>>("args")
                 )
             }
             "startScreenRecorder" -> ziggeo.startScreenRecorder(null)
@@ -87,7 +91,7 @@ class ZiggeoPlugin(private val context: Context,
     }
 
     private fun prepareCallback() {
-        ziggeo.recorderConfig.callback = object : IRecorderCallback {
+        ziggeo.recorderConfig.callback = object : RecorderCallback() {
             override fun streamingStarted() {
                 fireCallback("streamingStarted")
             }
@@ -141,7 +145,7 @@ class ZiggeoPlugin(private val context: Context,
                 fireCallback("verified", token)
             }
 
-            override fun uploadSelected(vararg paths: String?) {
+            override fun uploadSelected(paths: MutableList<String>) {
                 fireCallback("uploadSelected", paths)
             }
 
@@ -166,7 +170,7 @@ class ZiggeoPlugin(private val context: Context,
             }
 
             override fun error(exception: Throwable) {
-                fireCallback("error", exception)
+                fireCallback("error", exception.toString())
             }
 
             override fun canceledByUser() {
