@@ -8,6 +8,8 @@
 .pub/
 build/
 example/lib/generated/
+**/.flutter-plugins-dependencies
+**/*.lock
 
 # Android related
 .gradle
