@@ -64,18 +64,18 @@ class _MyAppState extends State<MyApp> {
           ),
           body: Center(
               child: Column(
-            children: <Widget>[
-              RaisedButton(
-                  child: Text("Start camera recorder"),
-                  onPressed: startCameraRecorder),
-              RaisedButton(
-                  child: Text("Start screen recorder"),
-                  onPressed: startScreenRecorder),
-              RaisedButton(
-                  child: Text("Start file selector"),
-                  onPressed: startFileSelector)
-            ],
-          ))),
+                children: <Widget>[
+                  RaisedButton(
+                      child: Text("Start camera recorder"),
+                      onPressed: startCameraRecorder),
+                  RaisedButton(
+                      child: Text("Start screen recorder"),
+                      onPressed: startScreenRecorder),
+                  RaisedButton(
+                      child: Text("Start file selector"),
+                      onPressed: startFileSelector)
+                ],
+              ))),
     );
   }
 
@@ -92,8 +92,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   void prepareRecorderListener() {
-    _ziggeo.recorderConfig = new RecorderConfig();
-    _ziggeo.recorderConfig.eventsListener = new RecorderEventsListener(
+    var recorderConfig = new RecorderConfig();
+    recorderConfig.maxDuration = 30;
+
+    recorderConfig.eventsListener = new RecorderEventsListener(
         onError: (exception) => print("onError:" + exception.toString()),
         onAccessForbidden: (permissions) =>
             print("onAccessForbidden:" + permissions.toString()),
@@ -120,17 +122,20 @@ class _MyAppState extends State<MyApp> {
         onUploaded: (token, path) =>
             print("onUploaded. Token:" + token + " Path:" + path),
         onUploadingStarted: (path) => print("onUploadingStarted:" + path),
-        onUploadProgress: (token, path, current, total) => print(
-            "onUploadProgress. Token:" +
-                token +
-                " " +
-                current.toString() +
-                "/" +
-                total.toString() +
-                " Path:" +
-                path),
+        onUploadProgress: (token, path, current, total) =>
+            print(
+                "onUploadProgress. Token:" +
+                    token +
+                    " " +
+                    current.toString() +
+                    "/" +
+                    total.toString() +
+                    " Path:" +
+                    path),
         onUploadSelected: (paths) =>
             print("onUploadSelected:" + paths.toString()),
         onVerified: (token) => print("onVerified:" + token));
+
+    _ziggeo.recorderConfig = recorderConfig;
   }
 }

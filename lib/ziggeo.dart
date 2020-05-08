@@ -7,12 +7,20 @@ class Ziggeo {
   static const _ziggeoChannel = const MethodChannel('ziggeo');
   static const _recorderChannel = const MethodChannel('recorder');
 
-  RecorderConfig recorderConfig;
+  RecorderConfig _recorderConfig;
 
   Ziggeo(String token) {
     setAppToken(token);
     startListening();
   }
+
+  set recorderConfig(value) {
+    _recorderConfig = value;
+    _ziggeoChannel.invokeMethod(
+        'setRecorderConfig', recorderConfig.convertToMap());
+  }
+
+  RecorderConfig get recorderConfig => _recorderConfig;
 
   Future<String> get appToken async {
     return await _ziggeoChannel.invokeMethod('getAppToken');

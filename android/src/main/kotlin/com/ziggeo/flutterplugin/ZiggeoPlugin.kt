@@ -1,13 +1,11 @@
 package com.ziggeo.flutterplugin
 
-import android.content.Context
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import com.ziggeo.androidsdk.IZiggeo
 import com.ziggeo.androidsdk.Ziggeo
 import com.ziggeo.androidsdk.callbacks.RecorderCallback
-import com.ziggeo.androidsdk.log.ZLog
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -15,11 +13,8 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import timber.log.Timber
 import java.io.File
-import java.util.*
 
-class ZiggeoPlugin(private val context: Context,
-                   private val ziggeo: IZiggeo,
-                   private val fromDartChannel: MethodChannel,
+class ZiggeoPlugin(private val ziggeo: IZiggeo,
                    private val recorderCallbackChannel: MethodChannel,
                    private val mainThread: Handler
 ) : MethodCallHandler {
@@ -31,13 +26,11 @@ class ZiggeoPlugin(private val context: Context,
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val fromDartChannel = MethodChannel(registrar.messenger(), "ziggeo")
+            val fromFlutterToNativeChannel = MethodChannel(registrar.messenger(), "ziggeo")
             val recorderCallbackChannel = MethodChannel(registrar.messenger(), "recorder")
             val context = registrar.activeContext()!!
-            fromDartChannel.setMethodCallHandler(
-                    ZiggeoPlugin(context,
-                            Ziggeo(context),
-                            fromDartChannel,
+            fromFlutterToNativeChannel.setMethodCallHandler(
+                    ZiggeoPlugin(Ziggeo(context),
                             recorderCallbackChannel,
                             Handler(Looper.getMainLooper())
                     )
@@ -86,6 +79,44 @@ class ZiggeoPlugin(private val context: Context,
                 )
             }
             "startScreenRecorder" -> ziggeo.startScreenRecorder(null)
+            "setRecorderConfig" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    val config = ziggeo.recorderConfig
+                    (it["shouldShowFaceOutline"] as? Boolean)?.let { value ->
+                        config.shouldShowFaceOutline = value
+                    }
+                    (it["isLiveStreaming"] as? Boolean)?.let { value ->
+                        config.isLiveStreaming = value
+                    }
+                    (it["shouldAutoStartRecording"] as? Boolean)?.let { value ->
+                        config.shouldAutoStartRecording = value
+                    }
+                    (it["startDelay"] as? Int)?.let { value ->
+                        config.startDelay = value
+                    }
+                    (it["shouldSendImmediately"] as? Boolean)?.let { value ->
+                        config.shouldSendImmediately = value
+                    }
+                    (it["shouldDisableCameraSwitch"] as? Boolean)?.let { value ->
+                        config.shouldDisableCameraSwitch = value
+                    }
+                    (it["videoQuality"] as? Int)?.let { value ->
+                        config.videoQuality = value
+                    }
+                    (it["facing"] as? Int)?.let { value ->
+                        config.facing = value
+                    }
+                    (it["maxDuration"] as? Long)?.let { value ->
+                        config.maxDuration = value
+                    }
+                    (it["shouldEnableCoverShot"] as? Boolean)?.let { value ->
+                        config.shouldEnableCoverShot = value
+                    }
+                    (it["shouldConfirmStopRecording"] as? Boolean)?.let { value ->
+                        config.shouldConfirmStopRecording = value
+                    }
+                }
+            }
             else -> result.notImplemented()
         }
     }

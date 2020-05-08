@@ -54,13 +54,13 @@ void main() {
 
   test('recorderConfig_showFaceOutline', () async {
     expect(recorderConfig.convertToMap()["showFaceOutline"], false);
-    recorderConfig.showFaceOutline = true;
+    recorderConfig.shouldShowFaceOutline = true;
     expect(recorderConfig.convertToMap()["showFaceOutline"], true);
   });
 
   test('recorderConfig_autostart', () async {
     expect(recorderConfig.convertToMap()["autostart"], false);
-    recorderConfig.autostart = true;
+    recorderConfig.shouldAutoStartRecording = true;
     expect(recorderConfig.convertToMap()["autostart"], true);
   });
 
@@ -73,13 +73,13 @@ void main() {
 
   test('recorderConfig_sendImmediately', () async {
     expect(recorderConfig.convertToMap()["sendImmediately"], true);
-    recorderConfig.sendImmediately = false;
+    recorderConfig.shouldSendImmediately = false;
     expect(recorderConfig.convertToMap()["sendImmediately"], false);
   });
 
   test('recorderConfig_disableCameraSwitch', () async {
     expect(recorderConfig.convertToMap()["disableCameraSwitch"], false);
-    recorderConfig.disableCameraSwitch = true;
+    recorderConfig.shouldDisableCameraSwitch = true;
     expect(recorderConfig.convertToMap()["disableCameraSwitch"], true);
   });
 
@@ -103,13 +103,13 @@ void main() {
 
   test('recorderConfig_enableCoverShot', () async {
     expect(recorderConfig.convertToMap()["enableCoverShot"], true);
-    recorderConfig.enableCoverShot = false;
+    recorderConfig.shouldEnableCoverShot = false;
     expect(recorderConfig.convertToMap()["enableCoverShot"], false);
   });
 
   test('recorderConfig_confirmStopRecording', () async {
     expect(recorderConfig.convertToMap()["confirmStopRecording"], false);
-    recorderConfig.confirmStopRecording = true;
+    recorderConfig.shouldConfirmStopRecording = true;
     expect(recorderConfig.convertToMap()["confirmStopRecording"], true);
   });
 

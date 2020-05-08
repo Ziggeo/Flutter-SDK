@@ -21,32 +21,34 @@ class RecorderConfig extends BaseConfig {
   static const facingBack = 0;
   static const facingFront = 1;
 
-  var showFaceOutline = false;
-  var autostart = false;
+  var shouldShowFaceOutline = false;
+  var isLiveStreaming = false;
+  var shouldAutoStartRecording = false;
   var startDelay = defaultStartDelay;
-  var sendImmediately = true;
-  var disableCameraSwitch = false;
+  var shouldSendImmediately = true;
+  var shouldDisableCameraSwitch = false;
   var videoQuality = 0;
   var facing = 0;
   var maxDuration = 0;
-  var enableCoverShot = true;
-  var confirmStopRecording = false;
+  var shouldEnableCoverShot = true;
+  var shouldConfirmStopRecording = false;
 
   RecorderEventsListener eventsListener;
 
   @override
   Map<String, dynamic> convertToMap() {
     var map = super.convertToMap();
-    map["showFaceOutline"] = showFaceOutline;
-    map["autostart"] = autostart;
+    map["shouldShowFaceOutline"] = shouldShowFaceOutline;
+    map["isLiveStreaming"] = isLiveStreaming;
+    map["shouldAutoStartRecording"] = shouldAutoStartRecording;
     map["startDelay"] = startDelay;
-    map["sendImmediately"] = sendImmediately;
-    map["disableCameraSwitch"] = disableCameraSwitch;
+    map["shouldSendImmediately"] = shouldSendImmediately;
+    map["shouldDisableCameraSwitch"] = shouldDisableCameraSwitch;
     map["videoQuality"] = videoQuality;
     map["facing"] = facing;
     map["maxDuration"] = maxDuration;
-    map["enableCoverShot"] = enableCoverShot;
-    map["confirmStopRecording"] = confirmStopRecording;
+    map["shouldEnableCoverShot"] = shouldEnableCoverShot;
+    map["shouldConfirmStopRecording"] = shouldConfirmStopRecording;
     return map;
   }
 }
