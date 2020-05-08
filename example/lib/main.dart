@@ -34,27 +34,6 @@ class _MyAppState extends State<MyApp> {
     setState(() {});
   }
 
-  Future<void> testAppToken() async {
-    final String testToken = "tt";
-    _ziggeo.setAppToken(testToken);
-    var token = await _ziggeo.appToken;
-    assert(token == testToken);
-  }
-
-  Future<void> testServerAuthToken() async {
-    final String testToken = "tt";
-    _ziggeo.setServerAuthToken(testToken);
-    var token = await _ziggeo.serverAuthToken;
-    assert(token == testToken);
-  }
-
-  Future<void> testClientAuthToken() async {
-    final String testToken = "tt";
-    _ziggeo.setClientAuthToken(testToken);
-    var token = await _ziggeo.clientAuthToken;
-    assert(token == testToken);
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
