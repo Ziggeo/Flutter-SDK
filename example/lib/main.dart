@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo/configs.dart';
@@ -18,20 +16,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    final String appToken = "tt";
+    final String appToken = "YOUR_APP_TOKEN_HERE";
     _ziggeo = new Ziggeo(appToken);
-    prepareRecorderListener();
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {});
+    prepareRecorderConfig();
   }
 
   @override
@@ -39,7 +26,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text('Plugin example app'),
+            title: const Text('Ziggeo SDK demo app'),
           ),
           body: Center(
               child: Column(
@@ -70,7 +57,7 @@ class _MyAppState extends State<MyApp> {
     _ziggeo.uploadFromFileSelector(null);
   }
 
-  void prepareRecorderListener() {
+  void prepareRecorderConfig() {
     var recorderConfig = new RecorderConfig();
     recorderConfig.maxDuration = 30;
 
