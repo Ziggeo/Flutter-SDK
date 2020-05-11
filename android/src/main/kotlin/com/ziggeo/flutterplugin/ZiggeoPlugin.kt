@@ -116,6 +116,9 @@ class ZiggeoPlugin(private val ziggeo: IZiggeo,
                     (it["shouldConfirmStopRecording"] as? Boolean)?.let { value ->
                         config.shouldConfirmStopRecording = value
                     }
+                    (it["extraArgs"] as? HashMap<String, String>)?.let { value ->
+                        config.extraArgs = value
+                    }
                 }
             }
             else -> result.notImplemented()
