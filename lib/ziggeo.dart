@@ -53,31 +53,19 @@ class Ziggeo {
     return await _ziggeoChannel.invokeMethod('startCameraRecorder');
   }
 
-  Future<void> startAudioRecorder() async {
-    return await _ziggeoChannel.invokeMethod('startAudioRecorder');
-  }
-
-  Future<void> startPlayingFromToken(List<String> videoTokens) async {
+  Future<void> startPlayerFromToken(List<String> videoTokens) async {
     return await _ziggeoChannel
         .invokeMethod('startPlayer', {"tokens": videoTokens});
   }
 
-  Future<void> startPlayingFromPath(List<String> videoPaths) async {
+  Future<void> startPlayerFromPath(List<String> videoPaths) async {
     return await _ziggeoChannel
         .invokeMethod('startPlayer', {"paths": videoPaths});
-  }
-
-  Future<void> startScreenRecorder() async {
-    return await _ziggeoChannel.invokeMethod('startScreenRecorder');
   }
 
   Future<void> uploadFromFileSelector(Map<String, String> args) async {
     return await _ziggeoChannel
         .invokeMethod('uploadFromFileSelector', {"args": args});
-  }
-
-  Future<void> clearRecorded() async {
-    return await _ziggeoChannel.invokeMethod('clearRecorded');
   }
 
   Future<void> _methodCallHandler(MethodCall call) async {

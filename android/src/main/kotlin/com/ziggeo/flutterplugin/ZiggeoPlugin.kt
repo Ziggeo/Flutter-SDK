@@ -6,6 +6,7 @@ import android.os.Looper
 import com.ziggeo.androidsdk.IZiggeo
 import com.ziggeo.androidsdk.Ziggeo
 import com.ziggeo.androidsdk.callbacks.RecorderCallback
+import com.ziggeo.androidsdk.log.ZLog
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -106,8 +107,8 @@ class ZiggeoPlugin(private val ziggeo: IZiggeo,
                     (it["facing"] as? Int)?.let { value ->
                         config.facing = value
                     }
-                    (it["maxDuration"] as? Long)?.let { value ->
-                        config.maxDuration = value
+                    (it["maxDuration"] as? Int)?.let { value ->
+                        config.maxDuration = value * 1000L
                     }
                     (it["shouldEnableCoverShot"] as? Boolean)?.let { value ->
                         config.shouldEnableCoverShot = value
