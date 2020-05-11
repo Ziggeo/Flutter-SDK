@@ -52,7 +52,11 @@ class _MyAppState extends State<MyApp> {
 
   void prepareRecorderConfig() {
     var recorderConfig = new RecorderConfig();
-    recorderConfig.maxDuration = 10; // seconds
+
+    var args = new Map<String, dynamic>();
+    args["data"] = "{\"key\":\"value\"}";
+    args["tags"] = new DateTime.now().millisecondsSinceEpoch;
+    recorderConfig.extraArgs = args;
 
     recorderConfig.eventsListener = new RecorderEventsListener(
         onError: (exception) => print("onError:" + exception.toString()),
