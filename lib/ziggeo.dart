@@ -82,32 +82,14 @@ class Ziggeo {
 
   Future<void> _methodCallHandler(MethodCall call) async {
     switch (call.method) {
-      case 'streamingStarted':
-        recorderConfig?.eventsListener?.onStreamingStarted();
-        break;
-      case 'loaded':
-        recorderConfig?.eventsListener?.onLoaded();
-        break;
-      case 'accessGranted':
-        recorderConfig?.eventsListener?.onAccessGranted();
-        break;
-      case 'noMicrophone':
-        recorderConfig?.eventsListener?.onNoMicrophone();
-        break;
       case 'accessForbidden':
         recorderConfig?.eventsListener?.onAccessForbidden(call.arguments);
-        break;
-      case 'hasMicrophone':
-        recorderConfig?.eventsListener?.onHasMicrophone();
         break;
       case 'recordingStopped':
         recorderConfig?.eventsListener?.onRecordingStopped(call.arguments);
         break;
       case 'processing':
         recorderConfig?.eventsListener?.onProcessing(call.arguments);
-        break;
-      case 'readyToRecord':
-        recorderConfig?.eventsListener?.onReadyToRecord();
         break;
       case 'uploadProgress':
         recorderConfig?.eventsListener?.onUploadProgress(
@@ -123,23 +105,8 @@ class Ziggeo {
       case 'verified':
         recorderConfig?.eventsListener?.onVerified(call.arguments);
         break;
-      case 'uploadSelected':
-        recorderConfig?.eventsListener?.onUploadSelected(call.arguments);
-        break;
       case 'recordingStarted':
         recorderConfig?.eventsListener?.onRecordingStarted();
-        break;
-      case 'recordingProgress':
-        recorderConfig?.eventsListener?.onRecordingProgress(call.arguments);
-        break;
-      case 'onPictureTaken':
-        recorderConfig?.eventsListener?.onPictureTaken(call.arguments);
-        break;
-      case 'hasCamera':
-        recorderConfig?.eventsListener?.onHasCamera();
-        break;
-      case 'microphoneHealth':
-        recorderConfig?.eventsListener?.onMicrophoneHealth(call.arguments);
         break;
       case 'error':
         recorderConfig?.eventsListener?.onError(new Exception(call.arguments));
@@ -147,27 +114,15 @@ class Ziggeo {
       case 'canceledByUser':
         recorderConfig?.eventsListener?.onCanceledByUser();
         break;
-      case 'streamingStopped':
-        recorderConfig?.eventsListener?.onStreamingStopped();
-        break;
       case 'uploadingStarted':
         recorderConfig?.eventsListener?.onUploadingStarted(call.arguments);
-        break;
-      case 'manuallySubmitted':
-        recorderConfig?.eventsListener?.onManuallySubmitted();
         break;
       case 'uploaded':
         recorderConfig?.eventsListener
             ?.onUploaded(call.arguments["token"], call.arguments["path"]);
         break;
-      case 'noCamera':
-        recorderConfig?.eventsListener?.onNoCamera();
-        break;
-      case 'countdown':
-        recorderConfig?.eventsListener?.onCountdown(call.arguments);
-        break;
       default:
-        print('Ignoring invoke from native. This normally shouldn\'t happen.');
+        print('Ignoring invoke from native.');
     }
   }
 
