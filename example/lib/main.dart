@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo/configs.dart';
 import 'package:ziggeo/listeners.dart';
+import 'package:ziggeo_example/screens/auth.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() => runApp(MyApp());
+import 'localization.dart';
 
-class MyApp extends StatefulWidget {
+void main() => runApp(ZiggeoDemoApp());
+
+class ZiggeoDemoApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _ZiggeoDemoAppState createState() => _ZiggeoDemoAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _ZiggeoDemoAppState extends State<ZiggeoDemoApp> {
   Ziggeo _ziggeo;
 
   @override
@@ -24,21 +28,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Ziggeo SDK demo app'),
-          ),
-          body: Center(
-              child: Column(
-            children: <Widget>[
-              RaisedButton(
-                  child: Text("Start camera recorder"),
-                  onPressed: startCameraRecorder),
-              RaisedButton(
-                  child: Text("Start file selector"),
-                  onPressed: startFileSelector)
-            ],
-          ))),
+      home: AuthScreen(),
+      localizationsDelegates: [
+        const AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en'),
+      ],
     );
   }
 
