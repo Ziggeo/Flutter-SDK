@@ -1,5 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ziggeo/configs.dart';
+import 'package:ziggeo/player/player_config.dart';
+import 'package:ziggeo/recorder/recorder_config.dart';
+import 'package:ziggeo/styles/camera_recorder.dart';
+import 'package:ziggeo/styles/player.dart';
 
 void main() {
   PlayerStyle playerStyle;

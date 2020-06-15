@@ -1,16 +1,5 @@
-import 'package:ziggeo/listeners.dart';
-
-abstract class BaseConfig {
-  var style;
-  var extraArgs = Map<String, dynamic>();
-
-  Map<String, dynamic> convertToMap() {
-    var map = Map<String, dynamic>();
-    map["style"] = style;
-    map["extraArgs"] = extraArgs;
-    return map;
-  }
-}
+import 'package:ziggeo/common/base_config.dart';
+import 'package:ziggeo/recorder/recorder_listener.dart';
 
 class RecorderConfig extends BaseConfig {
   static const defaultStartDelay = 3; // seconds
@@ -52,30 +41,3 @@ class RecorderConfig extends BaseConfig {
     return map;
   }
 }
-
-class PlayerConfig extends BaseConfig {
-  var showSubtitles = false;
-  var muted = false;
-
-  @override
-  Map<String, dynamic> convertToMap() {
-    var map = super.convertToMap();
-    map["showSubtitles"] = showSubtitles;
-    map["muted"] = muted;
-    return map;
-  }
-}
-
-class BaseStyle {
-  var hideControls = false;
-
-  Map<String, dynamic> convertToMap() {
-    var map = Map<String, dynamic>();
-    map["hideControls"] = hideControls;
-    return map;
-  }
-}
-
-class CameraRecorderStyle extends BaseStyle {}
-
-class PlayerStyle extends BaseStyle {}
