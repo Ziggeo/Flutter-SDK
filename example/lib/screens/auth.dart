@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ziggeo/qr/qr_scanner_config.dart';
+import 'package:ziggeo/qr/qr_scanner_listener.dart';
+import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
@@ -11,22 +14,36 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool _enterQrManuallyMode = false;
+  Ziggeo _ziggeo;
+  String _inputToken;
 
-  @override
-  void initState() {
-    super.initState();
+  _AuthScreenState() {
+    _ziggeo = Ziggeo(_inputToken);
+    _ziggeo.qrScannerConfig = new QrScannerConfig();
+    _ziggeo.qrScannerConfig.eventsListener = new QrScannerEventListener(
+      onDecoded: (value) => {this.navigateToMainScreen(value)},
+    );
   }
 
   onQrActionPressed() {
     if (_enterQrManuallyMode) {
-    } else {}
-    Fluttertoast.showToast(msg: "onScanQrPressed");
+      navigateToMainScreen(_inputToken);
+    } else {
+      _ziggeo.startQrScanner();
+    }
   }
 
   switchQrScannerMode() {
     this.setState(() {
       _enterQrManuallyMode = !_enterQrManuallyMode;
     });
+  }
+
+  onTextChanged() {
+    Fluttertoast.showToast(msg: "onTextChanged");
+  }
+
+  navigateToMainScreen(String value) {
   }
 
   @override
@@ -48,8 +65,12 @@ class _AuthScreenState extends State<AuthScreen> {
           SizedBox(
             height: qr_input_height,
             child: _enterQrManuallyMode
-                ? TextField(
-                    decoration: InputDecoration(labelText: 'Full name'),
+                ? TextFormField(
+                    onChanged: (value) => this.setState(() {
+                      _inputToken = value;
+                    }),
+                    decoration:
+                        InputDecoration(labelText: 'Enter your username'),
                   )
                 : null,
           ),
