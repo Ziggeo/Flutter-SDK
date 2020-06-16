@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ContactUsScreen extends StatefulWidget {
+  static const String routeName = '/contact-us';
+
   @override
   _ContactUsScreenState createState() => _ContactUsScreenState();
 }

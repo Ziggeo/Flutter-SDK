@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AboutScreen extends StatefulWidget {
+  static const String routeName = '/about';
+
   @override
   _AboutScreenState createState() => _AboutScreenState();
 }

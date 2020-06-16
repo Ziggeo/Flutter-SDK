@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class VideoEditorScreen extends StatefulWidget {
+  static const String routeName = '/video-editor';
+
   @override
   _VideoEditorScreenState createState() => _VideoEditorScreenState();
 }

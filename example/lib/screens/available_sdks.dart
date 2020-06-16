@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AvailableSdksScreen extends StatefulWidget {
+  static const String routeName = '/sdks';
+
   @override
   _AvailableSdksScreenState createState() => _AvailableSdksScreenState();
 }

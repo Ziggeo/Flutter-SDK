@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TopClientsScreen extends StatefulWidget {
+  static const String routeName = '/clients';
+
   @override
   _TopClientsScreenState createState() => _TopClientsScreenState();
 }

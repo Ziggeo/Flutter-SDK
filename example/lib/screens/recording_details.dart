@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RecordingDetailsScreen extends StatefulWidget {
+  static const String routeName = '/recording-details';
+
   @override
   _RecordingDetailsScreenState createState() => _RecordingDetailsScreenState();
 }
