@@ -5,6 +5,7 @@ import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/qr/qr_scanner_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/dimens.dart';
+import 'package:ziggeo_example/screens/main.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -44,6 +45,10 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   navigateToMainScreen(String value) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MainScreen()),
+    );
   }
 
   @override
@@ -60,7 +65,7 @@ class _AuthScreenState extends State<AuthScreen> {
             width: logo_width,
           ),
           SizedBox(height: logo_margin_bottom),
-          TextLocalized('auth_message', TextAlign.center),
+          TextLocalized('auth_message', textAlign: TextAlign.center),
           SizedBox(height: auth_controls_margin_top),
           SizedBox(
             height: qr_input_height,
