@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:ziggeo_example/res/dimens.dart';
+import 'package:ziggeo_example/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class ContactUsScreen extends StatelessWidget {
@@ -58,19 +58,10 @@ class ContactUsScreen extends StatelessWidget {
   }
 
   onContactUsPressed() async {
-    final Email email = Email(
-      recipients: ['support@ziggeo.com'],
-    );
-
-    await FlutterEmailSender.send(email);
+    Utils.sendEmail('support@ziggeo.com');
   }
 
   onVisitSupportPressed() async {
-    const url = 'https://support.ziggeo.com';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    Utils.openUrl('https://support.ziggeo.com');
   }
 }

@@ -33,9 +33,6 @@ const preview_height = 250.0;
 /// Contact us screen
 const btn_start_now_top_margin = 70.0;
 
-/// About screen
-const butt = 70.0;
-
 /// Top clients screen
 const clients_item_height = 200.0;
 

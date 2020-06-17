@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/screens/auth.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ziggeo_example/screens/main.dart';
 
 import 'localization.dart';
 
