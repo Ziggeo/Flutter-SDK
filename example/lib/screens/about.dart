@@ -19,13 +19,15 @@ class AboutScreen extends StatelessWidget {
                   children: <Widget>[
                     TextLocalized(
                       'about_subtitle',
-                      style: TextStyle(fontSize: about_subtitle_text_size),
+                      style: TextStyle(
+                          fontSize: subtitle_text_size,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: common_margin),
                     Html(
                       style: {
                         "body": Style(
-                          fontSize: FontSize(about_content_text_size),
+                          fontSize: FontSize(message_text_size),
                         ),
                         "a": Style(
                           // Note that the underline can be omitted, since the new parser merges styles with the element's

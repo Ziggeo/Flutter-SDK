@@ -40,5 +40,10 @@
   "btn_select_file_text": "Select file to cut",
   "read_storage_permission_message": "The app needs access to read files.",
   "cut_video_saved_to": "Video saved to: %s",
-  "video_chooser_title": "Select video"
+  "video_chooser_title": "Select video",
+  "contact_header": "Contact us",
+  "contact_title": "Stay in touch",
+  "contact_message": "Do you have a question about Ziggeo?\nWondering how you can start using Ziggeo?\nWish to get in touch with someone to see how you can start using Ziggeo tomorrow?\nIf you are ready to start a video revolution of your website / service / app or system, click on the Contact Us button to send us an email, or visit our support base to find answers or ask us there.",
+  "btn_contact_us": "Contact Us",
+  "btn_visit_support": "Visit Support"
 }

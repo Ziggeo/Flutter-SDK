@@ -5,6 +5,8 @@ const divider_height = 1.0;
 const list_empty_message_margin_top = 200.0;
 const item_elevation = 4.0;
 const item_corner_radius = 4.0;
+const subtitle_text_size = 20.0;
+const message_text_size = 18.0;
 
 /// Auth screen
 const logo_width = 250.0;
@@ -32,8 +34,7 @@ const preview_height = 250.0;
 const btn_start_now_top_margin = 70.0;
 
 /// About screen
-const about_subtitle_text_size = 20.0;
-const about_content_text_size = 18.0;
+const butt = 70.0;
 
 /// Top clients screen
 const clients_item_height = 200.0;

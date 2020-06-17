@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ziggeo_example/screens/about.dart';
+import 'package:ziggeo_example/screens/contact_us.dart';
 import 'package:ziggeo_example/screens/drawer.dart';
 import 'package:ziggeo_example/screens/recordings.dart';
 
@@ -17,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           title: Text("Contacts"),
         ),
-        body: getBodyBasedOnSelectedRoute());
+        body: SafeArea(child: getBodyBasedOnSelectedRoute()));
   }
 
   getBodyBasedOnSelectedRoute() {
