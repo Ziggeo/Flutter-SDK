@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   static const String routeName = '/settings';
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(),
+    return Scaffold(
+      body: Align(
+        child: TextLocalized('coming_soon'),
+        alignment: Alignment.center,
+      ),
     );
   }
-
 }
