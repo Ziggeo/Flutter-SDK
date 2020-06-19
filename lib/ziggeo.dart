@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:ziggeo/api/videos.dart';
 import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
@@ -6,19 +7,23 @@ import 'package:ziggeo/uploading/uploading_config.dart';
 
 class Ziggeo {
   static const _ziggeoChannel = const MethodChannel('ziggeo');
-  static const _recorderChannel = const MethodChannel('recorder');
+  static const _recorderChannel = const MethodChannel('ziggeo_recorder');
 
   Ziggeo(String token) {
     setAppToken(token);
     startListening();
+    _videosApi = VideosApi();
   }
 
+  VideosApi _videosApi;
   RecorderConfig _recorderConfig;
   QrScannerConfig _qrScannerConfig;
   UploadingConfig _uploadingConfig;
   FileSelectorConfig _fileSelectorConfig;
 
   FileSelectorConfig get fileSelectorConfig => _fileSelectorConfig;
+
+  VideosApi get videos => _videosApi;
 
   set fileSelectorConfig(FileSelectorConfig value) {
     _fileSelectorConfig = value;

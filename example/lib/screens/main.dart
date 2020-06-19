@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ziggeo_example/screens/available_sdks.dart';
 import 'package:ziggeo_example/screens/drawer.dart';
-import 'package:ziggeo_example/screens/recordings.dart';
-import 'package:ziggeo_example/screens/top_clients.dart';
+import 'package:ziggeo_example/screens/recordings/recordings.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = '/recordings';
