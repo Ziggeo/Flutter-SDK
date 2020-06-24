@@ -7,7 +7,7 @@ class AvailableSdksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: InfoList(sdks, true)),
+      home: Scaffold(body: InfoList(sdks)),
     );
   }
 

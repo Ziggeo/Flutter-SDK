@@ -5,16 +5,13 @@ import 'package:ziggeo_example/utils.dart';
 
 class InfoList extends StatelessWidget {
   final List<ListDataObject> data;
-  final bool gridMode;
 
-  InfoList(this.data, this.gridMode);
+  InfoList(this.data);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: gridMode
-            ? GridView.count(crossAxisCount: 2, children: getListChildren())
-            : ListView(children: getListChildren()));
+        body: GridView.count(crossAxisCount: 2, children: getListChildren()));
   }
 
   getListChildren() {
@@ -33,7 +30,7 @@ class InfoList extends StatelessWidget {
                           ),
                           child: Image.asset(
                             data[index].imagePath,
-                            fit: BoxFit.contain ,
+                            fit: BoxFit.contain,
                           ))))));
     });
   }
