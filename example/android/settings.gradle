@@ -1,4 +1,6 @@
 include ':app'
+//, ':sdk' //for internal development
+//project(':sdk').projectDir = new File('../../../Android-SDK/sdk')
 
 def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
 
