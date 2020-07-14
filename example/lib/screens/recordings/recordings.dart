@@ -4,10 +4,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/recordings/recording_model.dart';
+import 'package:ziggeo_example/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class RecordingsScreen extends StatefulWidget {
@@ -57,7 +59,9 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   Future<Null> fetchRecordings() async {
-    await Ziggeo("").videos.index(null).then((value) {
+    final prefs = await SharedPreferences.getInstance();
+    await Ziggeo(prefs.getString(Utils.keyAppToken)).videos.index(null).then(
+        (value) {
       setState(() {
         List<dynamic> data = json.decode(value).cast<Map<String, dynamic>>();
         recordings = data

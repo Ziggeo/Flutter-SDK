@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/qr/qr_scanner_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/main.dart';
+import 'package:ziggeo_example/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 import '../localization.dart';
@@ -29,9 +30,12 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  onQrActionPressed() {
+  onQrActionPressed() async {
     if (_enterQrManuallyMode) {
       if (_formKey.currentState.validate()) {
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString(Utils.keyAppToken, _inputToken);
+
         navigateToMainScreen(_inputToken);
       }
     } else {
@@ -43,10 +47,6 @@ class _AuthScreenState extends State<AuthScreen> {
     this.setState(() {
       _enterQrManuallyMode = !_enterQrManuallyMode;
     });
-  }
-
-  onTextChanged() {
-    Fluttertoast.showToast(msg: "onTextChanged");
   }
 
   navigateToMainScreen(String value) {
