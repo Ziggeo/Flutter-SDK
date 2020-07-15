@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/routes.dart';
@@ -92,7 +93,20 @@ class _AppDrawerState extends State<AppDrawer> {
   selectRoute(String routeName) {
     this.setState(() {
       selectedRote = routeName;
+      Provider.of<DrawerStateInfo>(context, listen: false)
+          .setSelectedRoute(selectedRote);
     });
     Navigator.pop(context);
+  }
+}
+
+class DrawerStateInfo with ChangeNotifier {
+  String _selectedRoute;
+
+  String get selectedRoute => _selectedRoute;
+
+  void setSelectedRoute(String route) {
+    _selectedRoute = route;
+    notifyListeners();
   }
 }
