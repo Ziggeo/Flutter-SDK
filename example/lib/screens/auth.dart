@@ -50,10 +50,8 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   navigateToMainScreen(String value) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MainScreen()),
-    );
+    Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(builder: (context) =>MainScreen()));
   }
 
   @override
