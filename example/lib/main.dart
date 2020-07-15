@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo_example/res/colors.dart';
-import 'package:ziggeo_example/screens/auth.dart';
 import 'package:ziggeo_example/screens/drawer.dart';
-import 'package:ziggeo_example/screens/main.dart';
-import 'package:ziggeo_example/utils.dart';
+import 'package:ziggeo_example/screens/splash.dart';
 
 import 'localization.dart';
 
@@ -19,25 +16,11 @@ class ZiggeoDemoApp extends StatefulWidget {
 }
 
 class _ZiggeoDemoAppState extends State<ZiggeoDemoApp> {
-
-  Future<bool> isLoggedIn() async {
-    var prefs = await SharedPreferences.getInstance();
-    return prefs.getString(Utils.keyAppToken).isNotEmpty;
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       child: MaterialApp(
-        home: FutureBuilder(
-          future: isLoggedIn(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.hasData && snapshot.data) {
-              return MainScreen();
-            }
-            return AuthScreen(); // noop, this builder is called again when the future completes
-          },
-        ),
+        home: SplashScreen(),
         localizationsDelegates: [
           const AppLocalizationsDelegate(),
           GlobalMaterialLocalizations.delegate,
