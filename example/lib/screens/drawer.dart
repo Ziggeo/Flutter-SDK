@@ -13,10 +13,10 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  String selectedRote = Routes.recordings;
-
   @override
   Widget build(BuildContext context) {
+    var drawerState = Provider.of<DrawerState>(context);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -24,22 +24,26 @@ class _AppDrawerState extends State<AppDrawer> {
           _createHeader(),
           _createDrawerItem(
               text: 'item_recordings',
-              onTap: () => {selectRoute(Routes.recordings)}),
+              onTap: () => {selectRoute(drawerState, Routes.recordings)}),
           _createDrawerItem(
               text: 'item_video_editor',
-              onTap: () => {selectRoute(Routes.video_editor)}),
+              onTap: () => {selectRoute(drawerState, Routes.video_editor)}),
           _createDrawerItem(
               text: 'item_settings',
-              onTap: () => {selectRoute(Routes.settings)}),
+              onTap: () => {selectRoute(drawerState, Routes.settings)}),
           Divider(),
           _createDrawerItem(
-              text: 'item_sdks', onTap: () => {selectRoute(Routes.sdks)}),
+              text: 'item_sdks',
+              onTap: () => {selectRoute(drawerState, Routes.sdks)}),
           _createDrawerItem(
-              text: 'item_clients', onTap: () => {selectRoute(Routes.clients)}),
+              text: 'item_clients',
+              onTap: () => {selectRoute(drawerState, Routes.clients)}),
           _createDrawerItem(
-              text: 'item_contact', onTap: () => {selectRoute(Routes.contact)}),
+              text: 'item_contact',
+              onTap: () => {selectRoute(drawerState, Routes.contact)}),
           _createDrawerItem(
-              text: 'item_about', onTap: () => {selectRoute(Routes.about)}),
+              text: 'item_about',
+              onTap: () => {selectRoute(drawerState, Routes.about)}),
         ],
       ),
     );
@@ -90,23 +94,19 @@ class _AppDrawerState extends State<AppDrawer> {
     );
   }
 
-  selectRoute(String routeName) {
-    this.setState(() {
-      selectedRote = routeName;
-      Provider.of<DrawerStateInfo>(context, listen: false)
-          .setSelectedRoute(selectedRote);
-    });
+  selectRoute(DrawerState state, String routeName) {
+    state.selectedRoute = routeName;
     Navigator.pop(context);
   }
 }
 
-class DrawerStateInfo with ChangeNotifier {
+class DrawerState with ChangeNotifier {
   String _selectedRoute;
 
   String get selectedRoute => _selectedRoute;
 
-  void setSelectedRoute(String route) {
-    _selectedRoute = route;
+  set selectedRoute(String value) {
+    _selectedRoute = value;
     notifyListeners();
   }
 }

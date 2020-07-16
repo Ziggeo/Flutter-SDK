@@ -20,17 +20,17 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    var drawerState = Provider.of<DrawerState>(context);
     return Scaffold(
         drawer: AppDrawer(),
         appBar: AppBar(
           title: Text("Contacts"),
         ),
-        body: SafeArea(child: getBodyBasedOnSelectedRoute()));
+        body: SafeArea(child: getBodyBasedOnSelectedRoute(drawerState)));
   }
 
-  getBodyBasedOnSelectedRoute() {
-    switch (
-        Provider.of<DrawerStateInfo>(context, listen: false).selectedRoute) {
+  getBodyBasedOnSelectedRoute(DrawerState drawerState) {
+    switch (drawerState.selectedRoute) {
       case Routes.video_editor:
         return VideoEditorScreen();
       case Routes.settings:

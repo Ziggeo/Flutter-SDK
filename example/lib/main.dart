@@ -43,8 +43,8 @@ class _ZiggeoDemoAppState extends State<ZiggeoDemoApp> {
         ),
       ),
       providers: <SingleChildWidget>[
-        ChangeNotifierProvider<DrawerStateInfo>(
-          create: (BuildContext context) => DrawerStateInfo(),
+        ChangeNotifierProvider<DrawerState>(
+          create: (BuildContext context) => DrawerState(),
         ),
       ],
     );
