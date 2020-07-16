@@ -3,6 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/routes.dart';
+import 'package:ziggeo_example/screens/about.dart';
+import 'package:ziggeo_example/screens/available_sdks.dart';
+import 'package:ziggeo_example/screens/contact_us.dart';
+import 'package:ziggeo_example/screens/recordings/recordings.dart';
+import 'package:ziggeo_example/screens/settings.dart';
+import 'package:ziggeo_example/screens/top_clients.dart';
+import 'package:ziggeo_example/screens/video_editor.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -95,18 +102,55 @@ class _AppDrawerState extends State<AppDrawer> {
   }
 
   selectRoute(DrawerState state, String routeName) {
-    state.selectedRoute = routeName;
+    state.selectRoute(routeName);
     Navigator.pop(context);
   }
 }
 
 class DrawerState with ChangeNotifier {
-  String _selectedRoute;
+  String _selectedRouteTitle;
+  StatefulWidget _selectedRoute;
 
-  String get selectedRoute => _selectedRoute;
+  DrawerState() {
+    // route by default
+    selectRoute(Routes.recordings);
+  }
 
-  set selectedRoute(String value) {
-    _selectedRoute = value;
+  String get selectedRouteTitle => _selectedRouteTitle;
+
+  selectRoute(String value) {
+    switch (value) {
+      case Routes.video_editor:
+        _selectedRouteTitle = 'item_video_editor';
+        _selectedRoute = VideoEditorScreen();
+        break;
+      case Routes.settings:
+        _selectedRouteTitle = 'item_settings';
+        _selectedRoute = SettingsScreen();
+        break;
+      case Routes.sdks:
+        _selectedRouteTitle = 'item_sdks';
+        _selectedRoute = AvailableSdksScreen();
+        break;
+      case Routes.clients:
+        _selectedRouteTitle = 'item_clients';
+        _selectedRoute = TopClientsScreen();
+        break;
+      case Routes.contact:
+        _selectedRouteTitle = 'item_contact';
+        _selectedRoute = ContactUsScreen();
+        break;
+      case Routes.about:
+        _selectedRouteTitle = 'item_about';
+        _selectedRoute = AboutScreen();
+        break;
+      case Routes.recordings:
+      default:
+        _selectedRouteTitle = 'item_recordings';
+        _selectedRoute = RecordingsScreen();
+    }
     notifyListeners();
   }
+
+  StatefulWidget get selectedRoute => _selectedRoute;
 }

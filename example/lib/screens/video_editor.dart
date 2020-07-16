@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
-class VideoEditorScreen extends StatelessWidget {
+class VideoEditorScreen extends StatefulWidget {
   static const String routeName = '/video-editor';
 
+  @override
+  _VideoEditorScreenState createState() => _VideoEditorScreenState();
+}
+
+class _VideoEditorScreenState extends State<VideoEditorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

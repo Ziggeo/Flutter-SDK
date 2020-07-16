@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ziggeo_example/screens/lists/list.dart';
 
-class AvailableSdksScreen extends StatelessWidget {
+class AvailableSdksScreen extends StatefulWidget {
   static const String routeName = '/sdks';
 
+  @override
+  _AvailableSdksScreenState createState() => _AvailableSdksScreenState();
+}
+
+class _AvailableSdksScreenState extends State<AvailableSdksScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

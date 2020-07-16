@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ziggeo_example/screens/lists/list.dart';
 
-class TopClientsScreen extends StatelessWidget {
+class TopClientsScreen extends StatefulWidget {
   static const String routeName = '/clients';
 
+  @override
+  _TopClientsScreenState createState() => _TopClientsScreenState();
+}
+
+class _TopClientsScreenState extends State<TopClientsScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
