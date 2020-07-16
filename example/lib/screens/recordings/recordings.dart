@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
+import 'package:ziggeo_example/screens/recording_details.dart';
 import 'package:ziggeo_example/screens/recordings/recording_model.dart';
 import 'package:ziggeo_example/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
@@ -91,7 +92,13 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
         .format(DateTime.fromMillisecondsSinceEpoch(item.created * 1000));
 
     return InkWell(
-        onTap: () => {},
+        onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RecordingDetailsScreen()),
+              )
+            },
         child: SizedBox(
             height: recording_item_height,
             child: Card(
