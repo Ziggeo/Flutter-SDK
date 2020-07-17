@@ -86,8 +86,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         onChanged: (value) => this.setState(() {
                           _inputToken = value;
                         }),
-                        decoration:
-                            InputDecoration(labelText: 'Enter your username'),
+                        decoration: InputDecoration(
+                            labelText: AppLocalizations.instance
+                                .text('enter_manually_hint')),
                       )
                     : null,
               ),
