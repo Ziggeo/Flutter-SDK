@@ -310,10 +310,6 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 fireCallback("recordingProgress", secondsPast)
             }
 
-            override fun onPictureTaken(path: String) {
-                fireCallback("onPictureTaken", path)
-            }
-
             override fun streamingStopped() {
                 fireCallback("streamingStopped")
             }
