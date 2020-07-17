@@ -14,9 +14,7 @@ import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return new _AppDrawerState();
-  }
+  State<StatefulWidget> createState() => _AppDrawerState();
 }
 
 class _AppDrawerState extends State<AppDrawer> {
