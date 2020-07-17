@@ -96,7 +96,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => RecordingDetailsScreen()),
+                    builder: (context) => RecordingDetailsScreen(item)),
               )
             },
         child: SizedBox(
