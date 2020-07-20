@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/routes.dart';
 import 'package:ziggeo_example/screens/about.dart';
+import 'package:ziggeo_example/screens/auth.dart';
 import 'package:ziggeo_example/screens/available_sdks.dart';
 import 'package:ziggeo_example/screens/contact_us.dart';
 import 'package:ziggeo_example/screens/recordings/recordings.dart';
@@ -80,10 +82,12 @@ class _AppDrawerState extends State<AppDrawer> {
                       children: <Widget>[
                         TextLocalized("title_app_token",
                             style: TextStyle(color: Colors.white)),
-                        Icon(
-                          Icons.exit_to_app,
-                          color: Colors.white,
-                        )
+                        IconButton(
+                            onPressed: () => showLogoutPopup(),
+                            icon: Icon(
+                              Icons.exit_to_app,
+                              color: Colors.white,
+                            )),
                       ],
                     ),
                     Container(
@@ -112,6 +116,39 @@ class _AppDrawerState extends State<AppDrawer> {
   selectRoute(DrawerState state, String routeName) {
     state.selectRoute(routeName);
     Navigator.pop(context);
+  }
+
+  showLogoutPopup() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            content: TextLocalized('logout_message'),
+            actions: <Widget>[
+              FlatButton(
+                child: TextLocalized('common_no'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: TextLocalized('common_yes'),
+                onPressed: () {
+                  logout();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    Navigator.of(context).pop();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => AuthScreen()));
   }
 }
 

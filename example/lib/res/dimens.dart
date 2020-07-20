@@ -19,7 +19,7 @@ const auth_controls_margin_top = 90.0;
 
 /// Drawer
 const drawer_width = 250.0;
-const drawer_height = 100.0;
+const drawer_height = 130.0;
 const drawer_menu_margin = 24.0;
 
 /// Recordings screen
