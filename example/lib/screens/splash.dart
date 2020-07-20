@@ -12,12 +12,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Future checkIsLoggedIn() async {
     var prefs = await SharedPreferences.getInstance();
-    if (prefs.getString(Utils.keyAppToken).isNotEmpty) {
+    var appToken = prefs.getString(Utils.keyAppToken);
+    if (appToken?.isNotEmpty ?? false) {
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => MainScreen()));
+          MaterialPageRoute(builder: (context) => MainScreen()));
     } else {
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => AuthScreen()));
+          MaterialPageRoute(builder: (context) => AuthScreen()));
     }
   }
 

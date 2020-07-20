@@ -106,49 +106,47 @@ class _AppDrawerState extends State<AppDrawer> {
 }
 
 class DrawerState with ChangeNotifier {
-  String _selectedRouteTitle;
   StatefulWidget _selectedRoute;
-
-  DrawerState() {
-    // route by default
-    selectRoute(Routes.recordings);
-  }
-
-  String get selectedRouteTitle => _selectedRouteTitle;
+  String selectedRouteTitle;
 
   selectRoute(String value) {
     switch (value) {
       case Routes.video_editor:
-        _selectedRouteTitle = 'item_video_editor';
+        selectedRouteTitle = 'item_video_editor';
         _selectedRoute = VideoEditorScreen();
         break;
       case Routes.settings:
-        _selectedRouteTitle = 'item_settings';
+        selectedRouteTitle = 'item_settings';
         _selectedRoute = SettingsScreen();
         break;
       case Routes.sdks:
-        _selectedRouteTitle = 'item_sdks';
+        selectedRouteTitle = 'item_sdks';
         _selectedRoute = AvailableSdksScreen();
         break;
       case Routes.clients:
-        _selectedRouteTitle = 'item_clients';
+        selectedRouteTitle = 'item_clients';
         _selectedRoute = TopClientsScreen();
         break;
       case Routes.contact:
-        _selectedRouteTitle = 'item_contact';
+        selectedRouteTitle = 'item_contact';
         _selectedRoute = ContactUsScreen();
         break;
       case Routes.about:
-        _selectedRouteTitle = 'item_about';
+        selectedRouteTitle = 'item_about';
         _selectedRoute = AboutScreen();
         break;
       case Routes.recordings:
       default:
-        _selectedRouteTitle = 'item_recordings';
+        selectedRouteTitle = 'item_recordings';
         _selectedRoute = RecordingsScreen();
     }
     notifyListeners();
   }
 
-  StatefulWidget get selectedRoute => _selectedRoute;
+  StatefulWidget get selectedRoute {
+    if (_selectedRoute == null) {
+      selectRoute(Routes.recordings);
+    }
+    return _selectedRoute;
+  }
 }

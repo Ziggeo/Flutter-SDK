@@ -24,8 +24,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   _AuthScreenState() {
     _ziggeo = Ziggeo(_inputToken);
-    _ziggeo.qrScannerConfig = new QrScannerConfig();
-    _ziggeo.qrScannerConfig.eventsListener = new QrScannerEventListener(
+    _ziggeo.qrScannerConfig = QrScannerConfig();
+    _ziggeo.qrScannerConfig.eventsListener = QrScannerEventListener(
       onDecoded: (value) => {this.navigateToMainScreen(value)},
     );
   }
@@ -50,8 +50,8 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   navigateToMainScreen(String value) {
-    Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) =>MainScreen()));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => MainScreen()));
   }
 
   @override
