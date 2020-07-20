@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var appToken = prefs.getString(Utils.keyAppToken);
     if (appToken?.isNotEmpty ?? false) {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => MainScreen()));
+          MaterialPageRoute(builder: (context) => MainScreen(appToken)));
     } else {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => AuthScreen()));

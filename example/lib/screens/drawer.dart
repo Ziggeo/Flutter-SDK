@@ -13,15 +13,22 @@ import 'package:ziggeo_example/screens/video_editor.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class AppDrawer extends StatefulWidget {
+  final String appToken;
+
+  AppDrawer(this.appToken);
+
   @override
-  State<StatefulWidget> createState() => _AppDrawerState();
+  State<StatefulWidget> createState() => _AppDrawerState(appToken);
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  String appToken;
+
+  _AppDrawerState(this.appToken);
+
   @override
   Widget build(BuildContext context) {
     var drawerState = Provider.of<DrawerState>(context);
-
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -79,11 +86,14 @@ class _AppDrawerState extends State<AppDrawer> {
                         )
                       ],
                     ),
-                    Text(
-                      "",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.white),
-                    )
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        appToken,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ]),
             )));
   }
