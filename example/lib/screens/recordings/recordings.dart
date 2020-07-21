@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/recording_details.dart';
 import 'package:ziggeo_example/screens/recordings/recording_model.dart';
-import 'package:ziggeo_example/utils.dart';
+import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class RecordingsScreen extends StatefulWidget {
@@ -32,7 +31,6 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   @override
   void initState() {
     super.initState();
-    initZiggeo();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -43,12 +41,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     return Scaffold(
       body: RefreshIndicator(
         key: refreshIndicatorKey,
-        onRefresh: () {
-          if (ziggeo != null) {
-            this.fetchRecordings();
-          }
-          return null;
-        },
+        onRefresh: () => this.init(),
         child: recordings != null && recordings.length >= 0
             ? ListView(
                 children: getListChildren(),
@@ -117,26 +110,21 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     ziggeo.uploadFromFileSelector(null);
   }
 
-  initZiggeo() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
+  init() async {
+    if (ziggeo == null) {
+      final prefs = await SharedPreferences.getInstance();
       ziggeo = Ziggeo(prefs.getString(Utils.keyAppToken));
-    });
-  }
+    }
 
-  Future<Null> fetchRecordings() async {
-    ziggeo.videos.index(null).then((value) {
-      setState(() {
-        List<dynamic> data = json.decode(value).cast<Map<String, dynamic>>();
-        recordings = data
-            .map<RecordingModel>((json) => RecordingModel.fromJson(json))
-            .toList();
-      });
-    }, onError: (error) {
-      print(error);
-    });
+    var recordings = await ziggeo.videos.index(null).then((value) => json
+        .decode(value)
+        .cast<Map<String, dynamic>>()
+        .map<RecordingModel>((json) => RecordingModel.fromJson(json))
+        .toList());
 
-    return null;
+    setState(() {
+      this.recordings = recordings;
+    });
   }
 
   getListChildren() {
@@ -159,8 +147,8 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => RecordingDetailsScreen(item)),
-              )
+                    builder: (context) => RecordingDetailsScreen(ziggeo, item)),
+              ).then((value) => refreshIndicatorKey.currentState?.show())
             },
         child: SizedBox(
             height: recording_item_height,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo_example/screens/auth.dart';
 import 'package:ziggeo_example/screens/main_flow_container.dart';
-import 'package:ziggeo_example/utils.dart';
+import 'package:ziggeo_example/utils/utils.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

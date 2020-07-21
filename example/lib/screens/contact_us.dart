@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ziggeo_example/res/dimens.dart';
-import 'package:ziggeo_example/utils.dart';
+import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class ContactUsScreen extends StatefulWidget {

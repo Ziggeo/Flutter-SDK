@@ -6,7 +6,7 @@ import 'package:ziggeo/qr/qr_scanner_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/main_flow_container.dart';
-import 'package:ziggeo_example/utils.dart';
+import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 import '../localization.dart';

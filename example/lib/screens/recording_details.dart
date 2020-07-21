@@ -1,57 +1,87 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/recordings/recording_model.dart';
-import 'package:ziggeo_example/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class RecordingDetailsScreen extends StatefulWidget {
   static const String routeName = '/recording-details';
   final RecordingModel recordingModel;
+  final Ziggeo ziggeo;
 
-  RecordingDetailsScreen(this.recordingModel);
+  RecordingDetailsScreen(this.ziggeo, this.recordingModel);
 
   @override
   _RecordingDetailsState createState() =>
-      _RecordingDetailsState(recordingModel);
+      _RecordingDetailsState(ziggeo, recordingModel);
 }
 
 class _RecordingDetailsState extends State<RecordingDetailsScreen> {
-  final RecordingModel recordingModel;
+  final Ziggeo ziggeo;
+  RecordingModel recordingModel;
   bool isInEditMode = false;
+  bool isLoading = false;
   String previewPath;
   AppLocalizations localize = AppLocalizations.instance;
-  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
-  _RecordingDetailsState(this.recordingModel);
+  _RecordingDetailsState(this.ziggeo, this.recordingModel);
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshIndicatorKey.currentState?.show();
+    fetchPreview();
+  }
+
+  fetchPreview() async {
+    setState(() {
+      isLoading = true;
+    });
+    ziggeo.videos.getImageUrl(recordingModel.token).then((value) {
+      setState(() {
+        previewPath = value;
+        isLoading = false;
+      });
+    }, onError: (error) => handleError(error));
+  }
+
+  onSavedBtnPressed() {
+    setState(() {
+      isLoading = true;
+    });
+    ziggeo.videos.update(recordingModel.toJson()).then((value) {
+      setState(() {
+        isLoading = false;
+        recordingModel = RecordingModel.fromJson(json.decode(value));
+        isInEditMode = false;
+      });
+    }, onError: (error) => handleError(error));
+  }
+
+  onDeleteBtnPressed() {
+    setState(() {
+      isLoading = true;
+    });
+    ziggeo.videos.destroy(recordingModel.token).then(
+        (value) => Navigator.of(context).pop(),
+        onError: (error) => handleError(error));
+  }
+
+  onEditBtnPressed() {
+    setState(() {
+      isInEditMode = true;
     });
   }
 
-  Future<Null> fetchPreview() async {
-    final prefs = await SharedPreferences.getInstance();
-    await Ziggeo(prefs.getString(Utils.keyAppToken))
-        .videos
-        .getImageUrl(recordingModel.token)
-        .then((value) {
-      setState(() {
-        previewPath = value;
-      });
-    }, onError: (error) {
-      print(error);
+  handleError(error) {
+    print(error);
+    setState(() {
+      isLoading = false;
     });
-
-    return null;
   }
 
   @override
@@ -78,29 +108,24 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
               ? <Widget>[
                   IconButton(
                     icon: Icon(Icons.save),
-                    onPressed: () {},
+                    onPressed: () => onSavedBtnPressed(),
                   )
                 ]
               : <Widget>[
                   IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () {
-                      setState(() {
-                        isInEditMode = true;
-                      });
-                    },
+                    onPressed: () => onEditBtnPressed(),
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {},
+                    onPressed: () => onDeleteBtnPressed(),
                   )
                 ],
         ),
-        body: Padding(
-            padding: EdgeInsets.all(common_margin),
-            child: RefreshIndicator(
-                key: refreshIndicatorKey,
-                onRefresh: () => this.fetchPreview(),
+        body: LoadingOverlay(
+            isLoading: isLoading,
+            child: Padding(
+                padding: EdgeInsets.all(common_margin),
                 child: Column(
                   children: <Widget>[
                     previewPath != null
@@ -124,6 +149,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                           labelText: localize.text('hint_token_or_key')),
                     ),
                     TextFormField(
+                      onChanged: (value) => recordingModel.title = value,
                       enabled: isInEditMode,
                       style:
                           !isInEditMode ? TextStyle(color: Colors.grey) : null,
@@ -132,6 +158,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                           labelText: localize.text('hint_title')),
                     ),
                     TextFormField(
+                      onChanged: (value) => recordingModel.description = value,
                       enabled: isInEditMode,
                       style:
                           !isInEditMode ? TextStyle(color: Colors.grey) : null,

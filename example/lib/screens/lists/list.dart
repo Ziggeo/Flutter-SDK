@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
-import 'package:ziggeo_example/utils.dart';
+import 'package:ziggeo_example/utils/utils.dart';
 
 class InfoList extends StatelessWidget {
   final List<ListDataObject> data;

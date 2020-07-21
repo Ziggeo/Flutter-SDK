@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class RecordingModel {
   static const String status_empty = "EMPTY";
   static const String status_verified = "VERIFIED";
@@ -32,5 +34,17 @@ class RecordingModel {
       tags: json['tags']?.cast<String>(),
       created: json['created'],
     );
+  }
+
+  String toJson() {
+    Map<String, dynamic> map = Map();
+    map['token'] = token;
+    map['key'] = key;
+    map['state_string'] = state;
+    map['title'] = title;
+    map['description'] = description;
+    map['tags'] = tags;
+    map['created'] = created;
+    return jsonEncode(map);
   }
 }
