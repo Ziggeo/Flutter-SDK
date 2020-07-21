@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/ziggeo.dart';
+import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/recording_details.dart';
@@ -22,12 +24,15 @@ class RecordingsScreen extends StatefulWidget {
 
 class _RecordingsScreenState extends State<RecordingsScreen> {
   List<RecordingModel> recordings;
+  Ziggeo ziggeo;
+
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     super.initState();
+    initZiggeo();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -38,7 +43,12 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     return Scaffold(
       body: RefreshIndicator(
         key: refreshIndicatorKey,
-        onRefresh: () => this.fetchRecordings(),
+        onRefresh: () {
+          if (ziggeo != null) {
+            this.fetchRecordings();
+          }
+          return null;
+        },
         child: recordings != null && recordings.length >= 0
             ? ListView(
                 children: getListChildren(),
@@ -56,13 +66,66 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
                 ],
               ),
       ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(accent),
+        animationSpeed: 50,
+        children: [
+          SpeedDialChild(
+              backgroundColor: Color(accent),
+              child: Icon(Icons.videocam, color: Colors.white),
+              onTap: onStartCameraRecorderPressed),
+          SpeedDialChild(
+              backgroundColor: Color(accent),
+              child: Icon(Icons.desktop_windows, color: Colors.white),
+              onTap: onStartScreenRecorderPressed),
+          SpeedDialChild(
+              backgroundColor: Color(accent),
+              child: Icon(Icons.mic, color: Colors.white),
+              onTap: onStartAudioRecorderPressed),
+          SpeedDialChild(
+              backgroundColor: Color(accent),
+              child: Icon(Icons.image, color: Colors.white),
+              onTap: onStartImageCapturePressed),
+          SpeedDialChild(
+              backgroundColor: Color(accent),
+              child: Icon(Icons.folder, color: Colors.white),
+              onTap: onStartFileSelectorPressed),
+        ],
+      ),
     );
   }
 
-  Future<Null> fetchRecordings() async {
+  onStartCameraRecorderPressed() {
+    ziggeo.startCameraRecorder();
+  }
+
+  onStartScreenRecorderPressed() {
+    ziggeo.startScreenRecorder();
+  }
+
+  onStartAudioRecorderPressed() {
+    Utils.showToast(context, AppLocalizations.instance.text('coming_soon'));
+  }
+
+  onStartImageCapturePressed() {
+    Utils.showToast(context, AppLocalizations.instance.text('coming_soon'));
+  }
+
+  onStartFileSelectorPressed() {
+    ziggeo.uploadFromFileSelector(null);
+  }
+
+  initZiggeo() async {
     final prefs = await SharedPreferences.getInstance();
-    await Ziggeo(prefs.getString(Utils.keyAppToken)).videos.index(null).then(
-        (value) {
+    setState(() {
+      ziggeo = Ziggeo(prefs.getString(Utils.keyAppToken));
+    });
+  }
+
+  Future<Null> fetchRecordings() async {
+    ziggeo.videos.index(null).then((value) {
       setState(() {
         List<dynamic> data = json.decode(value).cast<Map<String, dynamic>>();
         recordings = data

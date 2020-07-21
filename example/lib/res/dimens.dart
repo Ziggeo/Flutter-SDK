@@ -41,3 +41,11 @@ const category_text_size = 20.0;
 
 /// Video Editor screen
 const btn_select_file_margin_top = 250.0;
+
+/// Toast
+const double toastPadding = 12.0;
+const double shadowOpacity = 0.2;
+const double spreadRadius = 5.0;
+const double blurRadius = 7.0;
+const double borderRadius = 12.0;
+const int duration = 1;
