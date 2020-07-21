@@ -37,25 +37,32 @@ class _AppDrawerState extends State<AppDrawer> {
         children: <Widget>[
           _createHeader(),
           _createDrawerItem(
+              isSelected: drawerState.selectedRouteName == Routes.recordings,
               text: 'item_recordings',
               onTap: () => {selectRoute(drawerState, Routes.recordings)}),
           _createDrawerItem(
+              isSelected: drawerState.selectedRouteName == Routes.video_editor,
               text: 'item_video_editor',
               onTap: () => {selectRoute(drawerState, Routes.video_editor)}),
           _createDrawerItem(
+              isSelected: drawerState.selectedRouteName == Routes.settings,
               text: 'item_settings',
               onTap: () => {selectRoute(drawerState, Routes.settings)}),
           Divider(),
           _createDrawerItem(
+              isSelected: drawerState.selectedRouteName == Routes.sdks,
               text: 'item_sdks',
               onTap: () => {selectRoute(drawerState, Routes.sdks)}),
           _createDrawerItem(
+              isSelected: drawerState.selectedRouteName == Routes.clients,
               text: 'item_clients',
               onTap: () => {selectRoute(drawerState, Routes.clients)}),
           _createDrawerItem(
+              isSelected: drawerState.selectedRouteName == Routes.contact,
               text: 'item_contact',
               onTap: () => {selectRoute(drawerState, Routes.contact)}),
           _createDrawerItem(
+              isSelected: drawerState.selectedRouteName == Routes.about,
               text: 'item_about',
               onTap: () => {selectRoute(drawerState, Routes.about)}),
         ],
@@ -103,12 +110,10 @@ class _AppDrawerState extends State<AppDrawer> {
   }
 
   Widget _createDrawerItem(
-      {IconData icon, String text, GestureTapCallback onTap}) {
+      {IconData icon, String text, GestureTapCallback onTap, bool isSelected}) {
     return ListTile(
-      title: TextLocalized(
-        text,
-        style: TextStyle(color: Color(secondaryText)),
-      ),
+      selected: isSelected,
+      title: TextLocalized(text),
       onTap: onTap,
     );
   }
@@ -147,13 +152,14 @@ class _AppDrawerState extends State<AppDrawer> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
     Navigator.of(context).pop();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => AuthScreen()));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => AuthScreen()));
   }
 }
 
 class DrawerState with ChangeNotifier {
   StatefulWidget selectedRoute;
+  String selectedRouteName;
   String selectedRouteTitle;
 
   DrawerState() {
@@ -164,31 +170,38 @@ class DrawerState with ChangeNotifier {
     switch (value) {
       case Routes.video_editor:
         selectedRouteTitle = 'item_video_editor';
+        selectedRouteName = VideoEditorScreen.routeName;
         selectedRoute = VideoEditorScreen();
         break;
       case Routes.settings:
         selectedRouteTitle = 'item_settings';
+        selectedRouteName = SettingsScreen.routeName;
         selectedRoute = SettingsScreen();
         break;
       case Routes.sdks:
         selectedRouteTitle = 'item_sdks';
+        selectedRouteName = AvailableSdksScreen.routeName;
         selectedRoute = AvailableSdksScreen();
         break;
       case Routes.clients:
         selectedRouteTitle = 'item_clients';
+        selectedRouteName = TopClientsScreen.routeName;
         selectedRoute = TopClientsScreen();
         break;
       case Routes.contact:
         selectedRouteTitle = 'item_contact';
+        selectedRouteName = ContactUsScreen.routeName;
         selectedRoute = ContactUsScreen();
         break;
       case Routes.about:
         selectedRouteTitle = 'item_about';
+        selectedRouteName = AboutScreen.routeName;
         selectedRoute = AboutScreen();
         break;
       case Routes.recordings:
       default:
         selectedRouteTitle = 'item_recordings';
+        selectedRouteName = RecordingsScreen.routeName;
         selectedRoute = RecordingsScreen();
     }
     notifyListeners();

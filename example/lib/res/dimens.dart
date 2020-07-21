@@ -10,12 +10,12 @@ const message_text_size = 18.0;
 
 /// Auth screen
 const logo_width = 250.0;
-const logo_margin_top = 50.0;
+const logo_margin_top = 100.0;
 const logo_margin_bottom = 40.0;
 const qr_input_height = 80.0;
 const btn_qr_width = 160.0;
 const btn_qr_height = 55.0;
-const auth_controls_margin_top = 90.0;
+const auth_controls_margin_top = 40.0;
 
 /// Drawer
 const drawer_width = 250.0;

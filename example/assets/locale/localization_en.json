@@ -23,7 +23,7 @@
   "logout_message": "Are you sure you want to log out?",
   "title_recordings": "Recordings",
   "err_check_indexing": "It's possible you've forgotten to allow index operation. Please, check app settings on the website.",
-  "message_recordings_list_empty": "There are no recordings.\nPress plus button to add some.",
+  "message_recordings_list_empty": "There are no recordings.\nPress menu button to add some.",
   "title_settings": "Settings",
   "title_sdks": "Available SDKs",
   "title_clients": "Top Clients",

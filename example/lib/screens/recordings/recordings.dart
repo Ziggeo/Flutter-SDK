@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +25,8 @@ class RecordingsScreen extends StatefulWidget {
 class _RecordingsScreenState extends State<RecordingsScreen> {
   List<RecordingModel> recordings;
   Ziggeo ziggeo;
+  ScrollController scrollController;
+  bool dialVisible = true;
 
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -33,6 +36,17 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
+    });
+    scrollController = ScrollController()
+      ..addListener(() {
+        setDialVisible(scrollController.position.userScrollDirection ==
+            ScrollDirection.forward);
+      });
+  }
+
+  void setDialVisible(bool value) {
+    setState(() {
+      dialVisible = value;
     });
   }
 
@@ -44,6 +58,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
         onRefresh: () => this.init(),
         child: recordings != null && recordings.length >= 0
             ? ListView(
+                controller: scrollController,
                 children: getListChildren(),
               )
             : Column(
@@ -60,6 +75,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
               ),
       ),
       floatingActionButton: SpeedDial(
+        visible: dialVisible,
         animatedIcon: AnimatedIcons.menu_close,
         animatedIconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(accent),
