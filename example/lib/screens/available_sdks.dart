@@ -17,29 +17,41 @@ class _AvailableSdksScreenState extends State<AvailableSdksScreen> {
   }
 
   final sdks = [
-    ListDataObject('https://github.com/Ziggeo/iOS-Client-SDK',
-        'assets/img/sdks/ic_objc.png'),
-    ListDataObject('https://github.com/Ziggeo/Swift-Client-SDK',
-        'assets/img/sdks/ic_swift.png'),
-    ListDataObject('https://github.com/Ziggeo/Android-Client-SDK',
-        'assets/img/sdks/ic_android.png'),
-    ListDataObject('https://github.com/Ziggeo/Xamarin-SDK-Demo',
-        'assets/img/sdks/ic_xamarin.png'),
-    ListDataObject('https://github.com/Ziggeo/ReactNativeDemo',
-        'assets/img/sdks/ic_reactnative.png'),
-    ListDataObject('https://github.com/Ziggeo/Flutter-SDK',
-        'assets/img/sdks/ic_flutter.png'),
     ListDataObject(
-        'https://github.com/Ziggeo/ZiggeoPhpSdk', 'assets/img/sdks/ic_php.png'),
-    ListDataObject('https://github.com/Ziggeo/ZiggeoPythonSdk',
-        'assets/img/sdks/ic_python.png'),
-    ListDataObject('https://github.com/Ziggeo/ZiggeoNodeSdk',
-        'assets/img/sdks/ic_nodejs.png'),
-    ListDataObject('https://github.com/Ziggeo/ZiggeoRubySdk',
-        'assets/img/sdks/ic_ruby.png'),
-    ListDataObject('https://github.com/Ziggeo/ZiggeoJavaSdk',
-        'assets/img/sdks/ic_java.png'),
-    ListDataObject('https://github.com/Ziggeo/ZiggeoCSharpSDK',
-        'assets/img/sdks/ic_csharp.png'),
+        url: 'https://github.com/Ziggeo/iOS-Client-SDK',
+        imagePath: 'assets/img/sdks/ic_objc.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/Swift-Client-SDK',
+        imagePath: 'assets/img/sdks/ic_swift.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/Android-Client-SDK',
+        imagePath: 'assets/img/sdks/ic_android.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/Xamarin-SDK-Demo',
+        imagePath: 'assets/img/sdks/ic_xamarin.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/ReactNativeDemo',
+        imagePath: 'assets/img/sdks/ic_reactnative.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/Flutter-SDK',
+        imagePath: 'assets/img/sdks/ic_flutter.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/ZiggeoPhpSdk',
+        imagePath: 'assets/img/sdks/ic_php.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/ZiggeoPythonSdk',
+        imagePath: 'assets/img/sdks/ic_python.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/ZiggeoNodeSdk',
+        imagePath: 'assets/img/sdks/ic_nodejs.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/ZiggeoRubySdk',
+        imagePath: 'assets/img/sdks/ic_ruby.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/ZiggeoJavaSdk',
+        imagePath: 'assets/img/sdks/ic_java.png'),
+    ListDataObject(
+        url: 'https://github.com/Ziggeo/ZiggeoCSharpSDK',
+        imagePath: 'assets/img/sdks/ic_csharp.png'),
   ];
 }

@@ -17,35 +17,51 @@ class _TopClientsScreenState extends State<TopClientsScreen> {
   }
 
   final clients = [
-    ListDataObject('https://sap.com', 'assets/img/clients/logo_sap.png'),
     ListDataObject(
-        'https://www.gofundme.com', 'assets/img/clients/logo_gofundme.png'),
+        url: 'https://sap.com', imagePath: 'assets/img/clients/logo_sap.png'),
     ListDataObject(
-        'https://www.post.ch/en', 'assets/img/clients/logo_swisspost.png'),
+        url: 'https://www.gofundme.com',
+        imagePath: 'assets/img/clients/logo_gofundme.png'),
     ListDataObject(
-        'https://www.virginatlantic.com', 'assets/img/clients/logo_virgin.png'),
+        url: 'https://www.post.ch/en',
+        imagePath: 'assets/img/clients/logo_swisspost.png'),
     ListDataObject(
-        'https://itslearning.com', 'assets/img/clients/logo_itslearning.png'),
-    ListDataObject('https://www.calliduscloud.com',
-        'assets/img/clients/logo_callidus.png'),
+        url: 'https://www.virginatlantic.com',
+        imagePath: 'assets/img/clients/logo_virgin.png'),
     ListDataObject(
-        'http://www.hireiqinc.com', 'assets/img/clients/logo_hireiq.png'),
+        url: 'https://itslearning.com',
+        imagePath: 'assets/img/clients/logo_itslearning.png'),
     ListDataObject(
-        'https://www.fiverr.com', 'assets/img/clients/logo_fiverr.png'),
+        url: 'https://www.calliduscloud.com',
+        imagePath: 'assets/img/clients/logo_callidus.png'),
     ListDataObject(
-        'https://circleup.com', 'assets/img/clients/logo_circleup.png'),
+        url: 'http://www.hireiqinc.com',
+        imagePath: 'assets/img/clients/logo_hireiq.png'),
     ListDataObject(
-        'https://us.youcruit.com', 'assets/img/clients/logo_youcruit.png'),
+        url: 'https://www.fiverr.com',
+        imagePath: 'assets/img/clients/logo_fiverr.png'),
     ListDataObject(
-        'https://www.netflix.com', 'assets/img/clients/logo_netflix.png'),
+        url: 'https://circleup.com',
+        imagePath: 'assets/img/clients/logo_circleup.png'),
     ListDataObject(
-        'https://spotify.com', 'assets/img/clients/logo_spotify.png'),
+        url: 'https://us.youcruit.com',
+        imagePath: 'assets/img/clients/logo_youcruit.png'),
     ListDataObject(
-        'http://www.stern.nyu.edu', 'assets/img/clients/logo_nyustern.png'),
+        url: 'https://www.netflix.com',
+        imagePath: 'assets/img/clients/logo_netflix.png'),
     ListDataObject(
-        'https://dubizzle.com', 'assets/img/clients/logo_dubizzle.png'),
-    ListDataObject('https://usv.com', 'assets/img/clients/logo_usv.png'),
-    ListDataObject('https://www.mavenclinic.com',
-        'assets/img/clients/logo_mavenclinic.png'),
+        url: 'https://spotify.com',
+        imagePath: 'assets/img/clients/logo_spotify.png'),
+    ListDataObject(
+        url: 'http://www.stern.nyu.edu',
+        imagePath: 'assets/img/clients/logo_nyustern.png'),
+    ListDataObject(
+        url: 'https://dubizzle.com',
+        imagePath: 'assets/img/clients/logo_dubizzle.png'),
+    ListDataObject(
+        url: 'https://usv.com', imagePath: 'assets/img/clients/logo_usv.png'),
+    ListDataObject(
+        url: 'https://www.mavenclinic.com',
+        imagePath: 'assets/img/clients/logo_mavenclinic.png'),
   ];
 }

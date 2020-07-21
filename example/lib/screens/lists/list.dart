@@ -16,8 +16,9 @@ class InfoList extends StatelessWidget {
 
   getListChildren() {
     return List.generate(data.length, (index) {
+      var item = data[index];
       return InkWell(
-          onTap: () => {Utils.openUrl(data[index].url)},
+          onTap: () => {Utils.openUrl(item.url)},
           child: SizedBox(
               height: clients_item_height,
               child: Card(
@@ -29,7 +30,7 @@ class InfoList extends StatelessWidget {
                             BlendMode.srcATop,
                           ),
                           child: Image.asset(
-                            data[index].imagePath,
+                            item.imagePath,
                             fit: BoxFit.contain,
                           ))))));
     });
@@ -40,5 +41,5 @@ class ListDataObject {
   String url;
   String imagePath;
 
-  ListDataObject(this.url, this.imagePath);
+  ListDataObject({this.url, this.imagePath});
 }
