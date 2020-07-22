@@ -31,6 +31,15 @@ class _ZiggeoDemoAppState extends State<ZiggeoDemoApp> {
           const Locale('en'),
         ],
         theme: ThemeData.light().copyWith(
+          textTheme: Theme.of(context)
+              .textTheme
+              .apply(fontFamily: 'Quicksand'),
+          primaryTextTheme: Theme.of(context)
+              .textTheme
+              .apply(fontFamily: 'Quicksand', bodyColor: Colors.white),
+          accentTextTheme: Theme.of(context)
+              .textTheme
+              .apply(fontFamily: 'Quicksand', bodyColor: Colors.white),
           primaryColor: Color(primary),
           primaryColorDark: Color(primaryDark),
           accentColor: Color(accent),

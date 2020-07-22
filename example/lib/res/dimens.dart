@@ -13,8 +13,8 @@ const logo_width = 250.0;
 const logo_margin_top = 100.0;
 const logo_margin_bottom = 40.0;
 const qr_input_height = 80.0;
-const btn_qr_width = 160.0;
-const btn_qr_height = 55.0;
+const btn_qr_width = 150.0;
+const btn_qr_height = 40.0;
 const auth_controls_margin_top = 40.0;
 
 /// Drawer

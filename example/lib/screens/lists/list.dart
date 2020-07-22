@@ -26,7 +26,7 @@ class InfoList extends StatelessWidget {
                       padding: EdgeInsets.all(common_margin),
                       child: ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Color(grayFilter),
+                            Color(iconGrayFilter),
                             BlendMode.srcATop,
                           ),
                           child: Image.asset(

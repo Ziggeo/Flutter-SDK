@@ -2,7 +2,7 @@ name: ziggeo_example
 description: Demonstrates how to use the ziggeo plugin.
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"
 
 dependencies:
@@ -35,3 +35,9 @@ flutter:
     - assets/img/
     - assets/img/clients/
     - assets/img/sdks/
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/quicksand_regular.ttf
+        - asset: assets/fonts/quicksand_bold.ttf
+          weight: 700

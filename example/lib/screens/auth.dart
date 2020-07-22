@@ -98,6 +98,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   SizedBox(
                       width: btn_qr_width,
+                      height: btn_qr_height,
                       child: RaisedButton(
                           onPressed: () => this.onQrActionPressed(),
                           child: TextLocalized(
@@ -105,15 +106,13 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ? 'btn_use_entered_text'
                                 : 'btn_scan_qr_text',
                           ))),
-                  SizedBox(
-                      width: btn_qr_width,
-                      child: FlatButton(
-                          onPressed: () => this.switchQrScannerMode(),
-                          child: TextLocalized(
-                            _enterQrManuallyMode
-                                ? 'use_scanner_text'
-                                : 'enter_qr_manually_text',
-                          ))),
+                  FlatButton(
+                      onPressed: () => this.switchQrScannerMode(),
+                      child: TextLocalized(
+                        _enterQrManuallyMode
+                            ? 'use_scanner_text'
+                            : 'enter_qr_manually_text',
+                      )),
                 ],
               ))),
         ));

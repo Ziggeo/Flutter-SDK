@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
@@ -87,6 +86,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomPadding: true,
         appBar: AppBar(
           leading: isInEditMode
               ? IconButton(
@@ -122,51 +122,70 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                   )
                 ],
         ),
-        body: LoadingOverlay(
-            isLoading: isLoading,
-            child: Padding(
-                padding: EdgeInsets.all(common_margin),
-                child: Column(
-                  children: <Widget>[
-                    previewPath != null
-                        ? Image.network(
-                            previewPath,
-                            height: preview_height,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          )
-                        : Container(
-                            color: Color(primary),
-                            height: preview_height,
-                            width: double.infinity,
-                          ),
-                    TextFormField(
-                      enabled: isInEditMode,
-                      initialValue: recordingModel.key ?? recordingModel.token,
-                      style:
-                          !isInEditMode ? TextStyle(color: Colors.grey) : null,
-                      decoration: InputDecoration(
-                          labelText: localize.text('hint_token_or_key')),
-                    ),
-                    TextFormField(
-                      onChanged: (value) => recordingModel.title = value,
-                      enabled: isInEditMode,
-                      style:
-                          !isInEditMode ? TextStyle(color: Colors.grey) : null,
-                      initialValue: recordingModel.title,
-                      decoration: InputDecoration(
-                          labelText: localize.text('hint_title')),
-                    ),
-                    TextFormField(
-                      onChanged: (value) => recordingModel.description = value,
-                      enabled: isInEditMode,
-                      style:
-                          !isInEditMode ? TextStyle(color: Colors.grey) : null,
-                      initialValue: recordingModel.description,
-                      decoration: InputDecoration(
-                          labelText: localize.text('hint_description')),
-                    )
-                  ],
-                ))));
+        body: Container(
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.all(common_margin),
+                  child: SingleChildScrollView(
+                      child: Column(
+                    children: <Widget>[
+                      previewPath != null
+                          ? Image.network(
+                              previewPath,
+                              height: preview_height,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(
+                              color: Color(primary),
+                              height: preview_height,
+                              width: double.infinity,
+                            ),
+                      TextFormField(
+                        enabled: isInEditMode,
+                        initialValue:
+                            recordingModel.key ?? recordingModel.token,
+                        style: !isInEditMode
+                            ? TextStyle(color: Colors.grey)
+                            : null,
+                        decoration: InputDecoration(
+                            labelText: localize.text('hint_token_or_key')),
+                      ),
+                      TextFormField(
+                        onChanged: (value) => recordingModel.title = value,
+                        enabled: isInEditMode,
+                        style: !isInEditMode
+                            ? TextStyle(color: Colors.grey)
+                            : null,
+                        initialValue: recordingModel.title,
+                        decoration: InputDecoration(
+                            labelText: localize.text('hint_title')),
+                      ),
+                      TextFormField(
+                        onChanged: (value) =>
+                            recordingModel.description = value,
+                        enabled: isInEditMode,
+                        style: !isInEditMode
+                            ? TextStyle(color: Colors.grey)
+                            : null,
+                        initialValue: recordingModel.description,
+                        decoration: InputDecoration(
+                            labelText: localize.text('hint_description')),
+                      )
+                    ],
+                  ))),
+              if (isLoading)
+                Container(
+                  color: Color(progressIndicatorGrayFilter),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            ],
+          ),
+        ));
   }
 }
