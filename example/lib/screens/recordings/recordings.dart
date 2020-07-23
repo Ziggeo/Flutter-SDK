@@ -6,17 +6,19 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ziggeo/file_selector/file_selector_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/recording_details.dart';
 import 'package:ziggeo_example/screens/recordings/recording_model.dart';
+import 'package:ziggeo_example/utils/logger.dart';
 import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class RecordingsScreen extends StatefulWidget {
-  static const String routeName = '/recordings';
+  static const String routeName = 'title_recordings';
 
   @override
   _RecordingsScreenState createState() => _RecordingsScreenState();
@@ -27,6 +29,8 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   Ziggeo ziggeo;
   ScrollController scrollController;
   bool dialVisible = true;
+  final AppLocalizations localize = AppLocalizations.instance;
+  final List<LogModel> logBuffer = Logger.buffer;
 
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
@@ -130,6 +134,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     if (ziggeo == null) {
       final prefs = await SharedPreferences.getInstance();
       ziggeo = Ziggeo(prefs.getString(Utils.keyAppToken));
+      initCallbacks();
     }
 
     var recordings = await ziggeo.videos.index(null).then((value) => json
@@ -228,5 +233,37 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       default:
         return Color(secondaryText);
     }
+  }
+
+  initCallbacks() {
+    initFileSelectorCallback();
+    initPlayerCallback();
+    initRecorderCallback();
+    initUploaderCallback();
+  }
+
+  initFileSelectorCallback() {
+    ziggeo.fileSelectorConfig.eventsListener = FileSelectorEventsListener(
+      onUploadSelected: (pathsList) =>
+          addLogEvent('ev_fs_uploadSelected', details: pathsList.toString()),
+      onLoaded: () => addLogEvent('ev_fs_loaded'),
+      onCanceledByUser: () => addLogEvent('ev_fs_canceledByUser'),
+      onAccessForbidden: (permissions) =>
+          addLogEvent('ev_fs_accessForbidden', details: permissions.toString()),
+      onAccessGranted: () => addLogEvent('ev_fs_accessGranted'),
+      onError: (exception) =>
+          addLogEvent('ev_fs_error', details: exception.toString()),
+    );
+  }
+
+  initPlayerCallback() {
+  }
+
+  initRecorderCallback() {}
+
+  initUploaderCallback() {}
+
+  addLogEvent(String nameTag, {String details}) {
+    logBuffer.add(LogModel(name: localize.text(nameTag), details: details));
   }
 }

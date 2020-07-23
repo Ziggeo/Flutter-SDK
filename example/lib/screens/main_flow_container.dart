@@ -4,7 +4,6 @@ import 'package:ziggeo_example/screens/drawer.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class MainScreen extends StatefulWidget {
-  static const String routeName = '/recordings';
 
   final String appToken;
 
@@ -25,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
         drawer: AppDrawer(appToken),
         appBar: AppBar(
-          title: TextLocalized(drawerState.selectedRouteTitle),
+          title: TextLocalized(drawerState.selectedRouteName),
         ),
         body: SafeArea(child: drawerState.selectedRoute));
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class VideoEditorScreen extends StatefulWidget {
-  static const String routeName = '/video-editor';
+  static const String routeName = 'title_video_editor';
 
   @override
   _VideoEditorScreenState createState() => _VideoEditorScreenState();

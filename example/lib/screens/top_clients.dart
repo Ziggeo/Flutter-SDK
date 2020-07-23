@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ziggeo_example/screens/lists/list.dart';
 
 class TopClientsScreen extends StatefulWidget {
-  static const String routeName = '/clients';
+  static const String routeName = 'title_clients';
 
   @override
   _TopClientsScreenState createState() => _TopClientsScreenState();

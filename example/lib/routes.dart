@@ -1,5 +1,6 @@
 import 'package:ziggeo_example/screens/available_sdks.dart';
 import 'package:ziggeo_example/screens/contact_us.dart';
+import 'package:ziggeo_example/screens/log.dart';
 import 'package:ziggeo_example/screens/recordings/recordings.dart';
 import 'package:ziggeo_example/screens/settings.dart';
 import 'package:ziggeo_example/screens/top_clients.dart';
@@ -15,4 +16,5 @@ class Routes {
   static const String clients = TopClientsScreen.routeName;
   static const String contact = ContactUsScreen.routeName;
   static const String about = AboutScreen.routeName;
+  static const String log = LogScreen.routeName;
 }

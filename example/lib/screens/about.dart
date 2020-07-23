@@ -7,7 +7,7 @@ import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class AboutScreen extends StatefulWidget {
-  static const String routeName = '/about';
+  static const String routeName = 'title_about';
 
   @override
   _AboutScreenState createState() => _AboutScreenState();

@@ -42,6 +42,9 @@ const category_text_size = 20.0;
 /// Video Editor screen
 const btn_select_file_margin_top = 250.0;
 
+/// Video Editor screen
+const btn_report_height = 50.0;
+
 /// Toast
 const double toastPadding = 12.0;
 const double shadowOpacity = 0.2;

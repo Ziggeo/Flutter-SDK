@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ziggeo_example/screens/lists/list.dart';
 
 class AvailableSdksScreen extends StatefulWidget {
-  static const String routeName = '/sdks';
+  static const String routeName = 'title_sdks';
 
   @override
   _AvailableSdksScreenState createState() => _AvailableSdksScreenState();

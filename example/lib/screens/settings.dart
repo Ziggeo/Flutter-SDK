@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class SettingsScreen extends StatefulWidget {
-  static const String routeName = '/settings';
+  static const String routeName = 'title_settings';
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();

@@ -4,7 +4,7 @@ import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class ContactUsScreen extends StatefulWidget {
-  static const String routeName = '/contact-us';
+  static const String routeName = 'title_contact';
 
   @override
   _ContactUsScreenState createState() => _ContactUsScreenState();

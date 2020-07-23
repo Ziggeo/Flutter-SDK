@@ -9,7 +9,7 @@ import 'package:ziggeo_example/screens/recordings/recording_model.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class RecordingDetailsScreen extends StatefulWidget {
-  static const String routeName = '/recording-details';
+  static const String routeName = 'title_details';
   final RecordingModel recordingModel;
   final Ziggeo ziggeo;
 
@@ -103,7 +103,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                     Navigator.pop(context);
                   },
                 ),
-          title: TextLocalized('title_details'),
+          title: TextLocalized(RecordingDetailsScreen.routeName),
           actions: isInEditMode
               ? <Widget>[
                   IconButton(
