@@ -2,10 +2,13 @@ package com.ziggeo.flutterplugin
 
 import android.net.Uri
 import android.os.Handler
+import android.os.Looper
 import com.ziggeo.androidsdk.IZiggeo
 import com.ziggeo.androidsdk.callbacks.FileSelectorCallback
+import com.ziggeo.androidsdk.callbacks.PlayerCallback
 import com.ziggeo.androidsdk.callbacks.RecorderCallback
 import com.ziggeo.androidsdk.callbacks.UploadingCallback
+import com.ziggeo.androidsdk.log.ZLog
 import com.ziggeo.androidsdk.qr.QrScannerCallback
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
 import io.flutter.plugin.common.MethodCall
@@ -14,7 +17,11 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import java.io.File
 
 class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
-                              private val recorderCallbackChannel: MethodChannel,
+                              private val recCallbackChannel: MethodChannel,
+                              private val fsCallbackChannel: MethodChannel,
+                              private val uplCallbackChannel: MethodChannel,
+                              private val plCallbackChannel: MethodChannel,
+                              private val qrCallbackChannel: MethodChannel,
                               private val mainThread: Handler
 ) : MethodCallHandler {
 
@@ -29,11 +36,11 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
             }
             "getAppToken" -> result.success(ziggeo.appToken)
             "setClientAuthToken" -> call.argument<String>("clientAuthToken")?.let {
-                ziggeo.setClientAuthToken(it)
+                ziggeo.clientAuthToken = it
             }
             "getClientAuthToken" -> result.success(ziggeo.clientAuthToken)
             "setServerAuthToken" -> call.argument<String>("serverAuthToken")?.let {
-                ziggeo.setClientAuthToken(it)
+                ziggeo.clientAuthToken = it
             }
             "getServerAuthToken" -> result.success(ziggeo.serverAuthToken)
             "startCameraRecorder" -> {
@@ -139,81 +146,95 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
     }
 
     private fun prepareCallbacks() {
+        prepareQrCallback()
+        prepareFsCallback()
+        prepareUplCallback()
+        preparePlCallback()
+        prepareRecCallback()
+    }
+
+    private fun prepareQrCallback() {
         ziggeo.qrScannerConfig.callback = object : QrScannerCallback() {
             override fun loaded() {
-                fireCallback("loaded")
+                fireQrCallback("loaded")
             }
 
             override fun accessGranted() {
-                fireCallback("accessGranted")
+                fireQrCallback("accessGranted")
             }
 
             override fun accessForbidden(forbiddenPermissions: MutableList<String>) {
-                fireCallback("accessForbidden", forbiddenPermissions)
+                fireQrCallback("accessForbidden", forbiddenPermissions)
             }
 
             override fun error(exception: Throwable) {
-                fireCallback("error", exception.toString())
+                fireQrCallback("error", exception.toString())
             }
 
             override fun onQrDecoded(value: String) {
                 super.onQrDecoded(value)
-                fireCallback("ц", value)
+                fireQrCallback("onQrDecoded", value)
             }
 
             override fun canceledByUser() {
                 super.canceledByUser()
-                fireCallback("canceledByUser")
+                fireQrCallback("canceledByUser")
             }
 
             override fun noCamera() {
                 super.noCamera()
-                fireCallback("noCamera")
+                fireQrCallback("noCamera")
             }
 
             override fun noMicrophone() {
                 super.noMicrophone()
-                fireCallback("noMicrophone")
+                fireQrCallback("noMicrophone")
             }
 
             override fun hasCamera() {
                 super.hasCamera()
-                fireCallback("hasCamera")
+                fireQrCallback("hasCamera")
             }
 
             override fun hasMicrophone() {
                 super.hasMicrophone()
-                fireCallback("hasMicrophone")
+                fireQrCallback("hasMicrophone")
             }
         }
+    }
+
+    private fun prepareFsCallback() {
         ziggeo.fileSelectorConfig.callback = object : FileSelectorCallback() {
             override fun loaded() {
-                fireCallback("loaded")
+                fireFsCallback("loaded")
             }
 
             override fun accessGranted() {
-                fireCallback("accessGranted")
+                fireFsCallback("accessGranted")
             }
 
             override fun accessForbidden(forbiddenPermissions: MutableList<String>) {
-                fireCallback("accessForbidden", forbiddenPermissions)
+                fireFsCallback("accessForbidden", forbiddenPermissions)
             }
 
             override fun error(exception: Throwable) {
-                fireCallback("error", exception.toString())
+                fireFsCallback("error", exception.toString())
             }
 
             override fun canceledByUser() {
-                fireCallback("canceledByUser")
+                fireFsCallback("canceledByUser")
             }
 
             override fun uploadSelected(paths: MutableList<String>) {
-                fireCallback("uploadSelected", paths)
+                fireFsCallback("uploadSelected", paths)
             }
         }
+    }
+
+    private fun prepareUplCallback() {
         ziggeo.uploadingConfig.callback = object : UploadingCallback() {
             override fun processing(token: String) {
-                fireCallback("processing", token)
+                fireUplCallback("processing", token)
             }
 
             override fun uploadProgress(token: String, file: File, current: Long, total: Long) {
@@ -222,111 +243,181 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 args["path"] = file.absolutePath
                 args["current"] = current
                 args["total"] = total
-                fireCallback("uploadProgress", args)
+                fireUplCallback("uploadProgress", args)
             }
 
             override fun processed(token: String) {
-                fireCallback("processed", token)
+                fireUplCallback("processed", token)
             }
 
             override fun verified(token: String) {
-                fireCallback("verified", token)
+                fireUplCallback("verified", token)
             }
 
             override fun uploadingStarted(path: String) {
-                fireCallback("uploadingStarted", path)
+                fireUplCallback("uploadingStarted", path)
             }
 
             override fun uploaded(path: String, token: String) {
                 val args: MutableMap<String, Any> = HashMap()
                 args["token"] = token
                 args["path"] = path
-                fireCallback("uploaded", args)
+                fireUplCallback("uploaded", args)
             }
 
             override fun error(exception: Throwable) {
-                fireCallback("error", exception.toString())
-            }
-        }
-
-        ziggeo.recorderConfig.callback = object : RecorderCallback() {
-            override fun noMicrophone() {
-                fireCallback("noMicrophone")
-            }
-
-            override fun hasMicrophone() {
-                fireCallback("hasMicrophone")
-            }
-
-            override fun hasCamera() {
-                fireCallback("hasCamera")
-            }
-
-            override fun microphoneHealth(level: MicSoundLevel) {
-                fireCallback("microphoneHealth", level.name)
-            }
-
-            override fun loaded() {
-                fireCallback("loaded")
-            }
-
-            override fun accessGranted() {
-                fireCallback("accessGranted")
-            }
-
-            override fun accessForbidden(forbiddenPermissions: MutableList<String>) {
-                fireCallback("accessForbidden", forbiddenPermissions)
-            }
-
-            override fun error(exception: Throwable) {
-                fireCallback("error", exception.toString())
-            }
-
-            override fun canceledByUser() {
-                fireCallback("canceledByUser")
-            }
-
-            override fun noCamera() {
-                fireCallback("noCamera")
-            }
-
-            override fun streamingStarted() {
-                fireCallback("streamingStarted")
-            }
-
-            override fun recordingStopped(path: String) {
-                fireCallback("recordingStopped", path)
-            }
-
-            override fun readyToRecord() {
-                fireCallback("readyToRecord")
-            }
-
-            override fun recordingStarted() {
-                fireCallback("recordingStarted")
-            }
-
-            override fun recordingProgress(secondsPast: Long) {
-                fireCallback("recordingProgress", secondsPast)
-            }
-
-            override fun streamingStopped() {
-                fireCallback("streamingStopped")
-            }
-
-            override fun manuallySubmitted() {
-                fireCallback("manuallySubmitted")
-            }
-
-            override fun countdown(secondsLeft: Int) {
-                fireCallback("countdown", secondsLeft)
+                fireUplCallback("error", exception.toString())
             }
         }
     }
 
-    private fun fireCallback(methodName: String, args: Any? = null) {
+    private fun preparePlCallback() {
+        ziggeo.playerConfig.callback = object : PlayerCallback() {
+            override fun loaded() {
+                firePlCallback("loaded")
+            }
+
+            override fun accessGranted() {
+                firePlCallback("accessGranted")
+            }
+
+            override fun accessForbidden(forbiddenPermissions: MutableList<String>) {
+                firePlCallback("accessForbidden", forbiddenPermissions)
+            }
+
+            override fun error(exception: Throwable) {
+                firePlCallback("error", exception.toString())
+            }
+
+            override fun canceledByUser() {
+                firePlCallback("canceledByUser")
+            }
+
+            override fun playing() {
+                firePlCallback("playing")
+            }
+
+            override fun paused() {
+                firePlCallback("paused")
+            }
+
+            override fun ended() {
+                firePlCallback("ended")
+            }
+
+            override fun seek(millis: Long) {
+                firePlCallback("seek", millis)
+            }
+
+            override fun readyToPlay() {
+                firePlCallback("readyToPlay")
+            }
+        }
+    }
+
+    private fun prepareRecCallback() {
+        ziggeo.recorderConfig.callback = object : RecorderCallback() {
+            override fun noMicrophone() {
+                fireRecCallback("noMicrophone")
+            }
+
+            override fun hasMicrophone() {
+                fireRecCallback("hasMicrophone")
+            }
+
+            override fun hasCamera() {
+                fireRecCallback("hasCamera")
+            }
+
+            override fun microphoneHealth(level: MicSoundLevel) {
+                fireRecCallback("microphoneHealth", level.name)
+            }
+
+            override fun loaded() {
+                fireRecCallback("loaded")
+            }
+
+            override fun accessGranted() {
+                fireRecCallback("accessGranted")
+            }
+
+            override fun accessForbidden(forbiddenPermissions: MutableList<String>) {
+                fireRecCallback("accessForbidden", forbiddenPermissions)
+            }
+
+            override fun error(exception: Throwable) {
+                fireRecCallback("error", exception.toString())
+            }
+
+            override fun canceledByUser() {
+                fireRecCallback("canceledByUser")
+            }
+
+            override fun noCamera() {
+                fireRecCallback("noCamera")
+            }
+
+            override fun streamingStarted() {
+                fireRecCallback("streamingStarted")
+            }
+
+            override fun recordingStopped(path: String) {
+                fireRecCallback("recordingStopped", path)
+            }
+
+            override fun readyToRecord() {
+                fireRecCallback("readyToRecord")
+            }
+
+            override fun recordingStarted() {
+                fireRecCallback("recordingStarted")
+            }
+
+            override fun recordingProgress(secondsPast: Long) {
+                fireRecCallback("recordingProgress", secondsPast)
+            }
+
+            override fun streamingStopped() {
+                fireRecCallback("streamingStopped")
+            }
+
+            override fun manuallySubmitted() {
+                fireRecCallback("manuallySubmitted")
+            }
+
+            override fun countdown(secondsLeft: Int) {
+                fireRecCallback("countdown", secondsLeft)
+            }
+        }
+    }
+
+    private fun fireRecCallback(methodName: String, args: Any? = null) {
         mainThread.post {
-            recorderCallbackChannel.invokeMethod(methodName, args)
+            recCallbackChannel.invokeMethod(methodName, args)
+        }
+    }
+
+    private fun fireFsCallback(methodName: String, args: Any? = null) {
+        mainThread.post {
+            fsCallbackChannel.invokeMethod(methodName, args)
+        }
+    }
+
+    private fun firePlCallback(methodName: String, args: Any? = null) {
+        mainThread.post {
+            plCallbackChannel.invokeMethod(methodName, args)
+        }
+    }
+
+    private fun fireUplCallback(methodName: String, args: Any? = null) {
+        mainThread.post {
+            uplCallbackChannel.invokeMethod(methodName, args)
+        }
+    }
+
+    private fun fireQrCallback(methodName: String, args: Any? = null) {
+        mainThread.post {
+            qrCallbackChannel.invokeMethod(methodName, args)
         }
     }
 

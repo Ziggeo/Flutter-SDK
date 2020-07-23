@@ -37,11 +37,10 @@ class _LogScreenState extends State<LogScreen> {
                           EdgeInsets.only(top: list_empty_message_margin_top),
                       child: TextLocalized('message_log_empty'))
                   : Container(
-                      margin:
-                          EdgeInsets.only(top: list_empty_message_margin_top),
                       child: ListView.builder(
-                        itemBuilder: (context, index) => getListItem(index),
-                      ))),
+                      itemCount: logs.length,
+                      itemBuilder: (context, index) => getListItem(index),
+                    ))),
           Align(
             alignment: Alignment.bottomCenter,
             child: RaisedButton(

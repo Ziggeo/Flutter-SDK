@@ -15,12 +15,20 @@ class ZiggeoPlugin {
         fun registerWith(registrar: Registrar) {
             val ziggeoMainChannel = MethodChannel(registrar.messenger(), "ziggeo")
             val videosApiChannel = MethodChannel(registrar.messenger(), "ziggeo_videos")
-            val recorderCallbackChannel = MethodChannel(registrar.messenger(), "ziggeo_recorder")
+            val recCallbackChannel = MethodChannel(registrar.messenger(), "ziggeo_rec_callback")
+            val fsCallbackChannel = MethodChannel(registrar.messenger(), "ziggeo_fs_callback")
+            val uplCallbackChannel = MethodChannel(registrar.messenger(), "ziggeo_upl_callback")
+            val plCallbackChannel = MethodChannel(registrar.messenger(), "ziggeo_pl_callback")
+            val qrCallbackChannel = MethodChannel(registrar.messenger(), "ziggeo_qr_callback")
             val context = registrar.activeContext()!!
             val ziggeo = Ziggeo(context)
             ziggeoMainChannel.setMethodCallHandler(
                     ZiggeoMainMethodChannel(ziggeo,
-                            recorderCallbackChannel,
+                            recCallbackChannel,
+                            fsCallbackChannel,
+                            uplCallbackChannel,
+                            plCallbackChannel,
+                            qrCallbackChannel,
                             Handler(Looper.getMainLooper())
                     )
             )

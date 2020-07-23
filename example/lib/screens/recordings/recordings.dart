@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/file_selector/file_selector_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
@@ -243,6 +244,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initFileSelectorCallback() {
+    ziggeo.fileSelectorConfig = FileSelectorConfig();
     ziggeo.fileSelectorConfig.eventsListener = FileSelectorEventsListener(
       onUploadSelected: (pathsList) =>
           addLogEvent('ev_fs_uploadSelected', details: pathsList.toString()),
@@ -256,8 +258,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     );
   }
 
-  initPlayerCallback() {
-  }
+  initPlayerCallback() {}
 
   initRecorderCallback() {}
 
