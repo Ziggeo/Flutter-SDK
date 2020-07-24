@@ -2,15 +2,12 @@ package com.ziggeo.flutterplugin
 
 import android.net.Uri
 import android.os.Handler
-import android.os.Looper
 import com.ziggeo.androidsdk.IZiggeo
-import com.ziggeo.androidsdk.callbacks.FileSelectorCallback
-import com.ziggeo.androidsdk.callbacks.PlayerCallback
-import com.ziggeo.androidsdk.callbacks.RecorderCallback
-import com.ziggeo.androidsdk.callbacks.UploadingCallback
+import com.ziggeo.androidsdk.callbacks.*
 import com.ziggeo.androidsdk.log.ZLog
 import com.ziggeo.androidsdk.qr.QrScannerCallback
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
+import com.ziggeo.androidsdk.ui.theming.PlayerStyle
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -138,6 +135,17 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     val config = ziggeo.fileSelectorConfig
                     (it["maxDuration"] as? Int)?.let { value ->
                         config.maxDuration = value.toLong()
+                    }
+                }
+            }
+            "setPlayerConfig" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    val config = ziggeo.playerConfig
+                    (it["shouldShowSubtitles"] as? Boolean)?.let { value ->
+                        config.shouldShowSubtitles = value
+                    }
+                    (it["isMuted"] as? Boolean)?.let { value ->
+                        config.isMuted = value
                     }
                 }
             }

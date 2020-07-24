@@ -21,13 +21,13 @@ void main() {
 
   test('playerConfig_isMuted', () async {
     expect(playerConfig.convertToMap()["muted"], false);
-    playerConfig.muted = true;
+    playerConfig.isMuted = true;
     expect(playerConfig.convertToMap()["muted"], true);
   });
 
   test('playerConfig_showSubtitles', () async {
     expect(playerConfig.convertToMap()["showSubtitles"], false);
-    playerConfig.showSubtitles = true;
+    playerConfig.shouldShowSubtitles = true;
     expect(playerConfig.convertToMap()["showSubtitles"], true);
   });
 

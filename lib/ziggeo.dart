@@ -31,9 +31,17 @@ class Ziggeo {
   FileSelectorConfig _fileSelectorConfig;
   PlayerConfig _playerConfig;
 
-  FileSelectorConfig get fileSelectorConfig => _fileSelectorConfig;
-
   VideosApi get videos => _videosApi;
+
+  PlayerConfig get playerConfig => _playerConfig;
+
+  set playerConfig(PlayerConfig value) {
+    _playerConfig = value;
+    _ziggeoChannel.invokeMethod(
+        'setPlayerConfig', _playerConfig.convertToMap());
+  }
+
+  FileSelectorConfig get fileSelectorConfig => _fileSelectorConfig;
 
   set fileSelectorConfig(FileSelectorConfig value) {
     _fileSelectorConfig = value;
@@ -286,6 +294,9 @@ class Ziggeo {
           break;
         case 'readyToPlay':
           _playerConfig?.eventsListener?.onReadyToPlay();
+          break;
+        case 'playing':
+          _playerConfig?.eventsListener?.onPlaying();
           break;
         default:
           print(
