@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/utils/logger.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
@@ -35,7 +36,10 @@ class _LogScreenState extends State<LogScreen> {
                           EdgeInsets.only(top: list_empty_message_margin_top),
                       child: TextLocalized('message_log_empty'))
                   : Container(
-                      child: ListView.builder(
+                      child: ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return Divider();
+                      },
                       itemCount: logs.length,
                       itemBuilder: (context, index) => getListItem(index),
                     ))),
@@ -56,6 +60,8 @@ class _LogScreenState extends State<LogScreen> {
   Widget getListItem(index) {
     var item = logs[index];
     return Text(
-        "${item.name}${item.details == null ? "" : ". ${item.details}"}");
+        "[${DateFormat('dd.MM.yyyy_HH.mm.ss').format(DateTime.fromMillisecondsSinceEpoch(item.timestamp))}]"
+        " ${item.name}"
+        "${item.details != null ? ":${item.details}" : ""}");
   }
 }
