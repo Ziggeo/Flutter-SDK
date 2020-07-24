@@ -12,6 +12,8 @@ import 'package:ziggeo/player/player_config.dart';
 import 'package:ziggeo/player/player_listener.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
 import 'package:ziggeo/recorder/recorder_listener.dart';
+import 'package:ziggeo/uploading/uploading_config.dart';
+import 'package:ziggeo/uploading/uploading_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
@@ -284,13 +286,13 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   initRecorderCallback() {
     ziggeo.recorderConfig = RecorderConfig();
     ziggeo.recorderConfig.eventsListener = RecorderEventsListener(
+      onError: (exception) =>
+          addLogEvent('ev_rec_error', details: exception.toString()),
       onLoaded: () => addLogEvent('ev_rec_loaded'),
       onCanceledByUser: () => addLogEvent('ev_rec_canceledByUser'),
       onAccessForbidden: (permissions) => addLogEvent('ev_rec_accessForbidden',
           details: permissions.toString()),
       onAccessGranted: () => addLogEvent('ev_rec_accessGranted'),
-      onError: (exception) =>
-          addLogEvent('ev_rec_error', details: exception.toString()),
       onCountdown: (time) =>
           addLogEvent('ev_rec_countdown', details: time.toString()),
       onHasCamera: () => addLogEvent('ev_rec_hasCamera'),
@@ -311,7 +313,26 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     );
   }
 
-  initUploaderCallback() {}
+  initUploaderCallback() {
+    ziggeo.uploadingConfig = UploadingConfig();
+    ziggeo.uploadingConfig.eventsListener = UploadingEventsListener(
+      onError: (exception) =>
+          addLogEvent('ev_upl_error', details: exception.toString()),
+      onUploadingStarted: (videoToken) =>
+          addLogEvent('ev_upl_uploadingStarted', details: videoToken),
+      onUploadProgress: (videoToken, path, current, total) => addLogEvent(
+          'ev_upl_uploadProgress',
+          details: "$current/$total t: $videoToken, p:$path"),
+      onUploaded: (videoToken, path) =>
+          addLogEvent('ev_upl_uploaded', details: "t:$videoToken, p:$path"),
+      onVerified: (videoToken) =>
+          addLogEvent('ev_upl_verified', details: videoToken),
+      onProcessing: (videoToken) =>
+          addLogEvent('ev_upl_processing', details: videoToken),
+      onProcessed: (videoToken) =>
+          addLogEvent('ev_upl_processed', details: videoToken),
+    );
+  }
 
   addLogEvent(String nameTag, {String details}) {
     var model = LogModel(name: localize.text(nameTag), details: details);
