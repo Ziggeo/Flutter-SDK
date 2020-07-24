@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/file_selector/file_selector_listener.dart';
+import 'package:ziggeo/player/player_config.dart';
+import 'package:ziggeo/player/player_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
@@ -258,13 +260,31 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     );
   }
 
-  initPlayerCallback() {}
+  initPlayerCallback() {
+    ziggeo.playerConfig = PlayerConfig();
+    ziggeo.playerConfig.eventsListener = PlayerEventsListener(
+      onLoaded: () => addLogEvent('ev_pl_loaded'),
+      onCanceledByUser: () => addLogEvent('ev_pl_canceledByUser'),
+      onAccessForbidden: (permissions) =>
+          addLogEvent('ev_pl_accessForbidden', details: permissions.toString()),
+      onAccessGranted: () => addLogEvent('ev_pl_accessGranted'),
+      onError: (exception) =>
+          addLogEvent('ev_pl_error', details: exception.toString()),
+      onReadyToPlay: () => addLogEvent('ev_pl_readyToPlay'),
+      onPlaying: () => addLogEvent('ev_pl_playing'),
+      onSeek: (seekPos) =>
+          addLogEvent('ev_pl_seek', details: seekPos.toString()),
+      onPaused: () => addLogEvent('ev_pl_paused'),
+      onEnded: () => addLogEvent('ev_pl_ended'),
+    );
+  }
 
   initRecorderCallback() {}
 
   initUploaderCallback() {}
 
   addLogEvent(String nameTag, {String details}) {
-    logBuffer.add(LogModel(name: localize.text(nameTag), details: details));
+    var model = LogModel(name: localize.text(nameTag), details: details);
+    logBuffer.add(model);
   }
 }

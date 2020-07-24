@@ -26,8 +26,6 @@ class _LogScreenState extends State<LogScreen> {
         body: Padding(
       padding: EdgeInsets.all(common_margin),
       child: Stack(
-//        crossAxisAlignment: CrossAxisAlignment.stretch,
-//        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Align(
               alignment: Alignment.topCenter,
@@ -56,6 +54,8 @@ class _LogScreenState extends State<LogScreen> {
   onSendReportBtnPressed() {}
 
   Widget getListItem(index) {
-    return Text(logs[index].name);
+    var item = logs[index];
+    return Text(
+        "${item.name}${item.details == null ? "" : ". ${item.details}"}");
   }
 }

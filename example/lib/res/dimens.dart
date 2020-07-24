@@ -29,6 +29,7 @@ const icon_size = 60.0;
 
 /// Recording details screen
 const preview_height = 250.0;
+const btn_play_size = 70.0;
 
 /// Contact us screen
 const btn_start_now_top_margin = 70.0;
