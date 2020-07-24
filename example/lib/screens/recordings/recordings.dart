@@ -10,6 +10,8 @@ import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/file_selector/file_selector_listener.dart';
 import 'package:ziggeo/player/player_config.dart';
 import 'package:ziggeo/player/player_listener.dart';
+import 'package:ziggeo/recorder/recorder_config.dart';
+import 'package:ziggeo/recorder/recorder_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
@@ -279,7 +281,35 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     );
   }
 
-  initRecorderCallback() {}
+  initRecorderCallback() {
+    ziggeo.recorderConfig = RecorderConfig();
+    ziggeo.recorderConfig.eventsListener = RecorderEventsListener(
+      onLoaded: () => addLogEvent('ev_rec_loaded'),
+      onCanceledByUser: () => addLogEvent('ev_rec_canceledByUser'),
+      onAccessForbidden: (permissions) => addLogEvent('ev_rec_accessForbidden',
+          details: permissions.toString()),
+      onAccessGranted: () => addLogEvent('ev_rec_accessGranted'),
+      onError: (exception) =>
+          addLogEvent('ev_rec_error', details: exception.toString()),
+      onCountdown: (time) =>
+          addLogEvent('ev_rec_countdown', details: time.toString()),
+      onHasCamera: () => addLogEvent('ev_rec_hasCamera'),
+      onHasMicrophone: () => addLogEvent('ev_rec_hasMicrophone'),
+      onNoCamera: () => addLogEvent('ev_rec_noCamera'),
+      onNoMicrophone: () => addLogEvent('ev_rec_noMicrophone'),
+      onManuallySubmitted: () => addLogEvent('ev_rec_manuallySubmitted'),
+      onMicrophoneHealth: (health) =>
+          addLogEvent('ev_rec_microphoneHealth', details: health),
+      onReadyToRecord: () => addLogEvent('ev_rec_readyToRecord'),
+      onRecordingProgress: (progress) =>
+          addLogEvent('ev_rec_recordingProgress', details: progress.toString()),
+      onRecordingStarted: () => addLogEvent('ev_rec_recordingStarted'),
+      onRecordingStopped: (path) =>
+          addLogEvent('ev_rec_recordingStopped', details: path),
+      onStreamingStarted: () => addLogEvent('ev_rec_streamingStarted'),
+      onStreamingStopped: () => addLogEvent('ev_rec_streamingStopped'),
+    );
+  }
 
   initUploaderCallback() {}
 
