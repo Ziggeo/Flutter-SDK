@@ -17,7 +17,7 @@ class _LogScreenState extends State<LogScreen> {
   @override
   void initState() {
     super.initState();
-    logs.addAll(Logger.buffer);
+    logs.addAll(Logger.buffer.reversed);
   }
 
   @override
