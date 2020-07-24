@@ -132,11 +132,21 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                       child: Column(
                     children: <Widget>[
                       previewPath != null
-                          ? Image.network(
-                              previewPath,
-                              height: preview_height,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
+                          ? Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                Image.network(
+                                  previewPath,
+                                  height: preview_height,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                                IconButton(
+                                  onPressed: onPlayButtonPressed,
+                                  icon: Icon(Icons.play_circle_filled),
+                                  iconSize: btn_play_size,
+                                )
+                              ],
                             )
                           : Container(
                               color: Color(primary),
@@ -187,5 +197,9 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
             ],
           ),
         ));
+  }
+
+  onPlayButtonPressed() {
+    ziggeo.startPlayerFromToken([recordingModel.token]);
   }
 }
