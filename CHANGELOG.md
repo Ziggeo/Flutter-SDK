@@ -1,3 +1,7 @@
+## 0.1.0
+Android support added in this version
+  * Added demo and SDK functionality to demonstrate all common features for Android
+  
 ## 0.0.1
 Only Android support added in this version
   * set/get the application token
