@@ -34,7 +34,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.ziggeo.ziggeo_flutter_android_demo"
+        applicationId "com.ziggeo.flutter.demo"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
