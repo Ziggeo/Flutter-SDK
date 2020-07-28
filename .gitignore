@@ -82,6 +82,7 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
+google-services.json
+GoogleService-Info.plist
 
 # End of https://www.gitignore.io/api/flutter,intellij
