@@ -14,6 +14,7 @@ example/lib/generated/
 # Android related
 .gradle
 local.properties
+key.properties
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/
