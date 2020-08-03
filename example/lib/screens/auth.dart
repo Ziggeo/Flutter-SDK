@@ -26,17 +26,14 @@ class _AuthScreenState extends State<AuthScreen> {
     _ziggeo = Ziggeo(_inputToken);
     _ziggeo.qrScannerConfig = QrScannerConfig();
     _ziggeo.qrScannerConfig.eventsListener = QrScannerEventListener(
-      onDecoded: (value) => {this.navigateToMainScreen(value)},
+      onDecoded: (value) => {this.saveTokenAndNavigateToMainScreen(value)},
     );
   }
 
   onQrActionPressed() async {
     if (_enterQrManuallyMode) {
       if (_formKey.currentState.validate()) {
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString(Utils.keyAppToken, _inputToken);
-
-        navigateToMainScreen(_inputToken);
+        saveTokenAndNavigateToMainScreen(_inputToken);
       }
     } else {
       _ziggeo.startQrScanner();
@@ -49,9 +46,13 @@ class _AuthScreenState extends State<AuthScreen> {
     });
   }
 
-  navigateToMainScreen(String value) {
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => MainScreen(value)));
+  saveTokenAndNavigateToMainScreen(String token) {
+    SharedPreferences.getInstance().then((prefs) => prefs
+        .setString(Utils.keyAppToken, token)
+        .then((success) => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (context) =>
+                    MainScreen(prefs.getString(Utils.keyAppToken))))));
   }
 
   @override
