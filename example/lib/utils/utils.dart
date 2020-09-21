@@ -39,7 +39,7 @@ class Utils {
         ),
         child: Text(text));
 
-    FToast(context).showToast(
+    FToast().showToast(
       child: widget,
       gravity: ToastGravity.BOTTOM,
       toastDuration: Duration(seconds: duration),
