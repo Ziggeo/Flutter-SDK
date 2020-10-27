@@ -1,6 +1,6 @@
 name: ziggeo
 description: A Flutter plugin for getting access to Ziggeo services and ability to easely implement camera related functionality. Supports previewing the camera feed, capturing video, screen recording, etc.
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/Ziggeo/Flutter-SDK
 
 environment:

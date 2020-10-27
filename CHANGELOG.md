@@ -1,3 +1,7 @@
+## 0.1.2
+----------------------------
+* Fixed mapping for server auth token
+
 ## 0.1.1
 ----------------------------
 * New: added filters for file selector and switcher for grid/list modes
