@@ -248,12 +248,13 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 fireUplCallback("processing", token)
             }
 
-            override fun uploadProgress(token: String, file: File, current: Long, total: Long) {
+            override fun uploadProgress(videoToken: String, path: String, uploadedBytes: Long, totalBytes: Long) {
+                super.uploadProgress(videoToken, path, uploadedBytes, totalBytes)
                 val args: MutableMap<String, Any> = HashMap()
-                args["token"] = token
-                args["path"] = file.absolutePath
-                args["current"] = current
-                args["total"] = total
+                args["token"] = videoToken
+                args["path"] = path
+                args["current"] = uploadedBytes
+                args["total"] = totalBytes
                 fireUplCallback("uploadProgress", args)
             }
 
