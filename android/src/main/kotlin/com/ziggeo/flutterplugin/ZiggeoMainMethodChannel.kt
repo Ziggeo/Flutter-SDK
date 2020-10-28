@@ -37,7 +37,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
             }
             "getClientAuthToken" -> result.success(ziggeo.clientAuthToken)
             "setServerAuthToken" -> call.argument<String>("serverAuthToken")?.let {
-                ziggeo.clientAuthToken = it
+                ziggeo.serverAuthToken = it
             }
             "getServerAuthToken" -> result.success(ziggeo.serverAuthToken)
             "startCameraRecorder" -> {
