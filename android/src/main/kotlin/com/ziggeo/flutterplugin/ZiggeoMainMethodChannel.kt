@@ -4,14 +4,13 @@ import android.net.Uri
 import android.os.Handler
 import com.ziggeo.androidsdk.IZiggeo
 import com.ziggeo.androidsdk.callbacks.*
-import com.ziggeo.androidsdk.log.ZLog
 import com.ziggeo.androidsdk.qr.QrScannerCallback
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
-import com.ziggeo.androidsdk.ui.theming.PlayerStyle
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import java.io.File
+import java.util.*
 
 class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                               private val recCallbackChannel: MethodChannel,
@@ -151,6 +150,13 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                         config.isMuted = value
                     }
                 }
+            }
+            "sendReport" -> {
+                var list: List<String>? = null
+                call.argument<List<String>>("logs")?.let {
+                    list = it
+                }
+                ziggeo.sendReport(list)
             }
             else -> result.notImplemented()
         }

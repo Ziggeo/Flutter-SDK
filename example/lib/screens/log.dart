@@ -1,19 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/utils/logger.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class LogScreen extends StatefulWidget {
   static const String routeName = 'title_log';
+  final Ziggeo ziggeo;
+
+  LogScreen(this.ziggeo);
 
   @override
-  _LogScreenState createState() => _LogScreenState();
+  _LogScreenState createState() => _LogScreenState(ziggeo);
 }
 
 class _LogScreenState extends State<LogScreen> {
   List<LogModel> logs = List();
+  final Ziggeo ziggeo;
+
+  _LogScreenState(this.ziggeo);
 
   @override
   void initState() {
@@ -55,7 +62,13 @@ class _LogScreenState extends State<LogScreen> {
     ));
   }
 
-  onSendReportBtnPressed() {}
+  onSendReportBtnPressed() {
+    var l = List<String>();
+    for (var log in logs) {
+      l.add(log.toString());
+    }
+    ziggeo.sendReport(l);
+  }
 
   Widget getListItem(index) {
     var item = logs[index];

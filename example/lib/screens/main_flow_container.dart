@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/screens/drawer.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class MainScreen extends StatefulWidget {
-
   final String appToken;
 
   MainScreen(this.appToken);
@@ -21,6 +21,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     var drawerState = Provider.of<DrawerState>(context);
+    drawerState.ziggeo = Ziggeo(appToken);
     return Scaffold(
         drawer: AppDrawer(appToken),
         appBar: AppBar(

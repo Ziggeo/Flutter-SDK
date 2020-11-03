@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/qr/qr_scanner_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/dimens.dart';
+import 'package:ziggeo_example/screens/drawer.dart';
 import 'package:ziggeo_example/screens/main_flow_container.dart';
 import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
@@ -23,7 +25,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
 
   _AuthScreenState() {
-    _ziggeo = Ziggeo(_inputToken);
+    _ziggeo = Ziggeo(null);
     _ziggeo.qrScannerConfig = QrScannerConfig();
     _ziggeo.qrScannerConfig.eventsListener = QrScannerEventListener(
       onDecoded: (value) => {this.saveTokenAndNavigateToMainScreen(value)},
@@ -50,9 +52,7 @@ class _AuthScreenState extends State<AuthScreen> {
     SharedPreferences.getInstance().then((prefs) => prefs
         .setString(Utils.keyAppToken, token)
         .then((success) => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (context) =>
-                    MainScreen(prefs.getString(Utils.keyAppToken))))));
+            MaterialPageRoute(builder: (context) => MainScreen(token)))));
   }
 
   @override
