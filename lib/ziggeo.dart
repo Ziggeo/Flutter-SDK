@@ -127,6 +127,10 @@ class Ziggeo {
         .invokeMethod('uploadFromFileSelector', {"args": args});
   }
 
+  Future<void> sendReport(List<String> logs) async {
+    return await _ziggeoChannel.invokeMethod('sendReport', {"logs": logs});
+  }
+
   void startListeningChannels() {
     listenToRecChannel();
     listenToFsChannel();
