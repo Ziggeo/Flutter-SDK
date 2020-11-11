@@ -1,3 +1,7 @@
+## 0.1.3
+----------------------------
+* Added support for 1:1 aspect ratio
+
 ## 0.1.2
 ----------------------------
 * Fixed mapping for server auth token
