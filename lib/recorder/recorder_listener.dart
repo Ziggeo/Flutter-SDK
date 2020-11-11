@@ -10,6 +10,7 @@ typedef OnRecordingStarted = void Function();
 typedef OnRecordingProgress = void Function(int);
 typedef OnManuallySubmitted = void Function();
 typedef OnCountdown = void Function(int);
+typedef OnRerecord = void Function();
 
 class RecorderEventsListener
     implements
@@ -23,6 +24,7 @@ class RecorderEventsListener
   OnRecordingStopped onRecordingStopped;
   OnManuallySubmitted onManuallySubmitted;
   OnCountdown onCountdown;
+  OnRerecord onRerecord;
 
   @override
   OnAccessForbidden onAccessForbidden;

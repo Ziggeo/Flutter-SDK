@@ -197,6 +197,9 @@ class Ziggeo {
         case 'countdown':
           recorderConfig?.eventsListener?.onCountdown(call.arguments);
           break;
+        case 'rerecord':
+          recorderConfig?.eventsListener?.onRerecord();
+          break;
         default:
           print(
               "$_defaultChannelError Channel:$_plChannel, call:${call.method}");

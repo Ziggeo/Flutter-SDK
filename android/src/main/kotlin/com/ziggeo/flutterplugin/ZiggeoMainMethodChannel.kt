@@ -406,6 +406,10 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
             override fun countdown(secondsLeft: Int) {
                 fireRecCallback("countdown", secondsLeft)
             }
+
+            override fun rerecord() {
+                fireRecCallback("rerecord")
+            }
         }
     }
 
