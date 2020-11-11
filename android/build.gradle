@@ -42,8 +42,8 @@ android {
 }
 
 dependencies {
-    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.1.4@aar") {
-        transitive = true;
+    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.1.5:flutter@aar") {
+        transitive = true
     }
 //    implementation project(':sdk') // for internal development
     implementation 'com.jakewharton.timber:timber:4.7.1'
