@@ -327,7 +327,7 @@ class Ziggeo {
         case 'error':
           qrScannerConfig?.eventsListener?.onError(call.arguments);
           break;
-        case 'onQrDecoded':
+        case 'onDecoded':
           qrScannerConfig?.eventsListener?.onDecoded(call.arguments);
           break;
         case 'canceledByUser':

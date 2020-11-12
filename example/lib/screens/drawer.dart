@@ -177,6 +177,8 @@ class DrawerState with ChangeNotifier {
     selectRoute(selectedRouteName);
   }
 
+  Ziggeo get ziggeo => _ziggeo;
+
   DrawerState() {
     selectRoute(Routes.recordings);
   }
@@ -209,6 +211,8 @@ class DrawerState with ChangeNotifier {
         selectedRoute = RecordingsScreen(_ziggeo);
     }
     selectedRouteName = value;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 }

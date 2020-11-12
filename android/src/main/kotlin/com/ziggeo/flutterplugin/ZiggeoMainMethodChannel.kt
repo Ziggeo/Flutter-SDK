@@ -188,9 +188,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 fireQrCallback("error", exception.toString())
             }
 
-            override fun onQrDecoded(value: String) {
-                super.onQrDecoded(value)
-                fireQrCallback("onQrDecoded", value)
+            override fun onDecoded(value: String) {
+                super.onDecoded(value)
+                fireQrCallback("onDecoded", value)
             }
 
             override fun canceledByUser() {
