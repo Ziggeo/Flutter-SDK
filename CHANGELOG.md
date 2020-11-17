@@ -1,3 +1,7 @@
+## 0.1.4
+----------------------------
+* Fixed crash when starting analytics service in the background
+
 ## 0.1.3
 ----------------------------
 * Added support for 1:1 aspect ratio
