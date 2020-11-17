@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/routes.dart';
@@ -26,12 +27,16 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
   String appToken;
+  Ziggeo ziggeo;
 
-  _AppDrawerState(this.appToken);
+  _AppDrawerState(this.appToken) {
+    ziggeo = Ziggeo(this.appToken);
+  }
 
   @override
   Widget build(BuildContext context) {
     var drawerState = Provider.of<DrawerState>(context);
+    drawerState.ziggeo = this.ziggeo;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -165,6 +170,14 @@ class _AppDrawerState extends State<AppDrawer> {
 class DrawerState with ChangeNotifier {
   StatefulWidget selectedRoute;
   String selectedRouteName;
+  Ziggeo _ziggeo;
+
+  set ziggeo(Ziggeo value) {
+    _ziggeo = value;
+    selectRoute(selectedRouteName);
+  }
+
+  Ziggeo get ziggeo => _ziggeo;
 
   DrawerState() {
     selectRoute(Routes.recordings);
@@ -191,13 +204,15 @@ class DrawerState with ChangeNotifier {
         selectedRoute = AboutScreen();
         break;
       case Routes.log:
-        selectedRoute = LogScreen();
+        selectedRoute = LogScreen(_ziggeo);
         break;
       case Routes.recordings:
       default:
-        selectedRoute = RecordingsScreen();
+        selectedRoute = RecordingsScreen(_ziggeo);
     }
     selectedRouteName = value;
-    notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 }

@@ -1,6 +1,7 @@
+import 'package:ziggeo/common/cam_hardware_listener.dart';
 import 'package:ziggeo/common/common_event_listener.dart';
 import 'package:ziggeo/common/error_listener.dart';
-import 'package:ziggeo/common/hardware_listener.dart';
+import 'package:ziggeo/common/mic_hardware_listener.dart';
 import 'package:ziggeo/common/permission_listener.dart';
 
 typedef OnDecoded = void Function(String);
@@ -9,7 +10,8 @@ class QrScannerEventListener
     implements
         CommonEventsListener,
         PermissionsEventsListener,
-        HardwareCheckEventsListener {
+        CamHardwareCheckEventsListener,
+        MicHardwareCheckEventsListener {
   OnDecoded onDecoded;
 
   @override

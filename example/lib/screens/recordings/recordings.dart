@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/file_selector/file_selector_listener.dart';
 import 'package:ziggeo/player/player_config.dart';
@@ -26,9 +25,12 @@ import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class RecordingsScreen extends StatefulWidget {
   static const String routeName = 'title_recordings';
+  final Ziggeo ziggeo;
+
+  RecordingsScreen(this.ziggeo);
 
   @override
-  _RecordingsScreenState createState() => _RecordingsScreenState();
+  _RecordingsScreenState createState() => _RecordingsScreenState(ziggeo);
 }
 
 class _RecordingsScreenState extends State<RecordingsScreen> {
@@ -41,6 +43,8 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+
+  _RecordingsScreenState(this.ziggeo);
 
   @override
   void initState() {
@@ -138,9 +142,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   init() async {
-    if (ziggeo == null) {
-      final prefs = await SharedPreferences.getInstance();
-      ziggeo = Ziggeo(prefs.getString(Utils.keyAppToken));
+    if (ziggeo != null) {
       initCallbacks();
     }
 

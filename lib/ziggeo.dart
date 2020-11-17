@@ -127,6 +127,10 @@ class Ziggeo {
         .invokeMethod('uploadFromFileSelector', {"args": args});
   }
 
+  Future<void> sendReport(List<String> logs) async {
+    return await _ziggeoChannel.invokeMethod('sendReport', {"logs": logs});
+  }
+
   void startListeningChannels() {
     listenToRecChannel();
     listenToFsChannel();
@@ -192,6 +196,9 @@ class Ziggeo {
           break;
         case 'countdown':
           recorderConfig?.eventsListener?.onCountdown(call.arguments);
+          break;
+        case 'rerecord':
+          recorderConfig?.eventsListener?.onRerecord();
           break;
         default:
           print(
@@ -320,7 +327,7 @@ class Ziggeo {
         case 'error':
           qrScannerConfig?.eventsListener?.onError(call.arguments);
           break;
-        case 'onQrDecoded':
+        case 'onDecoded':
           qrScannerConfig?.eventsListener?.onDecoded(call.arguments);
           break;
         case 'canceledByUser':

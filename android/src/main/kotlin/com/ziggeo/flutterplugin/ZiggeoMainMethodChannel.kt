@@ -4,14 +4,13 @@ import android.net.Uri
 import android.os.Handler
 import com.ziggeo.androidsdk.IZiggeo
 import com.ziggeo.androidsdk.callbacks.*
-import com.ziggeo.androidsdk.log.ZLog
 import com.ziggeo.androidsdk.qr.QrScannerCallback
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
-import com.ziggeo.androidsdk.ui.theming.PlayerStyle
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import java.io.File
+import java.util.*
 
 class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                               private val recCallbackChannel: MethodChannel,
@@ -37,7 +36,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
             }
             "getClientAuthToken" -> result.success(ziggeo.clientAuthToken)
             "setServerAuthToken" -> call.argument<String>("serverAuthToken")?.let {
-                ziggeo.clientAuthToken = it
+                ziggeo.serverAuthToken = it
             }
             "getServerAuthToken" -> result.success(ziggeo.serverAuthToken)
             "startCameraRecorder" -> {
@@ -152,6 +151,13 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                 }
             }
+            "sendReport" -> {
+                var list: List<String>? = null
+                call.argument<List<String>>("logs")?.let {
+                    list = it
+                }
+                ziggeo.sendReport(list)
+            }
             else -> result.notImplemented()
         }
     }
@@ -182,9 +188,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 fireQrCallback("error", exception.toString())
             }
 
-            override fun onQrDecoded(value: String) {
-                super.onQrDecoded(value)
-                fireQrCallback("onQrDecoded", value)
+            override fun onDecoded(value: String) {
+                super.onDecoded(value)
+                fireQrCallback("onDecoded", value)
             }
 
             override fun canceledByUser() {
@@ -248,12 +254,13 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 fireUplCallback("processing", token)
             }
 
-            override fun uploadProgress(token: String, file: File, current: Long, total: Long) {
+            override fun uploadProgress(videoToken: String, path: String, uploadedBytes: Long, totalBytes: Long) {
+                super.uploadProgress(videoToken, path, uploadedBytes, totalBytes)
                 val args: MutableMap<String, Any> = HashMap()
-                args["token"] = token
-                args["path"] = file.absolutePath
-                args["current"] = current
-                args["total"] = total
+                args["token"] = videoToken
+                args["path"] = path
+                args["current"] = uploadedBytes
+                args["total"] = totalBytes
                 fireUplCallback("uploadProgress", args)
             }
 
@@ -398,6 +405,10 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
 
             override fun countdown(secondsLeft: Int) {
                 fireRecCallback("countdown", secondsLeft)
+            }
+
+            override fun rerecord() {
+                fireRecCallback("rerecord")
             }
         }
     }
