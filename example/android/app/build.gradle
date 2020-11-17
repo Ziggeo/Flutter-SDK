@@ -42,6 +42,7 @@ android {
         versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        setProperty("archivesBaseName", "androidFlutter-v" + versionName + "_" + getDate())
     }
     signingConfigs {
         release {
@@ -97,5 +98,8 @@ dependencies {
 }
 repositories {
     mavenCentral()
+}
+static def getDate() {
+    return new Date().format('HH.mm.ss_dd-MM-YYYY')
 }
 apply plugin: 'com.google.gms.google-services'
