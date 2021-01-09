@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:ziggeo/api/streams.dart';
 import 'package:ziggeo/api/videos.dart';
 import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/player/player_config.dart';
@@ -21,9 +22,11 @@ class Ziggeo {
     setAppToken(token);
     startListeningChannels();
     _videosApi = VideosApi();
+    _streamsApi = StreamsApi();
   }
 
   VideosApi _videosApi;
+  StreamsApi _streamsApi;
 
   RecorderConfig _recorderConfig;
   QrScannerConfig _qrScannerConfig;
@@ -32,6 +35,7 @@ class Ziggeo {
   PlayerConfig _playerConfig;
 
   VideosApi get videos => _videosApi;
+  StreamsApi get streams => _streamsApi;
 
   PlayerConfig get playerConfig => _playerConfig;
 

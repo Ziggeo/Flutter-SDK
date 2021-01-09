@@ -3,6 +3,7 @@ package com.ziggeo.flutterplugin
 import android.os.Handler
 import android.os.Looper
 import com.ziggeo.androidsdk.Ziggeo
+import com.ziggeo.flutterplugin.api.StreamsMethodChannel
 import com.ziggeo.flutterplugin.api.VideosMethodChannel
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodChannel
@@ -11,6 +12,7 @@ import timber.log.Timber
 class ZiggeoPlugin : FlutterPlugin {
     private lateinit var ziggeoMainChannel: MethodChannel
     private lateinit var videosApiChannel: MethodChannel
+    private lateinit var streamsApiChannel: MethodChannel
     private lateinit var recCallbackChannel: MethodChannel
     private lateinit var fsCallbackChannel: MethodChannel
     private lateinit var uplCallbackChannel: MethodChannel
@@ -20,6 +22,7 @@ class ZiggeoPlugin : FlutterPlugin {
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         ziggeoMainChannel = MethodChannel(binding.binaryMessenger, "ziggeo")
         videosApiChannel = MethodChannel(binding.binaryMessenger, "ziggeo_videos")
+        streamsApiChannel = MethodChannel(binding.binaryMessenger, "ziggeo_streams")
         recCallbackChannel = MethodChannel(binding.binaryMessenger, "ziggeo_rec_callback")
         fsCallbackChannel = MethodChannel(binding.binaryMessenger, "ziggeo_fs_callback")
         uplCallbackChannel = MethodChannel(binding.binaryMessenger, "ziggeo_upl_callback")
@@ -39,12 +42,14 @@ class ZiggeoPlugin : FlutterPlugin {
                 )
         )
         videosApiChannel.setMethodCallHandler(VideosMethodChannel(ziggeo))
+        streamsApiChannel.setMethodCallHandler(StreamsMethodChannel(ziggeo))
         Timber.plant(Timber.DebugTree())
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         ziggeoMainChannel.setMethodCallHandler(null)
         videosApiChannel.setMethodCallHandler(null)
+        streamsApiChannel.setMethodCallHandler(null)
         recCallbackChannel.setMethodCallHandler(null)
         fsCallbackChannel.setMethodCallHandler(null)
         uplCallbackChannel.setMethodCallHandler(null)
