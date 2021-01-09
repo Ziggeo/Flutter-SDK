@@ -43,6 +43,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         setProperty("archivesBaseName", "androidFlutter-v" + versionName + "_" + getDate())
+        missingDimensionStrategy "dim", "flutter" // for internal development
     }
     signingConfigs {
         release {

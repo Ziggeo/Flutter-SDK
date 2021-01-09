@@ -35,6 +35,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        missingDimensionStrategy "dim", "flutter" // for internal development
     }
     lintOptions {
         disable 'InvalidPackage'

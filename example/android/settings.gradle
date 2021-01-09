@@ -1,5 +1,5 @@
 include ':app'
-//, ':sdk' //for internal development
+//include ':sdk' //for internal development
 //project(':sdk').projectDir = new File('../../../Android-SDK/sdk')
 
 def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
