@@ -2,6 +2,7 @@ package com.ziggeo.flutterplugin.api
 
 import android.annotation.SuppressLint
 import com.ziggeo.androidsdk.Ziggeo
+import com.ziggeo.flutterplugin.ifLet
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.reactivex.Completable
@@ -63,9 +64,4 @@ class StreamsMethodChannel(private val ziggeo: Ziggeo) : MethodChannel.MethodCal
                 }, { throwable: Throwable? -> result.error(call.method, throwable.toString(), throwable?.message) })
     }
 
-    private inline fun <reified T : Any> ifLet(vararg elements: T?, closure: (List<T>) -> Unit) {
-        if (elements.all { it != null }) {
-            closure(elements.filterNotNull())
-        }
-    }
 }
