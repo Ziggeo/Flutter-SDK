@@ -28,10 +28,10 @@ class VideosMethodChannel(private val ziggeo: Ziggeo) : MethodCallHandler {
                 processRequest(ziggeo.apiRx().videosRaw()[it], call, result)
             }
             "getVideoUrl" -> call.argument<String>("videoToken")?.let {
-                processRequest(Single.fromCallable { ziggeo.apiRx().videosRaw().getVideoUrl(it) }, call, result)
+                processRequest(ziggeo.apiRx().videosRaw().getVideoUrl(it), call, result)
             }
             "getImageUrl" -> call.argument<String>("videoToken")?.let {
-                processRequest(Single.fromCallable { ziggeo.apiRx().videosRaw().getImageUrl(it) }, call, result)
+                processRequest(ziggeo.apiRx().videosRaw().getImageUrl(it), call, result)
             }
             "update" -> call.argument<String>("data")?.let {
                 processRequest(ziggeo.apiRx().videosRaw().update(VideoModel.fromJson(it)), call, result)

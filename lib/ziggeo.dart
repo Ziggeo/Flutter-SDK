@@ -17,6 +17,7 @@ class Ziggeo {
   static const _uplChannel = const MethodChannel('ziggeo_upl_callback');
   static const _plChannel = const MethodChannel('ziggeo_pl_callback');
   static const _qrChannel = const MethodChannel('ziggeo_qr_callback');
+  static const _zvChannel = const MethodChannel('z_video_view');
 
   Ziggeo(String token) {
     setAppToken(token);

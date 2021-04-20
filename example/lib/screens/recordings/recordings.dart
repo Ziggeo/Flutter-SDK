@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/file_selector/file_selector_listener.dart';
 import 'package:ziggeo/player/player_config.dart';
@@ -22,6 +23,8 @@ import 'package:ziggeo_example/screens/recordings/recording_model.dart';
 import 'package:ziggeo_example/utils/logger.dart';
 import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
+
+import '../camera_recorder.dart';
 
 class RecordingsScreen extends StatefulWidget {
   static const String routeName = 'title_recordings';
@@ -123,8 +126,17 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     );
   }
 
-  onStartCameraRecorderPressed() {
-    ziggeo.startCameraRecorder();
+  onStartCameraRecorderPressed() async {
+    await SharedPreferences.getInstance().then((value) {
+      if (value.getBool(Utils.keyCustomCameraMode) != null &&
+          value.getBool(Utils.keyCustomCameraMode)) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) =>
+                CameraRecorderScreen(ziggeo)));
+      } else {
+        ziggeo.startCameraRecorder();
+      }
+    });
   }
 
   onStartScreenRecorderPressed() {
@@ -288,7 +300,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initRecorderCallback() {
-    ziggeo.recorderConfig = RecorderConfig();
+    if (ziggeo.recorderConfig == null) ziggeo.recorderConfig = RecorderConfig();
     ziggeo.recorderConfig.eventsListener = RecorderEventsListener(
       onError: (exception) =>
           addLogEvent('ev_rec_error', details: exception.toString()),
