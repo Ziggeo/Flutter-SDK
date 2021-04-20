@@ -58,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: Padding(
           padding: EdgeInsets.all(common_margin),
           child: Form(

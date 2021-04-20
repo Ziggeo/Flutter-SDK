@@ -60,9 +60,11 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   void setDialVisible(bool value) {
-    setState(() {
-      dialVisible = value;
-    });
+    if (dialVisible != value) {
+      setState(() {
+        dialVisible = value;
+      });
+    }
   }
 
   @override

@@ -86,7 +86,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           leading: isInEditMode
               ? IconButton(
