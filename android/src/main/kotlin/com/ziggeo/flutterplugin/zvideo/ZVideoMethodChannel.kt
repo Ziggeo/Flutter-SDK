@@ -28,12 +28,11 @@ class ZVideoMethodChannel(private val zVideoPlayer: ZVideoView, private val zigg
             }
             "setVideoToken" -> call.argument<String>("videoToken").let {
                 val array = arrayOf(it)
-                zVideoPlayer.videoToken = array
-
+                zVideoPlayer.videoTokens = array.toMutableList()
             }
             "setVideoPath" -> if (call.hasArgument("videoPath")) {
                 call.argument<String>("videoPath")?.let {
-                    zVideoPlayer.videoPath = arrayOf(Uri.parse(it))
+                    zVideoPlayer.videoUris = arrayOf(Uri.parse(it)).toMutableList()
                     Handler().post {
                         zVideoPlayer.prepareQueueAndStartPlaying()
                     }
