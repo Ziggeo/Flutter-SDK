@@ -43,6 +43,19 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 ziggeo.startCameraRecorder()
             }
             "startAudioRecorder" -> ziggeo.startAudioRecorder()
+            "showImage" -> call.argument<String>("token")?.let {
+                ziggeo.showImage(it)
+            }
+            "startImageRecorder" -> ziggeo.startImageRecorder()
+            "startAudioPlayer" -> {
+                call.argument<String>("token")?.let {
+                    ziggeo.startAudioPlayer(null, it)
+                }
+                call.argument<String>("path")?.let {
+                    ziggeo.startAudioPlayer(it, null)
+                }
+            }
+
             "startPlayer" -> if (call.hasArgument("tokens")) {
                 call.argument<List<String>>("tokens")?.let {
                     ziggeo.startPlayer(*it.toTypedArray())

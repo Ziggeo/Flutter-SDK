@@ -2,7 +2,7 @@ package com.ziggeo.flutterplugin.api
 
 import android.annotation.SuppressLint
 import com.ziggeo.androidsdk.Ziggeo
-import com.ziggeo.androidsdk.net.models.videos.VideoModel
+import com.ziggeo.androidsdk.net.models.audios.AudioDetails
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -10,44 +10,38 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.io.File
 
-class VideosMethodChannel(private val ziggeo: Ziggeo) : MethodCallHandler {
+class AudiosMethodChannel(private val ziggeo: Ziggeo) : MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        print("onMethodCall")
         when (call.method) {
             "index" -> {
                 var args: HashMap<String, String>? = null
                 (call.arguments as? HashMap<String, String>)?.let {
                     args = it
                 }
-                processRequest(ziggeo.apiRx().videosRaw()
+                processRequest(ziggeo.apiRx().audiosRaw()
                         .index(args), call, result)
             }
-            "get" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw()[it], call, result)
-            }
-            "getVideoUrl" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().getVideoUrl(it), call, result)
-            }
-            "getImageUrl" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().getImageUrl(it), call, result)
+            "get" -> call.argument<String>("tokenOrKey")?.let {
+                processRequest(ziggeo.apiRx().audiosRaw()[it], call, result)
             }
             "update" -> call.argument<String>("data")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().update(VideoModel.fromJson(it)), call, result)
+                processRequest(ziggeo.apiRx().audiosRaw().update(AudioDetails.fromJson(it)), call, result)
             }
-            "destroy" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().destroy(it), call, result)
+            "destroy" -> call.argument<String>("tokenOrKey")?.let {
+                processRequest(ziggeo.apiRx().audiosRaw().destroy(it), call, result)
             }
             "create" -> {
                 var args: HashMap<String, String>? = null
                 (call.arguments as? HashMap<String, String>)?.let {
                     args = it
                 }
-                processRequest(ziggeo.apiRx().videosRaw()
-                        .create(args), call, result)
-            }
-            "createWithFile" -> {
+                (call.arguments as? File)?.let {
+                    processRequest(ziggeo.apiRx().audiosRaw()
+                            .create(it, args), call, result)
+                }
             }
             else -> result.notImplemented()
         }

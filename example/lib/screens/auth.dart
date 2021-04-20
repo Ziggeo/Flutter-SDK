@@ -52,7 +52,7 @@ class _AuthScreenState extends State<AuthScreen> {
     SharedPreferences.getInstance().then((prefs) => prefs
         .setString(Utils.keyAppToken, token)
         .then((success) => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => MainScreen(token)))));
+            MaterialPageRoute(builder: (context) => MainScreen(token, Ziggeo(token))))));
   }
 
   @override

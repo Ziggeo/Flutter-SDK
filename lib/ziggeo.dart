@@ -1,11 +1,14 @@
 import 'package:flutter/services.dart';
 import 'package:ziggeo/api/streams.dart';
+import 'package:ziggeo/api/audio.dart';
 import 'package:ziggeo/api/videos.dart';
 import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/player/player_config.dart';
 import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
 import 'package:ziggeo/uploading/uploading_config.dart';
+
+import 'api/images.dart';
 
 class Ziggeo {
   static const _defaultChannelError =
@@ -23,10 +26,14 @@ class Ziggeo {
     startListeningChannels();
     _videosApi = VideosApi();
     _streamsApi = StreamsApi();
+    _imagesApi = ImagesApi();
+    _audiosApi = AudiosApi();
   }
 
   VideosApi _videosApi;
   StreamsApi _streamsApi;
+  ImagesApi _imagesApi;
+  AudiosApi _audiosApi;
 
   RecorderConfig _recorderConfig;
   QrScannerConfig _qrScannerConfig;
@@ -36,6 +43,10 @@ class Ziggeo {
 
   VideosApi get videos => _videosApi;
   StreamsApi get streams => _streamsApi;
+
+  AudiosApi get audios => _audiosApi;
+
+  ImagesApi get images => _imagesApi;
 
   PlayerConfig get playerConfig => _playerConfig;
 
@@ -106,6 +117,30 @@ class Ziggeo {
 
   Future<void> startCameraRecorder() async {
     return await _ziggeoChannel.invokeMethod('startCameraRecorder');
+  }
+
+  Future<void> startAudioRecorder() async {
+    return await _ziggeoChannel.invokeMethod('startAudioRecorder');
+  }
+
+  Future<void> startAudioPlayer(String token, String path) async {
+    if (token != null) {
+      return await _ziggeoChannel
+          .invokeMethod('startAudioPlayer', {"token": token});
+    } else if (path != null) {
+      return await _ziggeoChannel
+          .invokeMethod('startAudioPlayer', {"path": path});
+    } else {
+      return await _ziggeoChannel.invokeMethod('startAudioPlayer');
+    }
+  }
+
+  Future<void> showImage(String token) async {
+    return await _ziggeoChannel.invokeMethod('showImage', {"token": token});
+  }
+
+  Future<void> startImageRecorder() async {
+    return await _ziggeoChannel.invokeMethod('startImageRecorder');
   }
 
   Future<void> startPlayerFromToken(List<String> videoTokens) async {

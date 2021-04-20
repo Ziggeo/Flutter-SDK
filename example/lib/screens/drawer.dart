@@ -18,19 +18,19 @@ import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class AppDrawer extends StatefulWidget {
   final String appToken;
+  Ziggeo ziggeo;
 
-  AppDrawer(this.appToken);
+  AppDrawer(this.appToken, this.ziggeo);
 
   @override
-  State<StatefulWidget> createState() => _AppDrawerState(appToken);
+  State<StatefulWidget> createState() => _AppDrawerState(appToken, ziggeo);
 }
 
 class _AppDrawerState extends State<AppDrawer> {
   String appToken;
   Ziggeo ziggeo;
 
-  _AppDrawerState(this.appToken) {
-    ziggeo = Ziggeo(this.appToken);
+  _AppDrawerState(this.appToken, this.ziggeo) {
   }
 
   @override
