@@ -12,11 +12,11 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'localization.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   if (kDebugMode) {
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
   }
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(ZiggeoDemoApp());
 }
 
@@ -28,7 +28,6 @@ class ZiggeoDemoApp extends StatefulWidget {
 class _ZiggeoDemoAppState extends State<ZiggeoDemoApp> {
   @override
   Widget build(BuildContext context) {
-    FirebaseCrashlytics.instance.crash();
     return MultiProvider(
       child: MaterialApp(
         home: SplashScreen(),

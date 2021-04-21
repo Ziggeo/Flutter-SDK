@@ -1,7 +1,6 @@
 package com.ziggeo.flutterplugin.api
 
 import android.annotation.SuppressLint
-import android.media.Image
 import com.ziggeo.androidsdk.Ziggeo
 import com.ziggeo.androidsdk.net.models.images.Image
 import com.ziggeo.androidsdk.net.models.images.ImageDetails
