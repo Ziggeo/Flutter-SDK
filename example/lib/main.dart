@@ -13,10 +13,11 @@ import 'localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  if (kDebugMode) {
-    FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-  }
+  // uncomment for release
+  // await Firebase.initializeApp();
+  // if (kDebugMode) {
+  //   FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  // }
   runApp(ZiggeoDemoApp());
 }
 
