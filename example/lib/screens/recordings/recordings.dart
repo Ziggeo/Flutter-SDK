@@ -130,7 +130,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     await SharedPreferences.getInstance().then((value) {
       if (value.getBool(Utils.keyCustomCameraMode) != null &&
           value.getBool(Utils.keyCustomCameraMode)) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
                 CameraRecorderScreen(ziggeo)));
       } else {
