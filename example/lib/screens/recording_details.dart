@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ziggeo/ziggeo.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/colors.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/recordings/recording_model.dart';
+import 'package:ziggeo_example/screens/video_player.dart';
+import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class RecordingDetailsScreen extends StatefulWidget {
@@ -86,7 +89,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           leading: isInEditMode
               ? IconButton(
@@ -199,7 +202,15 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
         ));
   }
 
-  onPlayButtonPressed() {
-    ziggeo.startPlayerFromToken([recordingModel.token]);
+  onPlayButtonPressed() async {
+    await SharedPreferences.getInstance().then((value) {
+      if (value.containsKey(Utils.keyCustomPlayerMode) && value.getBool(Utils.keyCustomPlayerMode)) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) =>
+                VideoPlayerScreen(ziggeo, recordingModel.token, null)));
+      } else {
+        ziggeo.startPlayerFromToken([recordingModel.token]);
+      }
+    });
   }
 }

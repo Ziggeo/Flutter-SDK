@@ -35,6 +35,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        missingDimensionStrategy "dim", "flutter" // for internal development
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -42,7 +43,7 @@ android {
 }
 
 dependencies {
-    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.1.7:flutter@aar") {
+    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.2.4:flutter@aar") {
         transitive = true
     }
 //    implementation project(':sdk') // for internal development
