@@ -44,6 +44,7 @@ android {
         multiDexEnabled true
         setProperty("archivesBaseName", "androidFlutter-v" + versionName + "_" + getDate())
         missingDimensionStrategy "dim", "flutter" // for internal development
+        manifestPlaceholders = [crashlyticsCollectionEnabled:"false"]
     }
     signingConfigs {
         release {
