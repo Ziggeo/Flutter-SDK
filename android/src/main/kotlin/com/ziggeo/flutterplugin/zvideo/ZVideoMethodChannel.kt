@@ -39,8 +39,6 @@ class ZVideoMethodChannel(private val zVideoPlayer: ZVideoView, private val zigg
                 }
             }
             "loadConfigs" -> {
-                zVideoPlayer.analyticsManager = ziggeo.analyticsManager()
-                zVideoPlayer.playerConfig = ziggeo.playerConfig
                 zVideoPlayer.loadConfigs()
             }
             else -> result.notImplemented()
