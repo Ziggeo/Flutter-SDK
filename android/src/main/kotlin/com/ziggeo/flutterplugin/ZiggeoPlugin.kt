@@ -40,7 +40,7 @@ class ZiggeoPlugin : FlutterPlugin {
         zcrCallbackChannel = MethodChannel(binding.binaryMessenger, "z_camera_recorder")
 
         val context = binding.applicationContext
-        val ziggeo = Ziggeo(context)
+        val ziggeo = Ziggeo.getInstance(context)
         context.setTheme(R.style.ZiggeoTheme)
         val zVideoView = ZVideoView(context)
         val zCameraView = CameraView(context)
