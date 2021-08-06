@@ -30,8 +30,7 @@ class _AppDrawerState extends State<AppDrawer> {
   String appToken;
   Ziggeo ziggeo;
 
-  _AppDrawerState(this.appToken, this.ziggeo) {
-  }
+  _AppDrawerState(this.appToken, this.ziggeo) {}
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +45,6 @@ class _AppDrawerState extends State<AppDrawer> {
               isSelected: drawerState.selectedRouteName == Routes.recordings,
               text: Routes.recordings,
               onTap: () => {selectRoute(drawerState, Routes.recordings)}),
-          _createDrawerItem(
-              isSelected: drawerState.selectedRouteName == Routes.video_editor,
-              text: Routes.video_editor,
-              onTap: () => {selectRoute(drawerState, Routes.video_editor)}),
           _createDrawerItem(
               isSelected: drawerState.selectedRouteName == Routes.settings,
               text: Routes.settings,
