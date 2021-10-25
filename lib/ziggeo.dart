@@ -36,6 +36,7 @@ class Ziggeo {
   PlayerConfig _playerConfig;
 
   VideosApi get videos => _videosApi;
+
   StreamsApi get streams => _streamsApi;
 
   PlayerConfig get playerConfig => _playerConfig;
@@ -90,6 +91,16 @@ class Ziggeo {
   Future<void> setClientAuthToken(String token) async {
     return await _ziggeoChannel
         .invokeMethod('setClientAuthToken', {'clientAuthToken': token});
+  }
+
+  Future<void> cancelUploadByPath(String path, bool deleteFile) async {
+    return await _ziggeoChannel
+        .invokeMethod('cancelUploadByPath', {'path': path, 'deleteFile': deleteFile});
+  }
+
+  Future<void> cancelCurrentUpload(bool deleteFile) async {
+    return await _ziggeoChannel
+        .invokeMethod('cancelCurrentUpload', {'deleteFile': deleteFile});
   }
 
   Future<String> get clientAuthToken async {

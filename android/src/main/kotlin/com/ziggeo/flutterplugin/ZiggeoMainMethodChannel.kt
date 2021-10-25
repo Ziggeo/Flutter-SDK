@@ -161,6 +161,31 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 }
                 ziggeo.sendReport(list)
             }
+            "cancelUploadByPath" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    var path = "";
+                    var deleteFile = false;
+                    (it["deleteFile"] as? Boolean)?.let { value ->
+                        deleteFile = value
+                    }
+                    (it["path"] as? String)?.let { value ->
+                        path = value
+                    }
+
+                    ziggeo.cancelUploadByPath(path, deleteFile)
+                }
+            }
+            "cancelCurrentUpload" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    var deleteFile = false;
+                    (it["deleteFile"] as? Boolean)?.let { value ->
+                        deleteFile = value
+                    }
+
+                    ziggeo.cancelCurrentUpload(deleteFile)
+                }
+            }
+
             else -> result.notImplemented()
         }
     }
