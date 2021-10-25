@@ -63,9 +63,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 }
             }
             "uploadFromFileSelector" -> {
-                ziggeo.uploadFromFileSelector(
-                        call.argument<HashMap<String, String>>("args")
-                )
+                ziggeo.startFileSelector()
             }
             "startScreenRecorder" -> ziggeo.startScreenRecorder(null)
             "setRecorderConfig" -> {
