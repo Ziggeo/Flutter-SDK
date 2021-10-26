@@ -9,15 +9,17 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  fluttertoast: ^7.0.1
-  flutter_html: ^1.0.0
-  url_launcher: ^5.5.0
-  flutter_email_sender: ^3.0.1
-  intl: ^0.16.1
-  provider: ^4.3.1
-  flutter_speed_dial: ^1.2.5
-  loading_overlay: ^0.2.1
-  shared_preferences: ^0.5.8
+  fluttertoast: 8.0.8
+  url_launcher: ^6.0.12
+  flutter_native_html_view: ^1.0.1
+  flutter_email_sender: ^5.0.2
+  intl: ^0.17.0
+  provider: ^6.0.1
+  flutter_speed_dial: ^4.4.0+2
+  loading_overlay: ^0.3.0
+  shared_preferences: ^2.0.8
+  firebase_core: ^1.7.0
+  firebase_crashlytics: ^2.2.3
 
   ziggeo:
     path: ../

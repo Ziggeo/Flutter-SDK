@@ -1,3 +1,8 @@
+## 0.1.5
+----------------------------
+* Added support for a custom player/camera views.
+* All changes from native SDK v2.2.4
+
 ## 0.1.4
 ----------------------------
 * Fixed crash when starting analytics service in the background

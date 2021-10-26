@@ -5,10 +5,10 @@ import 'package:ziggeo/styles/camera_recorder.dart';
 import 'package:ziggeo/styles/player.dart';
 
 void main() {
-  PlayerStyle playerStyle;
-  CameraRecorderStyle cameraRecorderStyle;
-  RecorderConfig recorderConfig;
-  PlayerConfig playerConfig;
+  late PlayerStyle playerStyle;
+  late CameraRecorderStyle cameraRecorderStyle;
+  late RecorderConfig recorderConfig;
+  late PlayerConfig playerConfig;
 
   setUp(() {
     playerConfig = PlayerConfig();

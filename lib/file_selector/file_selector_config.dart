@@ -5,7 +5,7 @@ class FileSelectorConfig extends BaseConfig {
   var maxDuration = 0;
   var shouldAllowMultipleSelection = false;
 
-  FileSelectorEventsListener eventsListener;
+  FileSelectorEventsListener? eventsListener;
 
   @override
   Map<String, dynamic> convertToMap() {

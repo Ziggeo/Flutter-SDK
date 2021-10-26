@@ -6,22 +6,22 @@ typedef OnUploadSelected = void Function(List);
 
 class FileSelectorEventsListener
     implements CommonEventsListener, PermissionsEventsListener {
-  OnUploadSelected onUploadSelected;
+  OnUploadSelected? onUploadSelected;
 
   @override
-  OnAccessForbidden onAccessForbidden;
+  OnAccessForbidden? onAccessForbidden;
 
   @override
-  OnAccessGranted onAccessGranted;
+  OnAccessGranted? onAccessGranted;
 
   @override
-  OnCanceledByUser onCanceledByUser;
+  OnCanceledByUser? onCanceledByUser;
 
   @override
-  OnError onError;
+  OnError? onError;
 
   @override
-  OnLoaded onLoaded;
+  OnLoaded? onLoaded;
 
   FileSelectorEventsListener(
       {this.onUploadSelected,

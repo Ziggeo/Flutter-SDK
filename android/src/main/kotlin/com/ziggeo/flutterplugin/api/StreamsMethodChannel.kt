@@ -2,53 +2,42 @@ package com.ziggeo.flutterplugin.api
 
 import android.annotation.SuppressLint
 import com.ziggeo.androidsdk.Ziggeo
-import com.ziggeo.androidsdk.net.models.videos.VideoModel
+import com.ziggeo.flutterplugin.ifLet
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.io.File
 
-class VideosMethodChannel(private val ziggeo: Ziggeo) : MethodCallHandler {
+class StreamsMethodChannel(private val ziggeo: Ziggeo) : MethodChannel.MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         print("onMethodCall")
         when (call.method) {
-            "index" -> {
-                var args: HashMap<String, String>? = null
-                (call.arguments as? HashMap<String, String>)?.let {
-                    args = it
-                }
-                processRequest(ziggeo.apiRx().videosRaw()
-                        .index(args), call, result)
+            "accept" -> ifLet(
+                    call.argument<String>("videoToken"),
+                    call.argument<String>("streamToken")) {
+                processRequest(ziggeo.apiRx().streams().bind(it[0], it[1]), call, result)
             }
-            "get" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw()[it], call, result)
-            }
-            "getVideoUrl" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().getVideoUrl(it), call, result)
-            }
-            "getImageUrl" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().getImageUrl(it), call, result)
-            }
-            "update" -> call.argument<String>("data")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().update(VideoModel.fromJson(it)), call, result)
-            }
-            "destroy" -> call.argument<String>("videoToken")?.let {
-                processRequest(ziggeo.apiRx().videosRaw().destroy(it), call, result)
+            "destroy" -> ifLet(
+                    call.argument<String>("videoToken"),
+                    call.argument<String>("streamToken")) {
+                processRequest(ziggeo.apiRx().streams().destroy(it[0], it[1]), call, result)
             }
             "create" -> {
                 var args: HashMap<String, String>? = null
                 (call.arguments as? HashMap<String, String>)?.let {
                     args = it
                 }
-                processRequest(ziggeo.apiRx().videosRaw()
-                        .create(args), call, result)
+                ifLet(
+                        call.argument<String>("videoToken"),
+                        call.argument<File>("path")) {
+                    processRequest(ziggeo.apiRx().streams().create(it[0].toString(), it[1] as File, args), call, result)
+                }
             }
-            "createWithFile" -> {
-            }
+
             else -> result.notImplemented()
         }
     }
@@ -74,4 +63,5 @@ class VideosMethodChannel(private val ziggeo: Ziggeo) : MethodCallHandler {
                     result.success(null)
                 }, { throwable: Throwable? -> result.error(call.method, throwable.toString(), throwable?.message) })
     }
+
 }

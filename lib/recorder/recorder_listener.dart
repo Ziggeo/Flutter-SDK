@@ -20,49 +20,49 @@ class RecorderEventsListener
         MicHardwareCheckEventsListener,
         CamHardwareCheckEventsListener,
         StreamingEventsListener {
-  OnReadyToRecord onReadyToRecord;
-  OnRecordingStarted onRecordingStarted;
-  OnRecordingProgress onRecordingProgress;
-  OnRecordingStopped onRecordingStopped;
-  OnManuallySubmitted onManuallySubmitted;
-  OnCountdown onCountdown;
-  OnRerecord onRerecord;
+  OnReadyToRecord? onReadyToRecord;
+  OnRecordingStarted? onRecordingStarted;
+  OnRecordingProgress? onRecordingProgress;
+  OnRecordingStopped? onRecordingStopped;
+  OnManuallySubmitted? onManuallySubmitted;
+  OnCountdown? onCountdown;
+  OnRerecord? onRerecord;
 
   @override
-  OnAccessForbidden onAccessForbidden;
+  OnAccessForbidden? onAccessForbidden;
 
   @override
-  OnAccessGranted onAccessGranted;
+  OnAccessGranted? onAccessGranted;
 
   @override
-  OnCanceledByUser onCanceledByUser;
+  OnCanceledByUser? onCanceledByUser;
 
   @override
-  OnError onError;
+  OnError? onError;
 
   @override
-  OnHasCamera onHasCamera;
+  OnHasCamera? onHasCamera;
 
   @override
-  OnHasMicrophone onHasMicrophone;
+  OnHasMicrophone? onHasMicrophone;
 
   @override
-  OnLoaded onLoaded;
+  OnLoaded? onLoaded;
 
   @override
-  OnMicrophoneHealth onMicrophoneHealth;
+  OnMicrophoneHealth? onMicrophoneHealth;
 
   @override
-  OnNoCamera onNoCamera;
+  OnNoCamera? onNoCamera;
 
   @override
-  OnNoMicrophone onNoMicrophone;
+  OnNoMicrophone? onNoMicrophone;
 
   @override
-  OnStreamingStarted onStreamingStarted;
+  OnStreamingStarted? onStreamingStarted;
 
   @override
-  OnStreamingStopped onStreamingStopped;
+  OnStreamingStopped? onStreamingStopped;
 
   RecorderEventsListener(
       {this.onReadyToRecord,

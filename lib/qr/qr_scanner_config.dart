@@ -4,7 +4,7 @@ import 'package:ziggeo/qr/qr_scanner_listener.dart';
 class QrScannerConfig extends BaseConfig {
   var shouldCloseAfterSuccessfulScan = true;
 
-  QrScannerEventListener eventsListener;
+  QrScannerEventListener? eventsListener;
 
   @override
   Map<String, dynamic> convertToMap() {

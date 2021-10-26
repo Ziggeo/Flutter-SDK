@@ -4,6 +4,6 @@ typedef OnHasCamera = void Function();
 typedef OnNoCamera = void Function();
 
 abstract class CamHardwareCheckEventsListener implements ErrorEventsListener {
-  OnNoCamera onNoCamera;
-  OnHasCamera onHasCamera;
+  OnNoCamera? onNoCamera;
+  OnHasCamera? onHasCamera;
 }

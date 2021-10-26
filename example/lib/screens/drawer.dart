@@ -18,20 +18,19 @@ import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 class AppDrawer extends StatefulWidget {
   final String appToken;
+  Ziggeo ziggeo;
 
-  AppDrawer(this.appToken);
+  AppDrawer(this.appToken, this.ziggeo);
 
   @override
-  State<StatefulWidget> createState() => _AppDrawerState(appToken);
+  State<StatefulWidget> createState() => _AppDrawerState(appToken, ziggeo);
 }
 
 class _AppDrawerState extends State<AppDrawer> {
   String appToken;
   Ziggeo ziggeo;
 
-  _AppDrawerState(this.appToken) {
-    ziggeo = Ziggeo(this.appToken);
-  }
+  _AppDrawerState(this.appToken, this.ziggeo) {}
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +45,6 @@ class _AppDrawerState extends State<AppDrawer> {
               isSelected: drawerState.selectedRouteName == Routes.recordings,
               text: Routes.recordings,
               onTap: () => {selectRoute(drawerState, Routes.recordings)}),
-          _createDrawerItem(
-              isSelected: drawerState.selectedRouteName == Routes.video_editor,
-              text: Routes.video_editor,
-              onTap: () => {selectRoute(drawerState, Routes.video_editor)}),
           _createDrawerItem(
               isSelected: drawerState.selectedRouteName == Routes.settings,
               text: Routes.settings,
@@ -189,7 +184,7 @@ class DrawerState with ChangeNotifier {
         selectedRoute = VideoEditorScreen();
         break;
       case Routes.settings:
-        selectedRoute = SettingsScreen();
+        selectedRoute = SettingsScreen(_ziggeo);
         break;
       case Routes.sdks:
         selectedRoute = AvailableSdksScreen();

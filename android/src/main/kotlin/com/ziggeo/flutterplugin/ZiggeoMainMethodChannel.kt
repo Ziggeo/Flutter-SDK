@@ -3,13 +3,15 @@ package com.ziggeo.flutterplugin
 import android.net.Uri
 import android.os.Handler
 import com.ziggeo.androidsdk.IZiggeo
-import com.ziggeo.androidsdk.callbacks.*
+import com.ziggeo.androidsdk.callbacks.FileSelectorCallback
+import com.ziggeo.androidsdk.callbacks.PlayerCallback
+import com.ziggeo.androidsdk.callbacks.RecorderCallback
+import com.ziggeo.androidsdk.callbacks.UploadingCallback
 import com.ziggeo.androidsdk.qr.QrScannerCallback
 import com.ziggeo.androidsdk.recorder.MicSoundLevel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import java.io.File
 import java.util.*
 
 class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
@@ -18,6 +20,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                               private val uplCallbackChannel: MethodChannel,
                               private val plCallbackChannel: MethodChannel,
                               private val qrCallbackChannel: MethodChannel,
+                              private val zvCallbackChannel: MethodChannel,
                               private val mainThread: Handler
 ) : MethodCallHandler {
 
@@ -60,9 +63,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 }
             }
             "uploadFromFileSelector" -> {
-                ziggeo.uploadFromFileSelector(
-                        call.argument<HashMap<String, String>>("args")
-                )
+                ziggeo.startFileSelector()
             }
             "startScreenRecorder" -> ziggeo.startScreenRecorder(null)
             "setRecorderConfig" -> {
@@ -158,6 +159,31 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 }
                 ziggeo.sendReport(list)
             }
+            "cancelUploadByPath" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    var path = "";
+                    var deleteFile = false;
+                    (it["deleteFile"] as? Boolean)?.let { value ->
+                        deleteFile = value
+                    }
+                    (it["path"] as? String)?.let { value ->
+                        path = value
+                    }
+
+                    ziggeo.cancelUploadByPath(path, deleteFile)
+                }
+            }
+            "cancelCurrentUpload" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    var deleteFile = false;
+                    (it["deleteFile"] as? Boolean)?.let { value ->
+                        deleteFile = value
+                    }
+
+                    ziggeo.cancelCurrentUpload(deleteFile)
+                }
+            }
+
             else -> result.notImplemented()
         }
     }

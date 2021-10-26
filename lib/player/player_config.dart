@@ -5,7 +5,7 @@ class PlayerConfig extends BaseConfig {
   var shouldShowSubtitles = false;
   var isMuted = false;
 
-  PlayerEventsListener eventsListener;
+  PlayerEventsListener? eventsListener;
 
   @override
   Map<String, dynamic> convertToMap() {

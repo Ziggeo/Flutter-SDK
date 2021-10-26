@@ -2,14 +2,14 @@ group 'com.ziggeo.flutterplugin'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.5.31'
     repositories {
         google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -33,8 +33,12 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 19
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        missingDimensionStrategy "dim", "flutter" // for internal development
+        ndk {
+            abiFilters 'armeabi-v7a','arm64-v8a','x86_64'
+        }
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -42,12 +46,12 @@ android {
 }
 
 dependencies {
-    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.1.7:flutter@aar") {
+    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.4.4:flutter@aar") {
         transitive = true
     }
 //    implementation project(':sdk') // for internal development
     implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation "androidx.core:core-ktx:1.3.0"
+    implementation "androidx.core:core-ktx:1.6.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
