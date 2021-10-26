@@ -1,3 +1,9 @@
+## 0.2.0
+----------------------------
+* Added nullability support.
+* Added cancelUpload method support.
+* All changes from android native SDK v2.4.4
+
 ## 0.1.5
 ----------------------------
 * Added support for a custom player/camera views.
