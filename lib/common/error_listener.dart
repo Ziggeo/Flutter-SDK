@@ -1,5 +1,5 @@
-typedef OnError = void Function(Exception);
+typedef OnError = void Function(Exception?);
 
 abstract class ErrorEventsListener {
-  OnError onError;
+  OnError? onError;
 }

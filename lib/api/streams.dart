@@ -7,17 +7,17 @@ class StreamsApi {
 
   StreamsApi();
 
-  Future<String> accept(String videoTokenOrKey, String streamTokenOrKey) async {
+  Future<String?> accept(String videoTokenOrKey, String streamTokenOrKey) async {
     return await _streamsChannel.invokeMethod('accept',
         {'videoToken': videoTokenOrKey, 'streamToken': streamTokenOrKey});
   }
 
-  Future<String> destroy(String videoTokenOrKey, String streamTokenOrKey) async {
+  Future<String?> destroy(String videoTokenOrKey, String streamTokenOrKey) async {
     return await _streamsChannel.invokeMethod('destroy',
         {'videoToken': videoTokenOrKey, 'streamToken': streamTokenOrKey});
   }
 
-  Future<String> create(String videoTokenOrKey, File file, Map<String, String> args) async {
+  Future<String?> create(String videoTokenOrKey, File file, Map<String, String>? args) async {
     return await _streamsChannel.invokeMethod('create',
         {'videoToken': videoTokenOrKey, 'path': file, 'args': args});
   }

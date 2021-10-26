@@ -12,37 +12,37 @@ class QrScannerEventListener
         PermissionsEventsListener,
         CamHardwareCheckEventsListener,
         MicHardwareCheckEventsListener {
-  OnDecoded onDecoded;
+  OnDecoded? onDecoded;
 
   @override
-  OnAccessForbidden onAccessForbidden;
+  OnAccessForbidden? onAccessForbidden;
 
   @override
-  OnAccessGranted onAccessGranted;
+  OnAccessGranted? onAccessGranted;
 
   @override
-  OnCanceledByUser onCanceledByUser;
+  OnCanceledByUser? onCanceledByUser;
 
   @override
-  OnError onError;
+  OnError? onError;
 
   @override
-  OnHasCamera onHasCamera;
+  OnHasCamera? onHasCamera;
 
   @override
-  OnHasMicrophone onHasMicrophone;
+  OnHasMicrophone? onHasMicrophone;
 
   @override
-  OnLoaded onLoaded;
+  OnLoaded? onLoaded;
 
   @override
-  OnMicrophoneHealth onMicrophoneHealth;
+  OnMicrophoneHealth? onMicrophoneHealth;
 
   @override
-  OnNoCamera onNoCamera;
+  OnNoCamera? onNoCamera;
 
   @override
-  OnNoMicrophone onNoMicrophone;
+  OnNoMicrophone? onNoMicrophone;
 
   QrScannerEventListener(
       {this.onDecoded,

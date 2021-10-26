@@ -4,6 +4,6 @@ typedef OnLoaded = void Function();
 typedef OnCanceledByUser = void Function();
 
 abstract class CommonEventsListener implements ErrorEventsListener {
-  OnLoaded onLoaded;
-  OnCanceledByUser onCanceledByUser;
+  OnLoaded? onLoaded;
+  OnCanceledByUser? onCanceledByUser;
 }

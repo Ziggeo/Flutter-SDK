@@ -4,6 +4,6 @@ typedef OnAccessGranted = void Function();
 typedef OnAccessForbidden = void Function(List);
 
 abstract class PermissionsEventsListener implements ErrorEventsListener {
-  OnAccessGranted onAccessGranted;
-  OnAccessForbidden onAccessForbidden;
+  OnAccessGranted? onAccessGranted;
+  OnAccessForbidden? onAccessForbidden;
 }
