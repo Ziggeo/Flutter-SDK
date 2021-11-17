@@ -21,6 +21,7 @@ import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/screens/recording_details.dart';
 import 'package:ziggeo_example/screens/recordings/recording_model.dart';
 import 'package:ziggeo_example/utils/logger.dart';
+import 'package:ziggeo_example/utils/utils.dart';
 import 'package:ziggeo_example/widgets/TextLocalized.dart';
 
 import '../camera_recorder.dart';

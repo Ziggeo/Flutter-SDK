@@ -52,10 +52,10 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
             "startImageRecorder" -> ziggeo.startImageRecorder()
             "startAudioPlayer" -> {
                 call.argument<String>("token")?.let {
-                    ziggeo.startAudioPlayer(null, it)
+                    ziggeo.startAudioPlayer(it)
                 }
                 call.argument<String>("path")?.let {
-                    ziggeo.startAudioPlayer(it, null)
+                    ziggeo.startAudioPlayer(it)
                 }
             }
 
