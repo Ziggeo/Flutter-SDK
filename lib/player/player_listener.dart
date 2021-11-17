@@ -10,26 +10,26 @@ typedef OnReadyToPlay = void Function();
 
 class PlayerEventsListener
     implements CommonEventsListener, PermissionsEventsListener {
-  OnPlaying onPlaying;
-  OnPaused onPaused;
-  OnEnded onEnded;
-  OnSeek onSeek;
-  OnReadyToPlay onReadyToPlay;
+  OnPlaying? onPlaying;
+  OnPaused? onPaused;
+  OnEnded? onEnded;
+  OnSeek? onSeek;
+  OnReadyToPlay? onReadyToPlay;
 
   @override
-  OnAccessForbidden onAccessForbidden;
+  OnAccessForbidden? onAccessForbidden;
 
   @override
-  OnAccessGranted onAccessGranted;
+  OnAccessGranted? onAccessGranted;
 
   @override
-  OnCanceledByUser onCanceledByUser;
+  OnCanceledByUser? onCanceledByUser;
 
   @override
-  OnError onError;
+  OnError? onError;
 
   @override
-  OnLoaded onLoaded;
+  OnLoaded? onLoaded;
 
   PlayerEventsListener(
   {this.onPlaying,

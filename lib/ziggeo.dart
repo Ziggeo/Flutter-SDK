@@ -20,8 +20,9 @@ class Ziggeo {
   static const _uplChannel = const MethodChannel('ziggeo_upl_callback');
   static const _plChannel = const MethodChannel('ziggeo_pl_callback');
   static const _qrChannel = const MethodChannel('ziggeo_qr_callback');
+  static const _zvChannel = const MethodChannel('z_video_view');
 
-  Ziggeo(String token) {
+  Ziggeo(String? token) {
     setAppToken(token);
     startListeningChannels();
     _videosApi = VideosApi();
@@ -30,88 +31,100 @@ class Ziggeo {
     _audiosApi = AudiosApi();
   }
 
-  VideosApi _videosApi;
-  StreamsApi _streamsApi;
-  ImagesApi _imagesApi;
-  AudiosApi _audiosApi;
+  late VideosApi _videosApi;
+  late StreamsApi _streamsApi;
+  late ImagesApi _imagesApi;
+  late AudiosApi _audiosApi;
 
-  RecorderConfig _recorderConfig;
-  QrScannerConfig _qrScannerConfig;
-  UploadingConfig _uploadingConfig;
-  FileSelectorConfig _fileSelectorConfig;
-  PlayerConfig _playerConfig;
+  RecorderConfig? _recorderConfig;
+  QrScannerConfig? _qrScannerConfig;
+  UploadingConfig? _uploadingConfig;
+  FileSelectorConfig? _fileSelectorConfig;
+  PlayerConfig? _playerConfig;
 
   VideosApi get videos => _videosApi;
+
   StreamsApi get streams => _streamsApi;
 
   AudiosApi get audios => _audiosApi;
 
   ImagesApi get images => _imagesApi;
 
-  PlayerConfig get playerConfig => _playerConfig;
+  PlayerConfig? get playerConfig => _playerConfig;
 
-  set playerConfig(PlayerConfig value) {
+
+  set playerConfig(PlayerConfig? value) {
     _playerConfig = value;
     _ziggeoChannel.invokeMethod(
-        'setPlayerConfig', _playerConfig.convertToMap());
+        'setPlayerConfig', _playerConfig?.convertToMap());
   }
 
-  FileSelectorConfig get fileSelectorConfig => _fileSelectorConfig;
+  FileSelectorConfig? get fileSelectorConfig => _fileSelectorConfig;
 
-  set fileSelectorConfig(FileSelectorConfig value) {
+  set fileSelectorConfig(FileSelectorConfig? value) {
     _fileSelectorConfig = value;
     _ziggeoChannel.invokeMethod(
-        'setFileSelectorConfig', _fileSelectorConfig.convertToMap());
+        'setFileSelectorConfig', _fileSelectorConfig?.convertToMap());
   }
 
-  QrScannerConfig get qrScannerConfig => _qrScannerConfig;
+  QrScannerConfig? get qrScannerConfig => _qrScannerConfig;
 
-  set qrScannerConfig(QrScannerConfig value) {
+  set qrScannerConfig(QrScannerConfig? value) {
     _qrScannerConfig = value;
     _ziggeoChannel.invokeMethod(
-        'setQrScannerConfig', _qrScannerConfig.convertToMap());
+        'setQrScannerConfig', _qrScannerConfig?.convertToMap());
   }
 
-  UploadingConfig get uploadingConfig => _uploadingConfig;
+  UploadingConfig? get uploadingConfig => _uploadingConfig;
 
-  set uploadingConfig(UploadingConfig value) {
+  set uploadingConfig(UploadingConfig? value) {
     _uploadingConfig = value;
     _ziggeoChannel.invokeMethod(
-        'setUploadingConfig', _uploadingConfig.convertToMap());
+        'setUploadingConfig', _uploadingConfig?.convertToMap());
   }
 
-  RecorderConfig get recorderConfig => _recorderConfig;
+  RecorderConfig? get recorderConfig => _recorderConfig;
 
   set recorderConfig(value) {
     _recorderConfig = value;
     _ziggeoChannel.invokeMethod(
-        'setRecorderConfig', recorderConfig.convertToMap());
+        'setRecorderConfig', recorderConfig?.convertToMap());
   }
 
-  Future<String> get appToken async {
+  Future<String?> get appToken async {
     return await _ziggeoChannel.invokeMethod('getAppToken');
   }
 
-  Future<void> setAppToken(String token) async {
+  Future<void> setAppToken(String? token) async {
     return await _ziggeoChannel
         .invokeMethod('setAppToken', {'appToken': token});
   }
 
-  Future<void> setClientAuthToken(String token) async {
+  Future<void> setClientAuthToken(String? token) async {
     return await _ziggeoChannel
         .invokeMethod('setClientAuthToken', {'clientAuthToken': token});
   }
 
-  Future<String> get clientAuthToken async {
+  Future<void> cancelUploadByPath(String path, bool deleteFile) async {
+    return await _ziggeoChannel
+        .invokeMethod('cancelUploadByPath', {'path': path, 'deleteFile': deleteFile});
+  }
+
+  Future<void> cancelCurrentUpload(bool deleteFile) async {
+    return await _ziggeoChannel
+        .invokeMethod('cancelCurrentUpload', {'deleteFile': deleteFile});
+  }
+
+  Future<String?> get clientAuthToken async {
     return await _ziggeoChannel.invokeMethod('getClientAuthToken');
   }
 
-  Future<void> setServerAuthToken(String token) async {
+  Future<void> setServerAuthToken(String? token) async {
     return await _ziggeoChannel
         .invokeMethod('setServerAuthToken', {'serverAuthToken': token});
   }
 
-  Future<String> get serverAuthToken async {
+  Future<String?> get serverAuthToken async {
     return await _ziggeoChannel.invokeMethod('getServerAuthToken');
   }
 
@@ -161,12 +174,12 @@ class Ziggeo {
     return await _ziggeoChannel.invokeMethod('startScreenRecorder');
   }
 
-  Future<void> uploadFromFileSelector(Map<String, String> args) async {
+  Future<void> uploadFromFileSelector(Map<String, String>? args) async {
     return await _ziggeoChannel
         .invokeMethod('uploadFromFileSelector', {"args": args});
   }
 
-  Future<void> sendReport(List<String> logs) async {
+  Future<void> sendReport(List<String>? logs) async {
     return await _ziggeoChannel.invokeMethod('sendReport', {"logs": logs});
   }
 
@@ -182,62 +195,61 @@ class Ziggeo {
     _recChannel.setMethodCallHandler((MethodCall call) async {
       switch (call.method) {
         case 'streamingStarted':
-          recorderConfig?.eventsListener?.onStreamingStarted();
+          recorderConfig?.eventsListener?.onStreamingStarted?.call();
           break;
         case 'loaded':
-          recorderConfig?.eventsListener?.onLoaded();
+          recorderConfig?.eventsListener?.onLoaded?.call();
           break;
         case 'accessGranted':
-          recorderConfig?.eventsListener?.onAccessGranted();
+          recorderConfig?.eventsListener?.onAccessGranted?.call();
           break;
         case 'noMicrophone':
-          recorderConfig?.eventsListener?.onNoMicrophone();
+          recorderConfig?.eventsListener?.onNoMicrophone?.call();
           break;
         case 'accessForbidden':
-          recorderConfig?.eventsListener?.onAccessForbidden(call.arguments);
+          recorderConfig?.eventsListener?.onAccessForbidden?.call(call.arguments);
           break;
         case 'hasMicrophone':
-          recorderConfig?.eventsListener?.onHasMicrophone();
+          recorderConfig?.eventsListener?.onHasMicrophone?.call();
           break;
         case 'recordingStopped':
-          recorderConfig?.eventsListener?.onRecordingStopped(call.arguments);
+          recorderConfig?.eventsListener?.onRecordingStopped?.call(call.arguments);
           break;
         case 'readyToRecord':
-          recorderConfig?.eventsListener?.onReadyToRecord();
+          recorderConfig?.eventsListener?.onReadyToRecord?.call();
           break;
         case 'recordingStarted':
-          recorderConfig?.eventsListener?.onRecordingStarted();
+          recorderConfig?.eventsListener?.onRecordingStarted?.call();
           break;
         case 'recordingProgress':
-          recorderConfig?.eventsListener?.onRecordingProgress(call.arguments);
+          recorderConfig?.eventsListener?.onRecordingProgress?.call(call.arguments);
           break;
         case 'hasCamera':
-          recorderConfig?.eventsListener?.onHasCamera();
+          recorderConfig?.eventsListener?.onHasCamera?.call();
           break;
         case 'microphoneHealth':
-          recorderConfig?.eventsListener?.onMicrophoneHealth(call.arguments);
+          recorderConfig?.eventsListener?.onMicrophoneHealth?.call(call.arguments);
           break;
         case 'error':
-          recorderConfig?.eventsListener
-              ?.onError(new Exception(call.arguments));
+          recorderConfig?.eventsListener?.onError?.call(new Exception(call.arguments));
           break;
         case 'canceledByUser':
-          recorderConfig?.eventsListener?.onCanceledByUser();
+          recorderConfig?.eventsListener?.onCanceledByUser?.call();
           break;
         case 'streamingStopped':
-          recorderConfig?.eventsListener?.onStreamingStopped();
+          recorderConfig?.eventsListener?.onStreamingStopped?.call();
           break;
         case 'manuallySubmitted':
-          recorderConfig?.eventsListener?.onManuallySubmitted();
+          recorderConfig?.eventsListener?.onManuallySubmitted?.call();
           break;
         case 'noCamera':
-          recorderConfig?.eventsListener?.onNoCamera();
+          recorderConfig?.eventsListener?.onNoCamera?.call();
           break;
         case 'countdown':
-          recorderConfig?.eventsListener?.onCountdown(call.arguments);
+          recorderConfig?.eventsListener?.onCountdown?.call(call.arguments);
           break;
         case 'rerecord':
-          recorderConfig?.eventsListener?.onRerecord();
+          recorderConfig?.eventsListener?.onRerecord?.call();
           break;
         default:
           print(
@@ -250,22 +262,22 @@ class Ziggeo {
     _fsChannel.setMethodCallHandler((MethodCall call) async {
       switch (call.method) {
         case 'loaded':
-          fileSelectorConfig?.eventsListener?.onLoaded();
+          fileSelectorConfig?.eventsListener?.onLoaded?.call();
           break;
         case 'accessGranted':
-          fileSelectorConfig?.eventsListener?.onAccessGranted();
+          fileSelectorConfig?.eventsListener?.onAccessGranted?.call();
           break;
         case 'accessForbidden':
-          fileSelectorConfig?.eventsListener?.onAccessForbidden(call.arguments);
+          fileSelectorConfig?.eventsListener?.onAccessForbidden?.call(call.arguments);
           break;
         case 'error':
-          fileSelectorConfig?.eventsListener?.onError(call.arguments);
+          fileSelectorConfig?.eventsListener?.onError?.call(call.arguments);
           break;
         case 'canceledByUser':
-          fileSelectorConfig?.eventsListener?.onCanceledByUser();
+          fileSelectorConfig?.eventsListener?.onCanceledByUser?.call();
           break;
         case 'uploadSelected':
-          fileSelectorConfig?.eventsListener?.onUploadSelected(call.arguments);
+          fileSelectorConfig?.eventsListener?.onUploadSelected?.call(call.arguments);
           break;
         default:
           print(
@@ -278,10 +290,10 @@ class Ziggeo {
     _uplChannel.setMethodCallHandler((MethodCall call) async {
       switch (call.method) {
         case 'processing':
-          _uploadingConfig?.eventsListener?.onProcessing(call.arguments);
+          _uploadingConfig?.eventsListener?.onProcessing?.call(call.arguments);
           break;
         case 'uploadProgress':
-          uploadingConfig?.eventsListener?.onUploadProgress(
+          uploadingConfig?.eventsListener?.onUploadProgress?.call(
             call.arguments["token"],
             call.arguments["path"],
             call.arguments["current"],
@@ -289,20 +301,20 @@ class Ziggeo {
           );
           break;
         case 'processed':
-          _uploadingConfig?.eventsListener?.onProcessed(call.arguments);
+          _uploadingConfig?.eventsListener?.onProcessed?.call(call.arguments);
           break;
         case 'verified':
-          _uploadingConfig?.eventsListener?.onVerified(call.arguments);
+          _uploadingConfig?.eventsListener?.onVerified?.call(call.arguments);
           break;
         case 'uploadingStarted':
-          _uploadingConfig?.eventsListener?.onUploadingStarted(call.arguments);
+          _uploadingConfig?.eventsListener?.onUploadingStarted?.call(call.arguments);
           break;
         case 'uploaded':
           uploadingConfig?.eventsListener
-              ?.onUploaded(call.arguments["token"], call.arguments["path"]);
+              ?.onUploaded?.call(call.arguments["token"], call.arguments["path"]);
           break;
         case 'error':
-          _uploadingConfig?.eventsListener?.onError(call.arguments);
+          _uploadingConfig?.eventsListener?.onError?.call(call.arguments);
           break;
         default:
           print(
@@ -315,34 +327,34 @@ class Ziggeo {
     _plChannel.setMethodCallHandler((MethodCall call) async {
       switch (call.method) {
         case 'loaded':
-          _playerConfig?.eventsListener?.onLoaded();
+          _playerConfig?.eventsListener?.onLoaded?.call();
           break;
         case 'accessGranted':
-          _playerConfig?.eventsListener?.onAccessGranted();
+          _playerConfig?.eventsListener?.onAccessGranted?.call();
           break;
         case 'accessForbidden':
-          _playerConfig?.eventsListener?.onAccessForbidden(call.arguments);
+          _playerConfig?.eventsListener?.onAccessForbidden?.call(call.arguments);
           break;
         case 'error':
-          _playerConfig?.eventsListener?.onError(call.arguments);
+          _playerConfig?.eventsListener?.onError?.call(call.arguments);
           break;
         case 'canceledByUser':
-          _playerConfig?.eventsListener?.onCanceledByUser();
+          _playerConfig?.eventsListener?.onCanceledByUser?.call();
           break;
         case 'paused':
-          _playerConfig?.eventsListener?.onPaused();
+          _playerConfig?.eventsListener?.onPaused?.call();
           break;
         case 'ended':
-          _playerConfig?.eventsListener?.onEnded();
+          _playerConfig?.eventsListener?.onEnded?.call();
           break;
         case 'seek':
-          _playerConfig?.eventsListener?.onSeek(call.arguments);
+          _playerConfig?.eventsListener?.onSeek?.call(call.arguments);
           break;
         case 'readyToPlay':
-          _playerConfig?.eventsListener?.onReadyToPlay();
+          _playerConfig?.eventsListener?.onReadyToPlay?.call();
           break;
         case 'playing':
-          _playerConfig?.eventsListener?.onPlaying();
+          _playerConfig?.eventsListener?.onPlaying?.call();
           break;
         default:
           print(
@@ -355,34 +367,34 @@ class Ziggeo {
     _qrChannel.setMethodCallHandler((MethodCall call) async {
       switch (call.method) {
         case 'loaded':
-          qrScannerConfig?.eventsListener?.onLoaded();
+          qrScannerConfig?.eventsListener?.onLoaded?.call();
           break;
         case 'accessGranted':
-          qrScannerConfig?.eventsListener?.onAccessGranted();
+          qrScannerConfig?.eventsListener?.onAccessGranted?.call();
           break;
         case 'accessForbidden':
-          qrScannerConfig?.eventsListener?.onAccessForbidden(call.arguments);
+          qrScannerConfig?.eventsListener?.onAccessForbidden?.call(call.arguments);
           break;
         case 'error':
-          qrScannerConfig?.eventsListener?.onError(call.arguments);
+          qrScannerConfig?.eventsListener?.onError?.call(call.arguments);
           break;
         case 'onDecoded':
-          qrScannerConfig?.eventsListener?.onDecoded(call.arguments);
+          qrScannerConfig?.eventsListener?.onDecoded?.call(call.arguments);
           break;
         case 'canceledByUser':
-          qrScannerConfig?.eventsListener?.onCanceledByUser();
+          qrScannerConfig?.eventsListener?.onCanceledByUser?.call();
           break;
         case 'noCamera':
-          qrScannerConfig?.eventsListener?.onNoCamera();
+          qrScannerConfig?.eventsListener?.onNoCamera?.call();
           break;
         case 'noMicrophone':
-          qrScannerConfig?.eventsListener?.onNoMicrophone();
+          qrScannerConfig?.eventsListener?.onNoMicrophone?.call();
           break;
         case 'hasCamera':
-          qrScannerConfig?.eventsListener?.onHasCamera();
+          qrScannerConfig?.eventsListener?.onHasCamera?.call();
           break;
         case 'hasMicrophone':
-          qrScannerConfig?.eventsListener?.onHasMicrophone();
+          qrScannerConfig?.eventsListener?.onHasMicrophone?.call();
           break;
         default:
           print(

@@ -8,7 +8,7 @@ class UploadingConfig extends BaseConfig {
   var syncInterval = defaultSyncInterval;
   var shouldTurnOffUploader = false;
 
-  UploadingEventsListener eventsListener;
+  UploadingEventsListener? eventsListener;
 
   @override
   Map<String, dynamic> convertToMap() {

@@ -53,3 +53,7 @@ const double spreadRadius = 5.0;
 const double blurRadius = 7.0;
 const double borderRadius = 12.0;
 const int duration = 1;
+
+/// Recording camera screen
+const btn_mic_size = 25.0;
+const btn_ic_size = 40.0;

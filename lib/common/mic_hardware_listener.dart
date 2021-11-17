@@ -5,7 +5,7 @@ typedef OnHasMicrophone = void Function();
 typedef OnMicrophoneHealth = void Function(String);
 
 abstract class MicHardwareCheckEventsListener implements ErrorEventsListener {
-  OnNoMicrophone onNoMicrophone;
-  OnHasMicrophone onHasMicrophone;
-  OnMicrophoneHealth onMicrophoneHealth;
+  OnNoMicrophone? onNoMicrophone;
+  OnHasMicrophone? onHasMicrophone;
+  OnMicrophoneHealth? onMicrophoneHealth;
 }

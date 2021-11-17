@@ -22,7 +22,7 @@ class RecorderConfig extends BaseConfig {
   var shouldEnableCoverShot = true;
   var shouldConfirmStopRecording = false;
 
-  RecorderEventsListener eventsListener;
+  RecorderEventsListener? eventsListener;
 
   @override
   Map<String, dynamic> convertToMap() {

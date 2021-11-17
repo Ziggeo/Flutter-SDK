@@ -8,12 +8,12 @@ typedef OnProcessing = void Function(String);
 typedef OnProcessed = void Function(String);
 
 class UploadingEventsListener implements ErrorEventsListener {
-  OnUploadingStarted onUploadingStarted;
-  OnUploadProgress onUploadProgress;
-  OnUploaded onUploaded;
-  OnVerified onVerified;
-  OnProcessing onProcessing;
-  OnProcessed onProcessed;
+  OnUploadingStarted? onUploadingStarted;
+  OnUploadProgress? onUploadProgress;
+  OnUploaded? onUploaded;
+  OnVerified? onVerified;
+  OnProcessing? onProcessing;
+  OnProcessed? onProcessed;
 
   UploadingEventsListener(
       {this.onUploadingStarted,
@@ -25,5 +25,5 @@ class UploadingEventsListener implements ErrorEventsListener {
       this.onError});
 
   @override
-  OnError onError;
+  OnError? onError;
 }

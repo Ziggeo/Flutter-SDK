@@ -1,3 +1,14 @@
+## 0.2.0
+----------------------------
+* Added nullability support.
+* Added cancelUpload method support.
+* All changes from android native SDK v2.4.4
+
+## 0.1.5
+----------------------------
+* Added support for a custom player/camera views.
+* All changes from native SDK v2.2.4
+
 ## 0.1.4
 ----------------------------
 * Fixed crash when starting analytics service in the background
