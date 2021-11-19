@@ -1,3 +1,7 @@
+## 0.2.1
+----------------------------
+* Added audio, image api support.
+
 ## 0.2.0
 ----------------------------
 * Added nullability support.
