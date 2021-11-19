@@ -41,6 +41,8 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   Ziggeo ziggeo;
   ScrollController scrollController;
   bool dialVisible = true;
+  bool isLoading = false;
+
   final AppLocalizations localize = AppLocalizations.instance;
   final List<LogModel> logBuffer = Logger.buffer;
 
@@ -144,11 +146,11 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   onStartAudioRecorderPressed() {
-    Utils.showToast(context, AppLocalizations.instance.text('coming_soon'));
+    ziggeo.startAudioRecorder();
   }
 
   onStartImageCapturePressed() {
-    Utils.showToast(context, AppLocalizations.instance.text('coming_soon'));
+    ziggeo.startImageRecorder();
   }
 
   onStartFileSelectorPressed() {
@@ -156,22 +158,60 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   init() async {
+    var recordings = new List<RecordingModel>();
+
+    isLoading = true;
+    setState(() {
+      this.recordings = recordings;
+    });
+
     if (ziggeo != null) {
       initCallbacks();
     }
 
-    var recordings = await ziggeo.videos.index(null).then((value) => json
-        .decode(value)
-        .cast<Map<String, dynamic>>()
-        .map<RecordingModel>((json) => RecordingModel.fromJson(json))
-        .toList());
+    var recordingsVideo = new List<RecordingModel>();
+    var recordingsAudio = new List<RecordingModel>();
+    var recordingsImages = new List<RecordingModel>();
 
-    setState(() {
-      this.recordings = recordings;
-    });
+    Future.wait([
+      (() async => recordingsVideo = await ziggeo.videos.index(null).then(
+              (value) => json
+                  .decode(value)
+                  .cast<Map<String, dynamic>>()
+                  .map<RecordingModel>((json) =>
+                      RecordingModel.fromJson(json, RecordingModel.video_type))
+                  .toList()))()
+          .then((value) {}, onError: (error) => isLoading = false),
+      (() async => recordingsAudio = await ziggeo.audios.index(null).then(
+              (value) => json
+                  .decode(value)
+                  .cast<Map<String, dynamic>>()
+                  .map<RecordingModel>((json) =>
+                      RecordingModel.fromJson(json, RecordingModel.audio_type))
+                  .toList()))()
+          .then((value) {}, onError: (error) => isLoading = false),
+      (() async => recordingsImages = await ziggeo.images.index(null).then(
+              (value) => json
+                  .decode(value)
+                  .cast<Map<String, dynamic>>()
+                  .map<RecordingModel>((json) =>
+                      RecordingModel.fromJson(json, RecordingModel.image_type))
+                  .toList()))()
+          .then((value) {}, onError: (error) => isLoading = false)
+    ]).then((value) {
+      recordings.addAll(recordingsVideo);
+      recordings.addAll(recordingsImages);
+      recordings.addAll(recordingsAudio);
+      recordings.sort((b, a) => a.created.compareTo(b.created));
+      setState(() {
+        this.recordings = recordings;
+      });
+      isLoading = false;
+    }, onError: (error) => isLoading = false);
   }
 
   getListChildren() {
+    isLoading = true;
     return List.generate(recordings.length, (index) {
       return buildItemWidget(recordings[index]);
     });
@@ -186,13 +226,31 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     final String dateCreated = DateFormat('dd.MM.yyyy hh:mm')
         .format(DateTime.fromMillisecondsSinceEpoch(item.created * 1000));
 
+    final Icon icon = (item.type == RecordingModel.image_type)
+        ? Icon(
+            Icons.image,
+            size: icon_size,
+          )
+        : (item.type == RecordingModel.audio_type)
+            ? Icon(
+                Icons.mic,
+                size: icon_size,
+              )
+            : Icon(
+                Icons.videocam,
+                size: icon_size,
+              );
+
     return InkWell(
         onTap: () => {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => RecordingDetailsScreen(ziggeo, item)),
-              ).then((value) => refreshIndicatorKey.currentState?.show())
+              ).then((value) {
+                refreshIndicatorKey.currentState?.show();
+                isLoading = value;
+              })
             },
         child: SizedBox(
             height: recording_item_height,
@@ -201,10 +259,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
               padding: EdgeInsets.all(common_margin),
               child: Row(
                 children: <Widget>[
-                  Icon(
-                    Icons.videocam,
-                    size: icon_size,
-                  ),
+                  icon,
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.all(common_half_margin),

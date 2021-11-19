@@ -7,6 +7,11 @@ class RecordingModel {
   static const String status_failed = "FAILED";
   static const String status_ready = "READY";
 
+  static const String video_type = "VIDEO";
+  static const String audio_type = "AUDIO";
+  static const String image_type = "IMAGE";
+
+  String type;
   String token;
   String key;
   String state;
@@ -16,7 +21,8 @@ class RecordingModel {
   int created;
 
   RecordingModel(
-      {this.token,
+      {this.type,
+      this.token,
       this.key,
       this.state,
       this.title,
@@ -24,8 +30,9 @@ class RecordingModel {
       this.tags,
       this.created});
 
-  factory RecordingModel.fromJson(Map<String, dynamic> json) {
+  factory RecordingModel.fromJson(Map<String, dynamic> json, String type) {
     return RecordingModel(
+      type: type,
       token: json['token'],
       key: json['key'],
       state: json['state_string'],
