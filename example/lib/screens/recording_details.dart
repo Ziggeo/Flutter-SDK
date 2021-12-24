@@ -209,6 +209,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                                       onPressed: onPlayButtonPressed,
                                       icon: Icon(Icons.play_circle_filled),
                                       iconSize: btn_play_size,
+                                      color: Color(accent),
                                     ))
                               ],
                             )

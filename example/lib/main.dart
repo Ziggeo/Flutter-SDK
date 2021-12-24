@@ -54,7 +54,7 @@ class _ZiggeoDemoAppState extends State<ZiggeoDemoApp> {
           accentColor: Color(accent),
           primaryColorLight: Color(primaryLight),
           colorScheme: ColorScheme.light(
-            primary: Color(primaryText),
+            primary: Color(primary),
           ),
           buttonTheme: ButtonThemeData(
               buttonColor: Color(primary), textTheme: ButtonTextTheme.primary),
