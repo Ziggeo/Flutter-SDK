@@ -282,10 +282,10 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       });
     }
     if (recordingModel.type == RecordingModel.audio_type) {
-      ziggeo.startAudioPlayer(recordingModel.token, null);
+      ziggeo.startAudioPlayerByToken(recordingModel.token);
     }
     if (recordingModel.type == RecordingModel.image_type) {
-      ziggeo.showImage(recordingModel.token);
+      ziggeo.showImageByToken(recordingModel.token);
     }
   }
 }

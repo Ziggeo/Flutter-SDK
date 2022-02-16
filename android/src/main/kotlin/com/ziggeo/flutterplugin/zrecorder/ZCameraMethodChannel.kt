@@ -2,14 +2,14 @@ package com.ziggeo.flutterplugin.zrecorder
 
 import com.ziggeo.androidsdk.Ziggeo
 import com.ziggeo.androidsdk.callbacks.RecorderCallback
-import com.ziggeo.androidsdk.widgets.cameraview.CameraView
+import com.ziggeo.androidsdk.widgets.cameraview.BaseCameraView
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ZCameraMethodChannel(private val zCameraRecorder: CameraView, private val ziggeo: Ziggeo) : MethodChannel.MethodCallHandler {
+class ZCameraMethodChannel(private val zCameraRecorder: BaseCameraView, private val ziggeo: Ziggeo) : MethodChannel.MethodCallHandler {
     val config = ziggeo.recorderConfig
     var recordedFile: File? = null
 
@@ -26,8 +26,8 @@ class ZCameraMethodChannel(private val zCameraRecorder: CameraView, private val 
             "getRecordedFile" ->
                 result.success(recordedFile?.path)
             "switchCamera" -> {
-                val isFacingBack = zCameraRecorder.facing == CameraView.FACING_BACK
-                zCameraRecorder.facing = if (isFacingBack) CameraView.FACING_FRONT else CameraView.FACING_BACK
+                val isFacingBack = zCameraRecorder.facing == BaseCameraView.FACING_BACK
+                zCameraRecorder.facing = if (isFacingBack) BaseCameraView.FACING_FRONT else BaseCameraView.FACING_BACK
             }
             "start" -> {
                 zCameraRecorder.start()
@@ -50,7 +50,7 @@ class ZCameraMethodChannel(private val zCameraRecorder: CameraView, private val 
                 zCameraRecorder.quality = config.videoQuality
                 zCameraRecorder.facing = config.facing
 
-                zCameraRecorder.setCameraCallback(object : CameraView.CameraCallback() {
+                zCameraRecorder.setCameraCallback(object : BaseCameraView.CameraCallback() {
                     override fun cameraOpened() {
                         super.cameraOpened()
                         readyToRecord()

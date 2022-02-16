@@ -136,20 +136,30 @@ class Ziggeo {
     return await _ziggeoChannel.invokeMethod('startAudioRecorder');
   }
 
-  Future<void> startAudioPlayer(String token, String path) async {
+  Future<void> startAudioPlayerByToken(String token) async {
     if (token != null) {
       return await _ziggeoChannel
-          .invokeMethod('startAudioPlayer', {"token": token});
-    } else if (path != null) {
-      return await _ziggeoChannel
-          .invokeMethod('startAudioPlayer', {"path": path});
+          .invokeMethod('startAudioPlayerByToken', {"token": token});
     } else {
-      return await _ziggeoChannel.invokeMethod('startAudioPlayer');
+      return await _ziggeoChannel.invokeMethod('startAudioPlayerByToken');
     }
   }
 
-  Future<void> showImage(String token) async {
-    return await _ziggeoChannel.invokeMethod('showImage', {"token": token});
+  Future<void> startAudioPlayerByPath(Uri path) async {
+    if (path != null) {
+      return await _ziggeoChannel
+          .invokeMethod('startAudioPlayerByPath', {"path": path});
+    } else {
+      return await _ziggeoChannel.invokeMethod('startAudioPlayerByPath');
+    }
+  }
+
+  Future<void> showImageByToken(String token) async {
+    return await _ziggeoChannel.invokeMethod('showImageByToken', {"token": token});
+  }
+
+  Future<void> showImageByPath(Uri path) async {
+    return await _ziggeoChannel.invokeMethod('showImageByPath', {"path": path});
   }
 
   Future<void> startImageRecorder() async {
@@ -207,13 +217,15 @@ class Ziggeo {
           recorderConfig?.eventsListener?.onNoMicrophone?.call();
           break;
         case 'accessForbidden':
-          recorderConfig?.eventsListener?.onAccessForbidden?.call(call.arguments);
+          recorderConfig?.eventsListener?.onAccessForbidden
+              ?.call(call.arguments);
           break;
         case 'hasMicrophone':
           recorderConfig?.eventsListener?.onHasMicrophone?.call();
           break;
         case 'recordingStopped':
-          recorderConfig?.eventsListener?.onRecordingStopped?.call(call.arguments);
+          recorderConfig?.eventsListener?.onRecordingStopped
+              ?.call(call.arguments);
           break;
         case 'readyToRecord':
           recorderConfig?.eventsListener?.onReadyToRecord?.call();

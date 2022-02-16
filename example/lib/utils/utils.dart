@@ -8,6 +8,7 @@ class Utils {
   static const String keyAppToken = "app_token";
   static const String keyCustomPlayerMode = "custom_player";
   static const String keyCustomCameraMode = "custom_camera";
+  static const String keyBlurMode = "blur_mode";
 
   static sendEmail(String address) async {
     final Email email = Email(
