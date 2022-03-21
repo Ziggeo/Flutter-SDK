@@ -152,6 +152,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["shouldAllowMultipleSelection"] as? Boolean)?.let { value ->
                         config.shouldAllowMultipleSelection = value
                     }
+                    (it["mediaType"] as? Int)?.let { value ->
+                        config.mediaType = value
+                    }
                 }
             }
             "setPlayerConfig" -> {
