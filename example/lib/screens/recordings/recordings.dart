@@ -78,23 +78,27 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       body: RefreshIndicator(
         key: refreshIndicatorKey,
         onRefresh: () => this.init(),
-        child: recordings != null && recordings.length >= 0
-            ? ListView(
-                controller: scrollController,
-                children: getListChildren(),
+        child: this.isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
               )
-            : Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: list_empty_message_margin_top,
+            : recordings != null && recordings.length >= 0
+                ? ListView(
+                    controller: scrollController,
+                    children: getListChildren(),
+                  )
+                : Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: list_empty_message_margin_top,
+                      ),
+                      Center(
+                          child: TextLocalized(
+                        'message_recordings_list_empty',
+                        textAlign: TextAlign.center,
+                      ))
+                    ],
                   ),
-                  Center(
-                      child: TextLocalized(
-                    'message_recordings_list_empty',
-                    textAlign: TextAlign.center,
-                  ))
-                ],
-              ),
       ),
       floatingActionButton: SpeedDial(
         visible: dialVisible,
@@ -204,6 +208,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       recordings.addAll(recordingsAudio);
       recordings.sort((b, a) => a.created.compareTo(b.created));
       setState(() {
+        this.isLoading = false;
         this.recordings = recordings;
       });
       isLoading = false;
@@ -249,7 +254,8 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
                     builder: (context) => RecordingDetailsScreen(ziggeo, item)),
               ).then((value) {
                 refreshIndicatorKey.currentState?.show();
-                isLoading = value;
+                //todo need it?
+                // isLoading = value;
               })
             },
         child: SizedBox(
