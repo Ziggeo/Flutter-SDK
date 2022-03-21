@@ -46,14 +46,19 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 ziggeo.startCameraRecorder()
             }
             "startAudioRecorder" -> ziggeo.startAudioRecorder()
-            "showImage" -> call.argument<String>("token")?.let {
+            "showImageByToken" -> call.argument<String>("token")?.let {
+                ziggeo.showImage(it)
+            }
+            "showImageByPath" -> call.argument<String>("path")?.let {
                 ziggeo.showImage(it)
             }
             "startImageRecorder" -> ziggeo.startImageRecorder()
-            "startAudioPlayer" -> {
+            "startAudioPlayerByToken" -> {
                 call.argument<String>("token")?.let {
                     ziggeo.startAudioPlayer(it)
                 }
+            }
+            "startAudioPlayerByPath" -> {
                 call.argument<String>("path")?.let {
                     ziggeo.startAudioPlayer(it)
                 }
@@ -93,6 +98,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                     (it["startDelay"] as? Int)?.let { value ->
                         config.startDelay = value
+                    }
+                    (it["blurMode"] as? Boolean)?.let { value ->
+                        config.blurMode = value
                     }
                     (it["shouldSendImmediately"] as? Boolean)?.let { value ->
                         config.shouldSendImmediately = value

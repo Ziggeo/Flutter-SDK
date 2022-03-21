@@ -14,6 +14,7 @@ class RecorderConfig extends BaseConfig {
   var isLiveStreaming = false;
   var shouldAutoStartRecording = false;
   var startDelay = defaultStartDelay;
+  var blurMode = false;
   var shouldSendImmediately = true;
   var shouldDisableCameraSwitch = false;
   var videoQuality = 0;
@@ -31,6 +32,7 @@ class RecorderConfig extends BaseConfig {
     map["isLiveStreaming"] = isLiveStreaming;
     map["shouldAutoStartRecording"] = shouldAutoStartRecording;
     map["startDelay"] = startDelay;
+    map["blurMode"] = blurMode;
     map["shouldSendImmediately"] = shouldSendImmediately;
     map["shouldDisableCameraSwitch"] = shouldDisableCameraSwitch;
     map["videoQuality"] = videoQuality;
