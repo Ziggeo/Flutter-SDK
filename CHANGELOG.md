@@ -1,3 +1,7 @@
+## 0.2.2
+----------------------------
+* Added blur mode support.
+
 ## 0.2.1
 ----------------------------
 * Added audio, image api support.
