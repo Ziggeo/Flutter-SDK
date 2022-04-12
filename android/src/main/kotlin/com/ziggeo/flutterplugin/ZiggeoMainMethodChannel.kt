@@ -157,6 +157,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["maxDuration"] as? Int)?.let { value ->
                         config.maxDuration = value.toLong()
                     }
+                    (it["mediaType"] as? Int)?.let { value ->
+                        config.mediaType = value
+                    }
                     (it["shouldAllowMultipleSelection"] as? Boolean)?.let { value ->
                         config.shouldAllowMultipleSelection = value
                     }

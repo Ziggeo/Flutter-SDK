@@ -12,6 +12,7 @@ import 'package:ziggeo/player/player_config.dart';
 import 'package:ziggeo/player/player_listener.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
 import 'package:ziggeo/recorder/recorder_listener.dart';
+import 'package:ziggeo/styles/player.dart';
 import 'package:ziggeo/uploading/uploading_config.dart';
 import 'package:ziggeo/uploading/uploading_listener.dart';
 import 'package:ziggeo/ziggeo.dart';
@@ -342,7 +343,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initPlayerCallback() {
-    ziggeo.playerConfig = PlayerConfig();
+    ziggeo.playerConfig = PlayerConfig(playerStyle: PlayerStyle(controllerStyle: PlayerStyle.CUBE));
     ziggeo.playerConfig.eventsListener = PlayerEventsListener(
       onLoaded: () => addLogEvent('ev_pl_loaded'),
       onCanceledByUser: () => addLogEvent('ev_pl_canceledByUser'),
