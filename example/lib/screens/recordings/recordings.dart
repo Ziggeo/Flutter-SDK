@@ -343,7 +343,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   initPlayerCallback() {
-    ziggeo.playerConfig = PlayerConfig(playerStyle: PlayerStyle(controllerStyle: PlayerStyle.CUBE));
+    ziggeo.playerConfig = PlayerConfig(playerStyle: PlayerStyle());
     ziggeo.playerConfig.eventsListener = PlayerEventsListener(
       onLoaded: () => addLogEvent('ev_pl_loaded'),
       onCanceledByUser: () => addLogEvent('ev_pl_canceledByUser'),

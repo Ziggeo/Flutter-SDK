@@ -3,9 +3,8 @@ import 'package:ziggeo/player/player_listener.dart';
 import 'package:ziggeo/styles/player.dart';
 
 class PlayerConfig extends BaseConfig {
-  var shouldShowSubtitles = false;
-  var isMuted = false;
-
+  bool? shouldShowSubtitles;
+  bool? isMuted;
   PlayerEventsListener? eventsListener;
   PlayerStyle? playerStyle;
 
@@ -19,8 +18,8 @@ class PlayerConfig extends BaseConfig {
   }
 
   PlayerConfig({
-    this.shouldShowSubtitles,
-    this.isMuted,
+    this.shouldShowSubtitles = false,
+    this.isMuted = false,
     this.playerStyle,
   });
 }

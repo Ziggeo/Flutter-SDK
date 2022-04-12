@@ -10,17 +10,17 @@ class PlayerStyle extends BaseStyle {
   static const ELEVATE = 5;
   static const THEATRE = 6;
 
-  int controllerStyle = DEFAULT;
-  int textColor;
-  int unplayedColor;
-  int playedColor;
-  int bufferedColor;
-  int tintColor;
-  int muteOffImageDrawable;
-  int muteOnImageDrawable;
+  int? controllerStyle;
+  int? textColor;
+  int? unplayedColor;
+  int? playedColor;
+  int? bufferedColor;
+  int? tintColor;
+  int? muteOffImageDrawable;
+  int? muteOnImageDrawable;
 
   PlayerStyle({
-    this.controllerStyle,
+    this.controllerStyle = DEFAULT,
     this.textColor,
     this.unplayedColor,
     this.playedColor,
