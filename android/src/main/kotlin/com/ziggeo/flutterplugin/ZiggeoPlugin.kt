@@ -30,6 +30,7 @@ class ZiggeoPlugin : FlutterPlugin {
     private lateinit var qrCallbackChannel: MethodChannel
     private lateinit var zvCallbackChannel: MethodChannel
     private lateinit var zcrCallbackChannel: MethodChannel
+    private lateinit var smCallbackChannel: MethodChannel
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         ziggeoMainChannel = MethodChannel(binding.binaryMessenger, "ziggeo")
@@ -44,6 +45,7 @@ class ZiggeoPlugin : FlutterPlugin {
         qrCallbackChannel = MethodChannel(binding.binaryMessenger, "ziggeo_qr_callback")
         zvCallbackChannel = MethodChannel(binding.binaryMessenger, "z_video_view")
         zcrCallbackChannel = MethodChannel(binding.binaryMessenger, "z_camera_recorder")
+        smCallbackChannel = MethodChannel(binding.binaryMessenger, "ziggeo_sensor_manager")
 
         val context = binding.applicationContext
         val ziggeo = Ziggeo.getInstance(context)
@@ -66,6 +68,7 @@ class ZiggeoPlugin : FlutterPlugin {
                         plCallbackChannel,
                         qrCallbackChannel,
                         zvCallbackChannel,
+                        smCallbackChannel,
                         Handler(Looper.getMainLooper())
                 )
         )
@@ -91,5 +94,6 @@ class ZiggeoPlugin : FlutterPlugin {
         plCallbackChannel.setMethodCallHandler(null)
         qrCallbackChannel.setMethodCallHandler(null)
         zvCallbackChannel.setMethodCallHandler(null)
+        smCallbackChannel.setMethodCallHandler(null)
     }
 }

@@ -3,6 +3,8 @@ package com.ziggeo.flutterplugin
 import android.net.Uri
 import android.os.Handler
 import com.ziggeo.androidsdk.IZiggeo
+import com.ziggeo.androidsdk.SensorManager
+import com.ziggeo.androidsdk.StopRecordingConfirmationDialogConfig
 import com.ziggeo.androidsdk.callbacks.FileSelectorCallback
 import com.ziggeo.androidsdk.callbacks.PlayerCallback
 import com.ziggeo.androidsdk.callbacks.RecorderCallback
@@ -21,6 +23,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                               private val plCallbackChannel: MethodChannel,
                               private val qrCallbackChannel: MethodChannel,
                               private val zvCallbackChannel: MethodChannel,
+                              private val smCallbackChannel: MethodChannel,
                               private val mainThread: Handler
 ) : MethodCallHandler {
 
@@ -128,6 +131,36 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                 }
             }
+            "setRecordingConfirmationDialogConfig" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    val stopDialogConfig = StopRecordingConfirmationDialogConfig.Builder()
+                    (it["titleResId"] as? Int)?.let { value ->
+                        stopDialogConfig.titleResId(value)
+                    }
+                    (it["titleText"] as? CharSequence)?.let { value ->
+                        stopDialogConfig.titleText(value)
+                    }
+                    (it["mesResId"] as? Int)?.let { value ->
+                        stopDialogConfig.mesResId(value)
+                    }
+                    (it["mesText"] as? CharSequence)?.let { value ->
+                        stopDialogConfig.mesText(value)
+                    }
+                    (it["posBtnResId"] as? Int)?.let { value ->
+                        stopDialogConfig.posBtnResId(value)
+                    }
+                    (it["posBtnText"] as? CharSequence)?.let { value ->
+                        stopDialogConfig.posBtnText(value)
+                    }
+                    (it["negBtnResId"] as? Int)?.let { value ->
+                        stopDialogConfig.negBtnResId(value)
+                    }
+                    (it["negBtnText"] as? CharSequence)?.let { value ->
+                        stopDialogConfig.negBtnText(value)
+                    }
+                    ziggeo.recorderConfig.stopRecordingConfirmationDialogConfig = stopDialogConfig.build()
+                }
+            }
             "startQrScanner" -> ziggeo.startQrScanner()
             "setQrScannerConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -218,6 +251,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
         prepareUplCallback()
         preparePlCallback()
         prepareRecCallback()
+        prepareSMCallback()
     }
 
     private fun prepareQrCallback() {
@@ -383,6 +417,12 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
         }
     }
 
+    private fun prepareSMCallback() {
+        ziggeo.setSensorCallback {
+            fireSMCallback("lightSensorLevel", it)
+        }
+    }
+
     private fun prepareRecCallback() {
         ziggeo.recorderConfig.callback = object : RecorderCallback() {
             override fun noMicrophone() {
@@ -460,6 +500,12 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
             override fun rerecord() {
                 fireRecCallback("rerecord")
             }
+        }
+    }
+
+    private fun fireSMCallback(methodName: String, args: Any? = null) {
+        mainThread.post {
+            smCallbackChannel.invokeMethod(methodName, args)
         }
     }
 
