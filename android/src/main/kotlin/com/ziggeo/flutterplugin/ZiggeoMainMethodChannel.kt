@@ -157,6 +157,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["maxDuration"] as? Int)?.let { value ->
                         config.maxDuration = value.toLong()
                     }
+                    (it["mediaType"] as? Int)?.let { value ->
+                        config.mediaType = value
+                    }
                     (it["shouldAllowMultipleSelection"] as? Boolean)?.let { value ->
                         config.shouldAllowMultipleSelection = value
                     }
@@ -173,6 +176,32 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                     (it["isMuted"] as? Boolean)?.let { value ->
                         config.isMuted = value
+                    }
+                }
+            }
+            "setPlayerStyle" -> {
+                (call.arguments as? HashMap<*, *>)?.let {
+                    val style = ziggeo.playerConfig.style
+                    (it["controllerStyle"] as? Int)?.let { value ->
+                        style.controllerStyle = value
+                    }
+                    (it["textColor"] as? Int)?.let { value ->
+                        style.textColor = value
+                    }
+                    (it["unplayedColor"] as? Int)?.let { value ->
+                        style.unplayedColor = value
+                    }
+                    (it["bufferedColor"] as? Int)?.let { value ->
+                        style.bufferedColor = value
+                    }
+                    (it["tintColor"] as? Int)?.let { value ->
+                        style.tintColor = value
+                    }
+                    (it["muteOffImageDrawable"] as? Int)?.let { value ->
+                        style.muteOffImageDrawable = value
+                    }
+                    (it["muteOnImageDrawable"] as? Int)?.let { value ->
+                        style.muteOnImageDrawable = value
                     }
                 }
             }
