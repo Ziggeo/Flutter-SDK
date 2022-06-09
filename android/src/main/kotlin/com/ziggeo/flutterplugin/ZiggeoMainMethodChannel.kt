@@ -196,10 +196,21 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["shouldAllowMultipleSelection"] as? Boolean)?.let { value ->
                         config.shouldAllowMultipleSelection = value
                     }
-                    (it["mediaType"] as? Int)?.let { value ->
-                        config.mediaType = value
-                    }
                 }
+            }
+            "getFileSelectorConfig" -> {
+                val config = ziggeo.fileSelectorConfig
+                var configMap = hashMapOf<String, Any>(
+                        "maxDuration" to config.maxDuration,
+                        "shouldAllowMultipleSelection" to config.shouldAllowMultipleSelection,
+                        "mediaType" to config.mediaType);
+                result.success(
+                        "{\"maxDuration\": "
+                                + config.maxDuration +
+                                ",\"mediaType\": " +
+                                config.mediaType +
+                        ",\"shouldAllowMultipleSelection\": " +
+                                config.shouldAllowMultipleSelection + "}");
             }
             "setPlayerConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -211,6 +222,16 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                         config.isMuted = value
                     }
                 }
+            }
+            "getPlayerConfig" -> {
+                val playerConfig = ziggeo.playerConfig
+                var playerConfigMap = hashMapOf<String, Any>(
+                        "isMuted" to playerConfig.isMuted,
+                        "shouldShowSubtitles" to playerConfig.shouldShowSubtitles);
+                result.success(
+                        "{\"isMuted\": " + playerConfig.isMuted +
+                                ",\"shouldShowSubtitles\": " +
+                                playerConfig.shouldShowSubtitles + "}");
             }
             "setPlayerStyle" -> {
                 (call.arguments as? HashMap<*, *>)?.let {

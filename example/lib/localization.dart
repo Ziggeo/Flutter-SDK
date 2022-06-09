@@ -14,7 +14,7 @@ class AppLocalizations {
   AppLocalizations._internal();
   static AppLocalizations get instance => _singleton;
 
-  Map<dynamic, dynamic> _localisedValues;
+  Map<dynamic, dynamic>? _localisedValues;
 
   Future<AppLocalizations> load(Locale locale) async {
     String jsonContent =
@@ -24,7 +24,7 @@ class AppLocalizations {
   }
 
   String text(String key) {
-    return _localisedValues[key] ?? "$key not found";
+    return _localisedValues![key] ?? "$key not found";
   }
 }
 

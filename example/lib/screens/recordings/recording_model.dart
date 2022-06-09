@@ -21,14 +21,14 @@ class RecordingModel {
   int created;
 
   RecordingModel(
-      {this.type,
-      this.token,
-      this.key,
-      this.state,
-      this.title,
-      this.description,
-      this.tags,
-      this.created});
+      {required this.type,
+      required this.token,
+      required this.key,
+      required this.state,
+      required this.title,
+      required this.description,
+      required this.tags,
+      required this.created});
 
   factory RecordingModel.fromJson(Map<String, dynamic> json, String type) {
     return RecordingModel(

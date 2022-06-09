@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/player/player_config.dart';
@@ -7,16 +8,24 @@ import 'package:ziggeo/recorder/recorder_config.dart';
 import 'package:ziggeo/recorder/stop_recording_confirmation_dialog_config.dart';
 import 'package:ziggeo/styles/camera_recorder.dart';
 import 'package:ziggeo/styles/player.dart';
+import 'package:ziggeo/ziggeo.dart';
 
 void main() {
+  const MessageCodec<String?> string = StringCodec();
   late QrScannerConfig qrScannerConfig;
   late PlayerStyle playerStyle;
   late CameraRecorderStyle cameraRecorderStyle;
   late RecorderConfig recorderConfig;
   late PlayerConfig playerConfig;
   late StopRecordingConfirmationDialogConfig
-      stopRecordingConfirmationDialogConfig;
+  stopRecordingConfirmationDialogConfig;
   late FileSelectorConfig fileSelectorConfig;
+  late Ziggeo ziggeo;
+
+  TestWidgetsFlutterBinding.ensureInitialized();
+  const MessageCodec<dynamic> jsonMessage = JSONMessageCodec();
+  const MethodCodec jsonMethod = JSONMethodCodec();
+  const MethodChannel channel = MethodChannel('ZiggeoMainMethodChannel', jsonMethod);
 
   setUp(() {
     playerConfig = PlayerConfig();
@@ -27,6 +36,20 @@ void main() {
         StopRecordingConfirmationDialogConfig();
     fileSelectorConfig = FileSelectorConfig();
     qrScannerConfig = QrScannerConfig();
+
+    TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger.setMockMessageHandler(
+      'ziggeo',
+          (ByteData? message) async
+          {
+        final Map<dynamic, dynamic> methodCall = jsonMessage.decodeMessage(message) as Map<dynamic, dynamic>;
+        if (methodCall['method'] == 'setAppToken') {
+          return jsonMessage.encodeMessage(<dynamic>[{methodCall['appToken']}]);
+        } else {
+          return jsonMessage.encodeMessage(<dynamic>['unknown', null, null]);
+        }
+      },
+    );
+    ziggeo = Ziggeo('token');
   });
 
   tearDown(() {});
@@ -276,5 +299,31 @@ void main() {
     qrScannerConfig.shouldCloseAfterSuccessfulScan = false;
     expect(qrScannerConfig.convertToMap()["shouldCloseAfterSuccessfulScan"],
         false);
+  });
+
+  test("Listening device", ()
+  async {
+    // ServicesBinding.instance?.defaultBinaryMessenger.handlePlatformMessage(
+    //     'ZiggeoMainMethodChannel',
+    //     StandardMethodCodec().encodeMethodCall(
+    //         MethodCall('getAppToken', '{"result":"token"}')), (ByteData? data) {
+    //   string.encodeMessage(string.decodeMessage(data));
+    //   });
+
+
+    TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger.setMockMessageHandler(
+      'ZiggeoMainMethodChannel',
+          (ByteData? message) async {
+        final Map<dynamic, dynamic> methodCall = jsonMessage.decodeMessage(message) as Map<dynamic, dynamic>;
+        if (methodCall['method'] == 'getAppToken') {
+          return jsonMessage.encodeMessage(<dynamic>[{methodCall['appToken']}]);
+        } else {
+          return jsonMessage.encodeMessage(<dynamic>['unknown', null, null]);
+        }
+      },
+    );
+    final String? result = await channel.invokeMethod('getAppToken', 'hello');
+
+    expect(result, equals('hello'));
   });
 }

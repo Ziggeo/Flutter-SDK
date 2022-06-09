@@ -26,8 +26,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool isCustomVideoSwitched = false;
   bool isCustomCameraSwitched = false;
   bool isBlurSwitched = false;
-  String startDelay;
-  RecorderConfig config;
+  String? startDelay;
+  late RecorderConfig config;
 
   _SettingsScreenState(this.ziggeo);
 
@@ -163,7 +163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       value.setBool(Utils.keyBlurMode, isBlurSwitched);
     });
     if (startDelay != null) {
-      config.startDelay = int.parse(startDelay);
+      config.startDelay = int.parse(startDelay!);
       ziggeo.recorderConfig = config;
     }
     if (isBlurSwitched != null) {
@@ -176,13 +176,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await SharedPreferences.getInstance().then((value) {
       setState(() {
         if (value.getBool(Utils.keyCustomPlayerMode) != null) {
-          isCustomVideoSwitched = value.getBool(Utils.keyCustomPlayerMode);
+          isCustomVideoSwitched = value.getBool(Utils.keyCustomPlayerMode) ?? false;
         }
         if (value.getBool(Utils.keyCustomPlayerMode) != null) {
-          isCustomCameraSwitched = value.getBool(Utils.keyCustomCameraMode);
+          isCustomCameraSwitched = value.getBool(Utils.keyCustomCameraMode) ?? false;
         }
         if (value.getBool(Utils.keyBlurMode) != null) {
-          isBlurSwitched = value.getBool(Utils.keyBlurMode);
+          isBlurSwitched = value.getBool(Utils.keyBlurMode) ?? false;
         }
       });
     });

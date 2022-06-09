@@ -30,7 +30,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
   RecordingModel recordingModel;
   bool isInEditMode = false;
   bool isLoading = false;
-  String previewPath;
+  String? previewPath;
   AppLocalizations localize = AppLocalizations.instance;
 
   _RecordingDetailsState(this.ziggeo, this.recordingModel);
@@ -76,8 +76,8 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       ziggeo.videos.update(recordingModel.toJson()).then((value) {
         setState(() {
           isLoading = false;
-          recordingModel =
-              RecordingModel.fromJson(json.decode(value), recordingModel.type);
+          recordingModel = RecordingModel.fromJson(
+              json.decode(value ?? ''), recordingModel.type);
           isInEditMode = false;
         });
       }, onError: (error) => handleError(error));
@@ -189,7 +189,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                               alignment: Alignment.center,
                               children: <Widget>[
                                 Image.network(
-                                  previewPath,
+                                  previewPath!,
                                   height: preview_height,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
@@ -273,7 +273,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
     if (recordingModel.type == RecordingModel.video_type) {
       await SharedPreferences.getInstance().then((value) {
         if (value.containsKey(Utils.keyCustomPlayerMode) &&
-            value.getBool(Utils.keyCustomPlayerMode)) {
+            (value.getBool(Utils.keyCustomPlayerMode) ?? false)) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) =>
                   VideoPlayerScreen(ziggeo, recordingModel.token, null)));

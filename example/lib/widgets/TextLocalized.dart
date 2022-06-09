@@ -4,10 +4,14 @@ import '../localization.dart';
 
 class TextLocalized extends StatelessWidget {
   final String _key;
-  final TextAlign textAlign;
-  final TextStyle style;
+  final TextAlign? textAlign;
+  final TextStyle? style;
 
-  TextLocalized(this._key, {this.textAlign, this.style});
+  TextLocalized(
+    this._key, {
+    this.textAlign,
+    this.style,
+  });
 
   @override
   Widget build(BuildContext context) {

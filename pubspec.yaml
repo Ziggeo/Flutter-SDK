@@ -12,6 +12,9 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  test: '^1.21.1'
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

@@ -7,8 +7,8 @@ typedef void ZCameraRecorderCreatedCallback(
 
 class ZCameraRecorder extends StatefulWidget {
   const ZCameraRecorder({
-    Key key,
-    this.onZCameraRecorderCreated,
+    Key? key,
+    required this.onZCameraRecorderCreated,
   }) : super(key: key);
 
   final ZCameraRecorderCreatedCallback onZCameraRecorderCreated;
@@ -33,7 +33,7 @@ class _ZCameraRecorderState extends State<ZCameraRecorder> {
     if (widget.onZCameraRecorderCreated == null) {
       return;
     }
-    widget.onZCameraRecorderCreated(new ZCameraRecorderController._(id));
+    widget.onZCameraRecorderCreated!(new ZCameraRecorderController._(id));
   }
 }
 
@@ -44,15 +44,15 @@ class ZCameraRecorderController {
   final MethodChannel _channel;
 
   Future<bool> isRecording() async {
-    return _channel.invokeMethod('isRecording');
+    return _channel.invokeMethod('isRecording') as Future<bool>;
   }
 
   Future<Function> getCallback() async {
-    return _channel.invokeMethod('getCallback');
+    return _channel.invokeMethod('getCallback') as Future<Function>;
   }
 
-  Future<String> getRecordedFile() async {
-    return _channel.invokeMethod('getRecordedFile');
+  Future<String?> getRecordedFile() async {
+    return _channel.invokeMethod('getRecordedFile') as Future<String>;
   }
 
   Future<void> start() async {

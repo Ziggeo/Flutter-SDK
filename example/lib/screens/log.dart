@@ -17,7 +17,7 @@ class LogScreen extends StatefulWidget {
 }
 
 class _LogScreenState extends State<LogScreen> {
-  List<LogModel> logs = List();
+  List<LogModel> logs = List.empty();
   final Ziggeo ziggeo;
 
   _LogScreenState(this.ziggeo);
@@ -63,7 +63,7 @@ class _LogScreenState extends State<LogScreen> {
   }
 
   onSendReportBtnPressed() {
-    var l = List<String>();
+    var l = List.empty() as List<String>;
     for (var log in logs) {
       l.add(log.toString());
     }

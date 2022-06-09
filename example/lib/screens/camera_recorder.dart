@@ -25,12 +25,11 @@ class _CameraRecorderScreenState extends State<CameraRecorderScreen> {
   bool isCameraFront = false;
   bool isRecording = false;
   bool isPlayModeOn = false;
+  ZCameraRecorderController? controller;
 
-  File recordedFile;
+  File? recordedFile;
 
   _CameraRecorderScreenState(this.ziggeo);
-
-  ZCameraRecorderController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -115,23 +114,23 @@ class _CameraRecorderScreenState extends State<CameraRecorderScreen> {
   }
 
   onBack() {
-    controller.stop();
+    controller?.stop();
     Navigator.of(context).pop();
   }
 
   onMoveFrontCameraClick() {
     setState(() {
       isCameraFront = !isCameraFront;
-      controller.switchCamera();
+      controller?.switchCamera();
     });
   }
 
   onPlayVideoClick() {
-    controller.getRecordedFile().then((path) async {
+    controller?.getRecordedFile().then((path) async {
       if (path != null) {
         await SharedPreferences.getInstance().then((value) {
           if (value.getBool(Utils.keyCustomPlayerMode) != null &&
-              value.getBool(Utils.keyCustomPlayerMode)) {
+              (value.getBool(Utils.keyCustomPlayerMode) ?? false )) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => VideoPlayerScreen(ziggeo, null, path)));
           } else {
@@ -144,7 +143,7 @@ class _CameraRecorderScreenState extends State<CameraRecorderScreen> {
 
   onRecordClick() {
     if (!isRecording) {
-      controller.startRecording();
+      controller?.startRecording();
     }
 
     setState(() {
@@ -153,7 +152,7 @@ class _CameraRecorderScreenState extends State<CameraRecorderScreen> {
   }
 
   onSaveClick() {
-    controller.stopRecording();
+    controller?.stopRecording();
     setState(() {
       isPlayModeOn = true;
       isRecording = false;

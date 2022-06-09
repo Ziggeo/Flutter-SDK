@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:ziggeo/api/audio.dart';
 import 'package:ziggeo/api/streams.dart';
@@ -55,6 +57,12 @@ class Ziggeo {
 
   PlayerConfig? get playerConfig => _playerConfig;
 
+  Future<PlayerConfig?> getPlayerConfig() async {
+    return _playerConfig?.convertFromMap(
+        json.decode((await _ziggeoChannel.invokeMethod('getPlayerConfig')))
+            as Map<String, dynamic>);
+  }
+
   set playerConfig(PlayerConfig? value) {
     _playerConfig = value;
     _ziggeoChannel.invokeMethod(
@@ -64,6 +72,11 @@ class Ziggeo {
   }
 
   FileSelectorConfig? get fileSelectorConfig => _fileSelectorConfig;
+  Future<FileSelectorConfig?> getFileSelectorConfig() async {
+    return _fileSelectorConfig?.convertFromMap(
+        json.decode((await _ziggeoChannel.invokeMethod('getFileSelectorConfig')))
+        as Map<String, dynamic>);
+  }
 
   set fileSelectorConfig(FileSelectorConfig? value) {
     _fileSelectorConfig = value;

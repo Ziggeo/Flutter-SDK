@@ -5,8 +5,8 @@ import 'package:ziggeo_example/widgets/ZVideoPlayer.dart';
 class VideoPlayerScreen extends StatefulWidget {
   static const String routeName = 'title_contact';
   final Ziggeo ziggeo;
-  final String tokens;
-  final String path;
+  final String? tokens;
+  final String? path;
 
   VideoPlayerScreen(this.ziggeo, this.tokens, this.path);
 
@@ -17,8 +17,8 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   final Ziggeo ziggeo;
-  final String tokens;
-  final String path;
+  final String? tokens;
+  final String? path;
 
   _VideoPlayerScreenState(this.ziggeo, this.tokens, this.path);
 
@@ -39,10 +39,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     controller.loadConfigs();
     controller.initViews();
     if (tokens != null) {
-      controller.setVideoToken(tokens);
+      controller.setVideoToken(tokens!);
     }
     if (path != null) {
-      controller.setVideoPath(path);
+      controller.setVideoPath(path!);
     }
     controller.prepareQueueAndStartPlaying();
   }
