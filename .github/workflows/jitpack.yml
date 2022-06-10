@@ -1,19 +1,25 @@
-name: Build
-
-on: [ push ]
+name: Ziggeo Integration Tests
+on: [ push, pull_request ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  drive_android:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [ 23 ]
+        target: [ default ]
     steps:
-
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v2
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
         with:
-          distribution: 'zulu'
-          java-version: '11'
-      - uses: subosito/flutter-action@v2
-        with:
+          flutter-version: '3.0.0'
           channel: 'stable'
-      - run: flutter pub get
-      - run: flutter test
+      - name: "Run Flutter Driver tests"
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: Nexus 6
+          script: "flutter drive --driver=example/test_driver/mapping_for_tests.dart --target=example/integration_test/mapping_tests.dart"
+

@@ -131,6 +131,62 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                 }
             }
+            "getRecorderConfig" -> {
+                val config = ziggeo.recorderConfig
+                var recorderConfigMap = hashMapOf<String, Any>(
+                        "shouldShowFaceOutline" to
+                                config.shouldShowFaceOutline,
+                        "isLiveStreaming" to
+                                config.isLiveStreaming,
+                        "shouldAutoStartRecording" to
+                                config.shouldAutoStartRecording,
+                        "startDelay" to
+                                config.startDelay,
+                        "blurMode" to
+                                config.blurMode,
+                        "shouldSendImmediately" to
+                                config.shouldSendImmediately,
+                        "shouldDisableCameraSwitch" to
+                                config.shouldDisableCameraSwitch,
+                        "videoQuality" to
+                                config.videoQuality,
+                        "facing" to
+                                config.facing,
+                        "shouldEnableCoverShot" to
+                                config.shouldEnableCoverShot,
+                        "shouldConfirmStopRecording" to
+                                config.shouldConfirmStopRecording,
+                        "extraArgs" to
+                                config.extraArgs,
+                );
+                result.success(
+                        "{\"shouldShowFaceOutline\": "
+                                + config.shouldShowFaceOutline +
+                                ",\"isLiveStreaming\": " +
+                                config.isLiveStreaming +
+                                ",\"shouldAutoStartRecording\": " +
+                                config.shouldAutoStartRecording +
+                                ",\"startDelay\": " +
+                                config.startDelay +
+                                ",\"blurMode\": " +
+                                config.blurMode +
+                                ",\"shouldSendImmediately\": " +
+                                config.shouldSendImmediately +
+                                ",\"shouldDisableCameraSwitch\": " +
+                                config.shouldDisableCameraSwitch +
+                                ",\"videoQuality\": " +
+                                config.videoQuality +
+                                ",\"facing\": " +
+                                config.facing +
+                                ",\"maxDuration\": " +
+                                config.maxDuration +
+                                ",\"shouldEnableCoverShot\": " +
+                                config.shouldEnableCoverShot +
+                                ",\"shouldConfirmStopRecording\": " +
+                                config.shouldConfirmStopRecording +
+                                ",\"extraArgs\": " +
+                                config.extraArgs + "}");
+            }
             "setRecordingConfirmationDialogConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
                     val stopDialogConfig = StopRecordingConfirmationDialogConfig.Builder()
@@ -161,6 +217,44 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     ziggeo.recorderConfig.stopRecordingConfirmationDialogConfig = stopDialogConfig.build()
                 }
             }
+            "getStopRecordingConfirmationDialogConfig" -> {
+                val uploadingConfig = ziggeo.recorderConfig.stopRecordingConfirmationDialogConfig
+                var uploadingConfigMap = hashMapOf<String, Any>(
+                        "titleResId" to
+                                uploadingConfig.titleResId,
+                        "titleText" to
+                                uploadingConfig.titleText,
+                        "mesResId" to
+                                uploadingConfig.mesResId,
+                        "mesText" to
+                                uploadingConfig.mesText,
+                        "posBtnResId" to
+                                uploadingConfig.posBtnResId,
+                        "posBtnText" to
+                                uploadingConfig.posBtnText,
+                        "negBtnResId" to
+                                uploadingConfig.negBtnResId,
+                        "negBtnText" to
+                                uploadingConfig.negBtnText,
+                );
+                result.success(
+                        "{\"titleResId\": "
+                                + uploadingConfig.titleResId +
+                                ",\"titleText\": " +
+                                uploadingConfig.titleText +
+                                ",\"mesResId\": " +
+                                uploadingConfig.mesResId +
+                                ",\"mesText\": " +
+                                uploadingConfig.mesText +
+                                ",\"posBtnResId\": " +
+                                uploadingConfig.posBtnResId +
+                                ",\"posBtnText\": " +
+                                uploadingConfig.posBtnText +
+                                ",\"negBtnResId\": " +
+                                uploadingConfig.negBtnResId +
+                                ",\"negBtnText\": " +
+                                uploadingConfig.negBtnText + "}");
+            }
             "startQrScanner" -> ziggeo.startQrScanner()
             "setQrScannerConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -169,6 +263,16 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                         config.shouldCloseAfterSuccessfulScan = value
                     }
                 }
+            }
+            "getQrScannerConfig" -> {
+                val qrScannerConfig = ziggeo.qrScannerConfig
+                var qrScannerConfigMap = hashMapOf<String, Any>(
+                        "shouldCloseAfterSuccessfulScan" to
+                                qrScannerConfig.shouldCloseAfterSuccessfulScan,
+                );
+                result.success(
+                        "{\"shouldCloseAfterSuccessfulScan\": " +
+                                qrScannerConfig.shouldCloseAfterSuccessfulScan + "}");
             }
             "setUploadingConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -183,6 +287,24 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                         config.shouldTurnOffUploader = value
                     }
                 }
+            }
+            "getUploadingConfig" -> {
+                val uploadingConfig = ziggeo.uploadingConfig
+                var uploadingConfigMap = hashMapOf<String, Any>(
+                        "shouldUseWifiOnly" to
+                                uploadingConfig.shouldUseWifiOnly,
+                        "syncInterval" to
+                                uploadingConfig.syncInterval,
+                        "shouldTurnOffUploader" to
+                                uploadingConfig.shouldTurnOffUploader,
+                );
+                result.success(
+                        "{\"shouldUseWifiOnly\": "
+                                + uploadingConfig.shouldUseWifiOnly +
+                                ",\"syncInterval\": " +
+                                uploadingConfig.syncInterval +
+                                ",\"shouldTurnOffUploader\": " +
+                                uploadingConfig.shouldTurnOffUploader + "}");
             }
             "setFileSelectorConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -209,7 +331,7 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                                 + config.maxDuration +
                                 ",\"mediaType\": " +
                                 config.mediaType +
-                        ",\"shouldAllowMultipleSelection\": " +
+                                ",\"shouldAllowMultipleSelection\": " +
                                 config.shouldAllowMultipleSelection + "}");
             }
             "setPlayerConfig" -> {
@@ -242,6 +364,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["textColor"] as? Int)?.let { value ->
                         style.textColor = value
                     }
+                    (it["playedColor"] as? Int)?.let { value ->
+                        style.playedColor = value
+                    }
                     (it["unplayedColor"] as? Int)?.let { value ->
                         style.unplayedColor = value
                     }
@@ -258,6 +383,34 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                         style.muteOnImageDrawable = value
                     }
                 }
+            }
+            "getPlayerStyle" -> {
+                val playerConfig = ziggeo.playerConfig.style
+                var playerConfigMap = hashMapOf<String, Any>(
+                        "controllerStyle" to playerConfig.controllerStyle,
+                        "textColor" to playerConfig.textColor,
+                        "unplayedColor" to playerConfig.unplayedColor,
+                        "playedColor" to playerConfig.playedColor,
+                        "bufferedColor" to playerConfig.bufferedColor,
+                        "tintColor" to playerConfig.tintColor,
+                        "muteOffImageDrawable" to playerConfig.muteOffImageDrawable,
+                        "muteOnImageDrawable" to playerConfig.muteOnImageDrawable);
+                result.success(
+                        "{\"controllerStyle\": " + playerConfig.controllerStyle +
+                                ",\"textColor\": " +
+                                playerConfig.textColor +
+                                ",\"unplayedColor\": " +
+                                playerConfig.unplayedColor +
+                                ",\"playedColor\": " +
+                                playerConfig.playedColor +
+                                ",\"bufferedColor\": " +
+                                playerConfig.bufferedColor +
+                                ",\"tintColor\": " +
+                                playerConfig.tintColor +
+                                ",\"muteOffImageDrawable\": " +
+                                playerConfig.muteOffImageDrawable +
+                                ",\"muteOnImageDrawable\": " +
+                                playerConfig.muteOnImageDrawable + "}");
             }
             "sendReport" -> {
                 var list: List<String>? = null

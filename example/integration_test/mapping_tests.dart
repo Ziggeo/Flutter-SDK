@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:ziggeo_example/test_main.dart' as app;
@@ -7,7 +8,7 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding();
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('mapping', () {
+  group('mapping_appToken', () {
     testWidgets('appToken_success', (WidgetTester tester) async {
       app.main();
       await binding.convertFlutterSurfaceToImage();
@@ -27,8 +28,8 @@ void main() {
     });
   });
 
-  group('mapping', () {
-    testWidgets('player_config_isMuted_success', (WidgetTester tester) async {
+  group('mapping_player', () {
+    testWidgets('player_config_success', (WidgetTester tester) async {
       app.main();
       await binding.convertFlutterSurfaceToImage();
       await tester.pumpAndSettle();
@@ -43,12 +44,13 @@ void main() {
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
       expect(find.text('isMuted$isMuted'), findsOneWidget);
+      expect(
+          find.text('shouldShowSubtitles$shouldShowSubtitles'), findsOneWidget);
     });
   });
 
-  group('mapping', () {
-    testWidgets('player_config_shouldShowSubtitles_success',
-        (WidgetTester tester) async {
+  group('mapping_fileSelector', () {
+    testWidgets('fileSelector_config_success', (WidgetTester tester) async {
       app.main();
       await binding.convertFlutterSurfaceToImage();
       await tester.pumpAndSettle();
@@ -62,72 +64,170 @@ void main() {
       // Trigger a frame.
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
-
       expect(
-          find.text('shouldShowSubtitles$shouldShowSubtitles'), findsOneWidget);
+          find.text(
+              'shouldAllowMultipleSelection$shouldAllowMultipleSelection'),
+          findsOneWidget);
+      expect(find.text('maxDuration$maxDuration'), findsOneWidget);
+      expect(find.text('mediaType$mediaType'), findsOneWidget);
     });
   });
 
-  group('mapping', () {
-    testWidgets('fileSelector_config_shouldAllowMultipleSelection_success',
-            (WidgetTester tester) async {
-          app.main();
-          await binding.convertFlutterSurfaceToImage();
-          await tester.pumpAndSettle();
+  group('mapping_uploadingConfig', () {
+    testWidgets('uploadingConfig_config_success', (WidgetTester tester) async {
+      app.main();
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
 
-          // Finds the floating action button to tap on.
-          final Finder fab = find.byTooltip('Increment');
+      // Finds the floating action button to tap on.
+      final Finder fab = find.byTooltip('Increment');
 
-          // Emulate a tap on the floating action button.
-          await tester.tap(fab);
+      // Emulate a tap on the floating action button.
+      await tester.tap(fab);
 
-          // Trigger a frame.
-          await tester.pumpAndSettle();
-          await binding.takeScreenshot('test-screenshot');
-          expect(
-              find.text('shouldAllowMultipleSelection$shouldAllowMultipleSelection'), findsOneWidget);
-        });
+      final gesture = await tester
+          .startGesture(Offset(0, 300)); //Position of the scrollview
+      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
+      await tester.pump();
+
+      // Trigger a frame.
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot('test-screenshot');
+      expect(find.text('shouldUseWifiOnly$shouldUseWifiOnly'), findsOneWidget);
+      expect(find.text('syncInterval$syncInterval'), findsOneWidget);
+      expect(find.text('shouldTurnOffUploader$shouldTurnOffUploader'),
+          findsOneWidget);
+    });
   });
 
-  group('mapping', () {
-    testWidgets('fileSelector_config_maxDuration_success',
-            (WidgetTester tester) async {
-          app.main();
-          await binding.convertFlutterSurfaceToImage();
-          await tester.pumpAndSettle();
+  group('mapping_QrScanner', () {
+    testWidgets('QrScanner_config_success', (WidgetTester tester) async {
+      app.main();
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
 
-          // Finds the floating action button to tap on.
-          final Finder fab = find.byTooltip('Increment');
+      // Finds the floating action button to tap on.
+      final Finder fab = find.byTooltip('Increment');
 
-          // Emulate a tap on the floating action button.
-          await tester.tap(fab);
+      // Emulate a tap on the floating action button.
+      await tester.tap(fab);
 
-          // Trigger a frame.
-          await tester.pumpAndSettle();
-          await binding.takeScreenshot('test-screenshot');
-          expect(
-              find.text('maxDuration$maxDuration'), findsOneWidget);
-        });
+      final gesture = await tester
+          .startGesture(Offset(0, 300)); //Position of the scrollview
+      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
+      await tester.pump();
+
+      // Trigger a frame.
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot('test-screenshot_1');
+      expect(
+          find.text(
+              'shouldCloseAfterSuccessfulScan$shouldCloseAfterSuccessfulScan'),
+          findsOneWidget);
+    });
   });
 
-  group('mapping', () {
-    testWidgets('fileSelector_config_mediaType_success',
-            (WidgetTester tester) async {
-          app.main();
-          await binding.convertFlutterSurfaceToImage();
-          await tester.pumpAndSettle();
+  group('mapping_Recorder', () {
+    testWidgets('recorder_config_success', (WidgetTester tester) async {
+      app.main();
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
 
-          // Finds the floating action button to tap on.
-          final Finder fab = find.byTooltip('Increment');
+      // Finds the floating action button to tap on.
+      final Finder fab = find.byTooltip('Increment');
 
-          // Emulate a tap on the floating action button.
-          await tester.tap(fab);
+      // Emulate a tap on the floating action button.
+      await tester.tap(fab);
 
-          // Trigger a frame.
-          await tester.pumpAndSettle();
-          await binding.takeScreenshot('test-screenshot');
-          expect(
-              find.text('mediaType$mediaType'), findsOneWidget);
-        });
+      final gesture = await tester
+          .startGesture(Offset(0, 300)); //Position of the scrollview
+      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
+      await tester.pump();
+
+      // Trigger a frame.
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot('test-screenshot');
+
+      expect(find.text('shouldShowFaceOutline$shouldShowFaceOutline'),
+          findsOneWidget);
+      expect(find.text('isLiveStreaming$isLiveStreaming'), findsOneWidget);
+      expect(find.text('shouldAutoStartRecording$shouldAutoStartRecording'),
+          findsOneWidget);
+      expect(find.text('startDelay$startDelay'), findsOneWidget);
+      expect(find.text('blurMode$blurMode'), findsOneWidget);
+      expect(find.text('shouldSendImmediately$shouldSendImmediately'),
+          findsOneWidget);
+      expect(find.text('shouldDisableCameraSwitch$shouldDisableCameraSwitch'),
+          findsOneWidget);
+
+      expect(find.text('videoQuality$videoQuality'), findsOneWidget);
+      expect(find.text('facing$facing'), findsOneWidget);
+      var newDuration = app.maxDurationRec * 1000;
+      expect(find.text('maxDurationRec$newDuration'), findsOneWidget);
+      expect(find.text('shouldEnableCoverShot$shouldEnableCoverShot'),
+          findsOneWidget);
+      expect(find.text('shouldConfirmStopRecording$shouldConfirmStopRecording'),
+          findsOneWidget);
+    });
+  });
+
+  group('mapping_Recorder_dialog', () {
+    testWidgets('recorder_dialog_config_success', (WidgetTester tester) async {
+      app.main();
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+
+      // Finds the floating action button to tap on.
+      final Finder fab = find.byTooltip('Increment');
+
+      // Emulate a tap on the floating action button.
+      await tester.tap(fab);
+
+      final gesture = await tester
+          .startGesture(Offset(0, 300)); //Position of the scrollview
+      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
+      await tester.pump();
+
+      // Trigger a frame.
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot('test-screenshot');
+
+      // expect(find.text('titleText$titleText'), findsOneWidget);
+      // expect(find.text('mesText$mesText'), findsOneWidget);
+      // expect(find.text('posBtnText$posBtnText'), findsOneWidget);
+      // expect(find.text('negBtnText$negBtnText'), findsOneWidget);
+    });
+  });
+
+  group('mapping_player_style', () {
+    testWidgets('player_style_config_success', (WidgetTester tester) async {
+      app.main();
+      await binding.convertFlutterSurfaceToImage();
+      await tester.pumpAndSettle();
+
+      // Finds the floating action button to tap on.
+      final Finder fab = find.byTooltip('Increment');
+
+      // Emulate a tap on the floating action button.
+      await tester.tap(fab);
+
+      final gesture = await tester
+          .startGesture(Offset(0, 300)); //Position of the scrollview
+      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
+      await tester.pump();
+
+      // Trigger a frame.
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot('test-screenshot');
+
+      expect(find.text('textColor$textColor'), findsOneWidget);
+      expect(find.text('controllerStyle$controllerStyle'), findsOneWidget);
+      expect(find.text('unplayedColor$unplayedColor'), findsOneWidget);
+      expect(find.text('playedColor$playedColor'), findsOneWidget);
+      expect(find.text('bufferedColor$bufferedColor'), findsOneWidget);
+      expect(find.text('tintColor$tintColor'), findsOneWidget);
+      expect(find.text('muteOffImageDrawable$muteOffImageDrawable'), findsOneWidget);
+      expect(find.text('muteOnImageDrawable$muteOnImageDrawable'), findsOneWidget);
+    });
   });
 }
