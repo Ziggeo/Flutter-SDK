@@ -112,14 +112,26 @@ void main() {
       // Emulate a tap on the floating action button.
       await tester.tap(fab);
 
-      final gesture = await tester
-          .startGesture(Offset(0, 300)); //Position of the scrollview
-      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
-      await tester.pump();
+      // final gesture = await tester
+      //     .startGesture(Offset(0, 300)); //Position of the scrollview
+      // await gesture.moveBy(Offset(0, -300)); //How much to scroll by
+      // await tester.pump();
+
+      final listFinder = find.byType(Scrollable);
+      final itemFinder = find.byKey(ValueKey('shouldCloseAfterSuccessfulScan: '));
+
+      // Scroll until the item to be found appears.
+      await tester.scrollUntilVisible(
+        itemFinder,
+        500.0,
+        scrollable: listFinder,
+      );
 
       // Trigger a frame.
       await tester.pumpAndSettle();
-      await binding.takeScreenshot('test-screenshot_1');
+      await binding.takeScreenshot('test-screenshot');
+
+      expect(itemFinder, findsOneWidget);
       expect(
           find.text(
               'shouldCloseAfterSuccessfulScan$shouldCloseAfterSuccessfulScan'),
@@ -139,14 +151,21 @@ void main() {
       // Emulate a tap on the floating action button.
       await tester.tap(fab);
 
-      final gesture = await tester
-          .startGesture(Offset(0, 300)); //Position of the scrollview
-      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
-      await tester.pump();
+      final listFinder = find.byType(Scrollable);
+      final itemFinder = find.byKey(ValueKey('shouldConfirmStopRecording: '));
+
+      // Scroll until the item to be found appears.
+      await tester.scrollUntilVisible(
+        itemFinder,
+        500.0,
+        scrollable: listFinder,
+      );
 
       // Trigger a frame.
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
+
+      expect(itemFinder, findsOneWidget);
 
       expect(find.text('shouldShowFaceOutline$shouldShowFaceOutline'),
           findsOneWidget);
@@ -183,14 +202,21 @@ void main() {
       // Emulate a tap on the floating action button.
       await tester.tap(fab);
 
-      final gesture = await tester
-          .startGesture(Offset(0, 300)); //Position of the scrollview
-      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
-      await tester.pump();
+      final listFinder = find.byType(Scrollable);
+      final itemFinder = find.byKey(ValueKey('negBtnText: '));
+
+      // Scroll until the item to be found appears.
+      await tester.scrollUntilVisible(
+        itemFinder,
+        500.0,
+        scrollable: listFinder,
+      );
 
       // Trigger a frame.
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
+
+      expect(itemFinder, findsOneWidget);
 
       // expect(find.text('titleText$titleText'), findsOneWidget);
       // expect(find.text('mesText$mesText'), findsOneWidget);
@@ -211,14 +237,21 @@ void main() {
       // Emulate a tap on the floating action button.
       await tester.tap(fab);
 
-      final gesture = await tester
-          .startGesture(Offset(0, 300)); //Position of the scrollview
-      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
-      await tester.pump();
+      final listFinder = find.byType(Scrollable);
+      final itemFinder = find.byKey(ValueKey('muteOnImageDrawable: '));
+
+      // Scroll until the item to be found appears.
+      await tester.scrollUntilVisible(
+        itemFinder,
+        500.0,
+        scrollable: listFinder,
+      );
 
       // Trigger a frame.
       await tester.pumpAndSettle();
       await binding.takeScreenshot('test-screenshot');
+
+      expect(itemFinder, findsOneWidget);
 
       expect(find.text('textColor$textColor'), findsOneWidget);
       expect(find.text('controllerStyle$controllerStyle'), findsOneWidget);

@@ -310,15 +310,15 @@ class _MyHomePageState extends State<MyHomePage> {
               'shouldShowFaceOutline$_shouldShowFaceOutline',
             ),
             buildItemWidget(
-                'isLiveStreaming:', 'isLiveStreaming$_isLiveStreaming'),
-            buildItemWidget('shouldAutoStartRecording:',
+                'isLiveStreaming: ', 'isLiveStreaming$_isLiveStreaming'),
+            buildItemWidget('shouldAutoStartRecording: ',
                 'shouldAutoStartRecording$_shouldAutoStartRecording'),
             buildItemWidget(
               'startDelay: ',
               'startDelay$_startDelay',
             ),
-            buildItemWidget('blurMode:', 'blurMode$_blurMode'),
-            buildItemWidget('shouldSendImmediately:',
+            buildItemWidget('blurMode: ', 'blurMode$_blurMode'),
+            buildItemWidget('shouldSendImmediately: ',
                 'shouldSendImmediately$_shouldSendImmediately'),
             buildItemWidget(
               'shouldDisableCameraSwitch: ',
@@ -326,29 +326,29 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             buildItemWidget('videoQuality:', 'videoQuality$_videoQuality'),
             buildItemWidget('facing:', 'facing$_facing'),
-            buildItemWidget('maxDuration:', 'maxDurationRec$_maxDurationRec'),
-            buildItemWidget('shouldEnableCoverShot:',
+            buildItemWidget('maxDuration: ', 'maxDurationRec$_maxDurationRec'),
+            buildItemWidget('shouldEnableCoverShot: ',
                 'shouldEnableCoverShot$_shouldEnableCoverShot'),
-            buildItemWidget('shouldConfirmStopRecording:',
+            buildItemWidget('shouldConfirmStopRecording: ',
                 'shouldConfirmStopRecording$_shouldConfirmStopRecording'),
             const Text(
               'RecorderDialogConfig:',
             ),
             buildItemWidget('titleText: ', 'titleText$_titleText'),
-            buildItemWidget('mesText:', 'mesText$_mesText'),
-            buildItemWidget('posBtnText:', 'posBtnText$_posBtnText'),
+            buildItemWidget('mesText: ', 'mesText$_mesText'),
+            buildItemWidget('posBtnText: ', 'posBtnText$_posBtnText'),
             buildItemWidget('negBtnText: ', 'negBtnText$_negBtnText'),
             const Text(
-              'PlayerStyleConfig:',
+              'PlayerStyleConfig: ',
             ),
             buildItemWidget(
                 'controllerStyle: ', 'controllerStyle$_controllerStyle'),
-            buildItemWidget('textColor:', 'textColor$_textColor'),
-            buildItemWidget('unplayedColor:', 'unplayedColor$_unplayedColor'),
+            buildItemWidget('textColor: ', 'textColor$_textColor'),
+            buildItemWidget('unplayedColor: ', 'unplayedColor$_unplayedColor'),
             buildItemWidget('playedColor: ', 'playedColor$_playedColor'),
             buildItemWidget('bufferedColor: ', 'bufferedColor$_bufferedColor'),
-            buildItemWidget('tintColor:', 'tintColor$_tintColor'),
-            buildItemWidget('muteOffImageDrawable:',
+            buildItemWidget('tintColor: ', 'tintColor$_tintColor'),
+            buildItemWidget('muteOffImageDrawable: ',
                 'muteOffImageDrawable$_muteOffImageDrawable'),
             buildItemWidget('muteOnImageDrawable: ',
                 'muteOnImageDrawable$_muteOnImageDrawable'),
@@ -370,6 +370,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Padding(
             padding: EdgeInsets.all(common_margin),
             child: Row(
+              key: ValueKey(itemName),
               children: <Widget>[
                 Expanded(
                   child: Padding(
