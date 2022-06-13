@@ -82,7 +82,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   String? _appToken;
   bool? _isMuted;
   bool? _shouldShowSubtitles;
@@ -126,14 +125,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _incrementCounter() async {
     //test App token setting
-    _appToken = await widget.ziggeo.appToken ?? '';
+    var _appTokenTest = await widget.ziggeo.appToken ?? '';
     //test player config
     widget.ziggeo.playerConfig = PlayerConfig(
       isMuted: isMuted,
       shouldShowSubtitles: shouldShowSubtitles,
     );
-    _isMuted = (await widget.ziggeo.getPlayerConfig())?.isMuted;
-    _shouldShowSubtitles =
+    var _isMutedTest = (await widget.ziggeo.getPlayerConfig())?.isMuted;
+    var _shouldShowSubtitlesTest =
         (await widget.ziggeo.getPlayerConfig())?.shouldShowSubtitles;
 
     //test file selector config
@@ -142,11 +141,13 @@ class _MyHomePageState extends State<MyHomePage> {
       shouldAllowMultipleSelection: shouldAllowMultipleSelection,
       mediaType: mediaType,
     );
-    _shouldAllowMultipleSelection =
+    var _shouldAllowMultipleSelectionTest =
         (await widget.ziggeo.getFileSelectorConfig())
             ?.shouldAllowMultipleSelection;
-    _maxDuration = (await widget.ziggeo.getFileSelectorConfig())?.maxDuration;
-    _mediaType = (await widget.ziggeo.getFileSelectorConfig())?.mediaType;
+    var _maxDurationTest =
+        (await widget.ziggeo.getFileSelectorConfig())?.maxDuration;
+    var _mediaTypeTest =
+        (await widget.ziggeo.getFileSelectorConfig())?.mediaType;
 
     //test uploading config
     widget.ziggeo.uploadingConfig = UploadingConfig(
@@ -154,18 +155,20 @@ class _MyHomePageState extends State<MyHomePage> {
       shouldUseWifiOnly: shouldUseWifiOnly,
       shouldTurnOffUploader: shouldTurnOffUploader,
     );
-    _syncInterval = (await widget.ziggeo.getUploadingConfig())?.syncInterval;
-    _shouldUseWifiOnly =
+    var _syncIntervalTest =
+        (await widget.ziggeo.getUploadingConfig())?.syncInterval;
+    var _shouldUseWifiOnlyTest =
         (await widget.ziggeo.getUploadingConfig())?.shouldUseWifiOnly;
-    _shouldTurnOffUploader =
+    var _shouldTurnOffUploaderTest =
         (await widget.ziggeo.getUploadingConfig())?.shouldTurnOffUploader;
 
     //test qrScanner config
     widget.ziggeo.qrScannerConfig = QrScannerConfig(
       shouldCloseAfterSuccessfulScan: shouldCloseAfterSuccessfulScan,
     );
-    _shouldCloseAfterSuccessfulScan = (await widget.ziggeo.getQrScannerConfig())
-        ?.shouldCloseAfterSuccessfulScan;
+    var _shouldCloseAfterSuccessfulScanTest =
+        (await widget.ziggeo.getQrScannerConfig())
+            ?.shouldCloseAfterSuccessfulScan;
 
     //test recorder config
     widget.ziggeo.recorderConfig = RecorderConfig(
@@ -188,24 +191,26 @@ class _MyHomePageState extends State<MyHomePage> {
           posBtnText: posBtnText,
           negBtnText: negBtnText,
         ));
-    _isLiveStreaming =
+    var _isLiveStreamingTest =
         (await widget.ziggeo.getRecorderConfig())?.isLiveStreaming;
-    _shouldShowFaceOutline =
+    var _shouldShowFaceOutlineTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldShowFaceOutline;
-    _shouldAutoStartRecording =
+    var _shouldAutoStartRecordingTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldAutoStartRecording;
-    _startDelay = (await widget.ziggeo.getRecorderConfig())?.startDelay;
-    _blurMode = (await widget.ziggeo.getRecorderConfig())?.blurMode;
-    _shouldSendImmediately =
+    var _startDelayTest = (await widget.ziggeo.getRecorderConfig())?.startDelay;
+    var _blurModeTest = (await widget.ziggeo.getRecorderConfig())?.blurMode;
+    var _shouldSendImmediatelyTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldSendImmediately;
-    _shouldDisableCameraSwitch =
+    var _shouldDisableCameraSwitchTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldDisableCameraSwitch;
-    _videoQuality = (await widget.ziggeo.getRecorderConfig())?.videoQuality;
-    _facing = (await widget.ziggeo.getRecorderConfig())?.facing;
-    _maxDurationRec = (await widget.ziggeo.getRecorderConfig())?.maxDuration;
-    _shouldEnableCoverShot =
+    var _videoQualityTest =
+        (await widget.ziggeo.getRecorderConfig())?.videoQuality;
+    var _facingTest = (await widget.ziggeo.getRecorderConfig())?.facing;
+    var _maxDurationRecTest =
+        (await widget.ziggeo.getRecorderConfig())?.maxDuration;
+    var _shouldEnableCoverShotTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldEnableCoverShot;
-    _shouldConfirmStopRecording =
+    var _shouldConfirmStopRecordingTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldConfirmStopRecording;
 
     //test uploading config
@@ -216,14 +221,16 @@ class _MyHomePageState extends State<MyHomePage> {
     //   posBtnText: posBtnText,
     //   negBtnText: negBtnText,
     // );
-    _titleText =
+    var _titleTextTest =
         (await widget.ziggeo.getRecordingConfirmationDialogConfig())?.titleText;
-    _mesText =
+    var _mesTextTest =
         (await widget.ziggeo.getRecordingConfirmationDialogConfig())?.mesText;
-    _posBtnText = (await widget.ziggeo.getRecordingConfirmationDialogConfig())
-        ?.posBtnText;
-    _negBtnText = (await widget.ziggeo.getRecordingConfirmationDialogConfig())
-        ?.negBtnText;
+    var _posBtnTextTest =
+        (await widget.ziggeo.getRecordingConfirmationDialogConfig())
+            ?.posBtnText;
+    var _negBtnTextTest =
+        (await widget.ziggeo.getRecordingConfirmationDialogConfig())
+            ?.negBtnText;
 
     //test player style
     widget.ziggeo.playerStyle = PlayerStyle(
@@ -236,20 +243,61 @@ class _MyHomePageState extends State<MyHomePage> {
       muteOffImageDrawable: muteOffImageDrawable,
       muteOnImageDrawable: muteOnImageDrawable,
     );
-    _controllerStyle = (await widget.ziggeo.getPlayerStyle())?.controllerStyle;
-    _textColor = (await widget.ziggeo.getPlayerStyle())?.textColor;
-    _unplayedColor = (await widget.ziggeo.getPlayerStyle())?.unplayedColor;
-    _playedColor = (await widget.ziggeo.getPlayerStyle())?.playedColor;
-    _bufferedColor = (await widget.ziggeo.getPlayerStyle())?.bufferedColor;
-    _tintColor = (await widget.ziggeo.getPlayerStyle())?.tintColor;
-    _muteOffImageDrawable =
+    var _controllerStyleTest =
+        (await widget.ziggeo.getPlayerStyle())?.controllerStyle;
+    var _textColorTest = (await widget.ziggeo.getPlayerStyle())?.textColor;
+    var _unplayedColorTest =
+        (await widget.ziggeo.getPlayerStyle())?.unplayedColor;
+    var _playedColorTest = (await widget.ziggeo.getPlayerStyle())?.playedColor;
+    var _bufferedColorTest =
+        (await widget.ziggeo.getPlayerStyle())?.bufferedColor;
+    var _tintColorTest = (await widget.ziggeo.getPlayerStyle())?.tintColor;
+    var _muteOffImageDrawableTest =
         (await widget.ziggeo.getPlayerStyle())?.muteOffImageDrawable;
-    _muteOnImageDrawable =
+    var _muteOnImageDrawableTest =
         (await widget.ziggeo.getPlayerStyle())?.muteOnImageDrawable;
 
     setState(() {
-      _counter++;
-      _appToken = _appToken;
+      _appToken = _appTokenTest;
+      _isMuted = _isMutedTest;
+      _shouldShowSubtitles = _shouldShowSubtitlesTest;
+
+      _maxDuration = _maxDurationTest;
+      _shouldAllowMultipleSelection = _shouldAllowMultipleSelectionTest;
+      _mediaType = _mediaTypeTest;
+
+      _syncInterval = _syncIntervalTest;
+      _shouldUseWifiOnly = _shouldUseWifiOnlyTest;
+      _shouldTurnOffUploader = _shouldTurnOffUploaderTest;
+
+      _shouldCloseAfterSuccessfulScan = _shouldCloseAfterSuccessfulScanTest;
+
+      _shouldShowFaceOutline = _shouldShowFaceOutlineTest;
+      _isLiveStreaming = _isLiveStreamingTest;
+      _shouldAutoStartRecording = _shouldAutoStartRecordingTest;
+      _startDelay = _startDelayTest;
+      _blurMode = _blurModeTest;
+      _shouldSendImmediately = _shouldSendImmediatelyTest;
+      _shouldDisableCameraSwitch = _shouldDisableCameraSwitchTest;
+      _videoQuality = _videoQualityTest;
+      _facing = _facingTest;
+      _maxDurationRec = _maxDurationRecTest;
+      _shouldEnableCoverShot = _shouldEnableCoverShotTest;
+      _shouldConfirmStopRecording = _shouldConfirmStopRecordingTest;
+
+      _titleText = _titleTextTest;
+      _mesText = _mesTextTest;
+      _posBtnText = _posBtnTextTest;
+      _negBtnText = _negBtnTextTest;
+
+      _controllerStyle = _controllerStyleTest;
+      _textColor = _textColorTest;
+      _unplayedColor = _unplayedColorTest;
+      _playedColor = _playedColorTest;
+      _bufferedColor = _bufferedColorTest;
+      _tintColor = _tintColorTest;
+      _muteOffImageDrawable = _muteOffImageDrawableTest;
+      _muteOnImageDrawable = _muteOnImageDrawableTest;
     });
   }
 
