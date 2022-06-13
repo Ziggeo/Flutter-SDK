@@ -341,7 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             buildItemWidget(
                 'shouldUseWifiOnly:', 'shouldUseWifiOnly$_shouldUseWifiOnly'),
-            buildItemWidget('shouldTurnOffUploader:',
+            buildItemWidget('shouldTurnOffUploader: ',
                 'shouldTurnOffUploader$_shouldTurnOffUploader'),
             const Text(
               'QrScannerConfig:',
