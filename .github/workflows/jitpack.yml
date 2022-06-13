@@ -25,5 +25,5 @@ jobs:
           working-directory: ./example
           arch: x86_64
           profile: Nexus 6
-          script: "flutter drive --driver=example/test_driver/mapping_for_tests.dart --target=example/integration_test/mapping_tests.dart"
+          script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
