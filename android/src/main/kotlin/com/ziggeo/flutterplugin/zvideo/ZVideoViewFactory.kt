@@ -9,6 +9,6 @@ import io.flutter.plugin.platform.PlatformViewFactory
 
 class ZVideoViewFactory(private val zVideoView: ZVideoView) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
     override fun create(context: Context?, id: Int, o: Any?): PlatformView {
-        return ZVideoViewFlutter(context, zVideoView, Ziggeo(context))
+        return ZVideoViewFlutter(context!!, zVideoView, Ziggeo(context!!))
     }
 }
