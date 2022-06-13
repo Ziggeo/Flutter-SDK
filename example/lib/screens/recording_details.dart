@@ -46,14 +46,14 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       isLoading = true;
     });
     if (recordingModel.type == RecordingModel.video_type) {
-      await ziggeo.videos.getImageUrl(recordingModel.token).then((value) {
+      await ziggeo.videos.getImageUrl(recordingModel.token ?? '').then((value) {
         setState(() {
           previewPath = value;
           isLoading = false;
         });
       }, onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.image_type) {
-      await ziggeo.images.getImageUrl(recordingModel.token).then((value) {
+      await ziggeo.images.getImageUrl(recordingModel.token ?? '').then((value) {
         setState(() {
           previewPath = value;
           isLoading = false;
@@ -77,7 +77,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
         setState(() {
           isLoading = false;
           recordingModel = RecordingModel.fromJson(
-              json.decode(value ?? ''), recordingModel.type);
+              json.decode(value ?? ''), recordingModel.type ?? '');
           isInEditMode = false;
         });
       }, onError: (error) => handleError(error));
@@ -86,8 +86,8 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       ziggeo.audios.update(model.toJson()).then((value) {
         setState(() {
           isLoading = false;
-          recordingModel =
-              RecordingModel.fromJson(json.decode(value), recordingModel.type);
+          recordingModel = RecordingModel.fromJson(
+              json.decode(value), recordingModel.type ?? '');
           isInEditMode = false;
         });
       }, onError: (error) => handleError(error));
@@ -96,8 +96,8 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       ziggeo.images.update(model.toJson()).then((value) {
         setState(() {
           isLoading = false;
-          recordingModel =
-              RecordingModel.fromJson(json.decode(value), recordingModel.type);
+          recordingModel = RecordingModel.fromJson(
+              json.decode(value), recordingModel.type ?? '');
           isInEditMode = false;
         });
       }, onError: (error) => handleError(error));
@@ -109,15 +109,15 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       isLoading = true;
     });
     if (recordingModel.type == RecordingModel.video_type) {
-      ziggeo.videos.destroy(recordingModel.token).then(
+      ziggeo.videos.destroy(recordingModel.token ?? '').then(
           (value) => Navigator.of(context).pop(),
           onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.audio_type) {
-      ziggeo.audios.destroy(recordingModel.token).then(
+      ziggeo.audios.destroy(recordingModel.token ?? '').then(
           (value) => Navigator.of(context).pop(),
           onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.image_type) {
-      ziggeo.images.destroy(recordingModel.token).then(
+      ziggeo.images.destroy(recordingModel.token ?? '').then(
           (value) => Navigator.of(context).pop(),
           onError: (error) => handleError(error));
     }
@@ -278,15 +278,15 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
               builder: (context) =>
                   VideoPlayerScreen(ziggeo, recordingModel.token, null)));
         } else {
-          ziggeo.startPlayerFromToken([recordingModel.token]);
+          ziggeo.startPlayerFromToken([recordingModel.token ?? '']);
         }
       });
     }
     if (recordingModel.type == RecordingModel.audio_type) {
-      ziggeo.startAudioPlayerByToken(recordingModel.token);
+      ziggeo.startAudioPlayerByToken(recordingModel.token ?? '');
     }
     if (recordingModel.type == RecordingModel.image_type) {
-      ziggeo.showImageByToken(recordingModel.token);
+      ziggeo.showImageByToken(recordingModel.token ?? '');
     }
   }
 }

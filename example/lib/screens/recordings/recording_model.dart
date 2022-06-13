@@ -11,24 +11,24 @@ class RecordingModel {
   static const String audio_type = "AUDIO";
   static const String image_type = "IMAGE";
 
-  String type;
-  String token;
-  String key;
-  String state;
-  String title;
-  String description;
-  List<String> tags;
-  int created;
+  String? type;
+  String? token;
+  String? key;
+  String? state;
+  String? title;
+  String? description;
+  List<String>? tags;
+  int? created = 0;
 
   RecordingModel(
-      {required this.type,
-      required this.token,
-      required this.key,
-      required this.state,
-      required this.title,
-      required this.description,
-      required this.tags,
-      required this.created});
+      {this.type,
+      this.token,
+      this.key,
+      this.state,
+      this.title,
+      this.description,
+      this.tags,
+      this.created = 0});
 
   factory RecordingModel.fromJson(Map<String, dynamic> json, String type) {
     return RecordingModel(

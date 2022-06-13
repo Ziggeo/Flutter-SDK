@@ -33,7 +33,7 @@ class _ZCameraRecorderState extends State<ZCameraRecorder> {
     if (widget.onZCameraRecorderCreated == null) {
       return;
     }
-    widget.onZCameraRecorderCreated!(new ZCameraRecorderController._(id));
+    widget.onZCameraRecorderCreated(new ZCameraRecorderController._(id));
   }
 }
 

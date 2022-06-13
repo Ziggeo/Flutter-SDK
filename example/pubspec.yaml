@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   fluttertoast: 8.0.8
   url_launcher: ^6.0.12
-  flutter_native_html_view: ^1.0.1
+  flutter_html: ^2.2.1
   flutter_email_sender: ^5.0.2
   intl: ^0.17.0
   provider: ^6.0.1

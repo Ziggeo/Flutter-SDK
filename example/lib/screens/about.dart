@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_html_view/flutter_native_html_view.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:ziggeo_example/localization.dart';
 import 'package:ziggeo_example/res/dimens.dart';
 import 'package:ziggeo_example/utils/utils.dart';
@@ -28,9 +28,9 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             SizedBox(height: common_margin),
             Expanded(
-              child: FlutterNativeHtmlView(
-                htmlData: AppLocalizations.instance.text('about_text'),
-                onLinkTap: (url) => onVisitUrlPressed(url),
+              child: Html(
+                data: AppLocalizations.instance.text('about_text'),
+                onLinkTap: (url, _, __, ___) => onVisitUrlPressed(url),
               ),
             ),
           ],
@@ -39,7 +39,7 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  onVisitUrlPressed(String url) async {
-    Utils.openUrl(url);
+  onVisitUrlPressed(String? url) async {
+    Utils.openUrl(url ?? '');
   }
 }

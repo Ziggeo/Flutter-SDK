@@ -206,7 +206,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       recordings.addAll(recordingsVideo);
       recordings.addAll(recordingsImages);
       recordings.addAll(recordingsAudio);
-      recordings.sort((b, a) => a.created.compareTo(b.created));
+      recordings.sort((b, a) => a.created!.compareTo(b.created ?? 0));
       setState(() {
         this.isLoading = false;
         this.recordings = recordings;
@@ -229,7 +229,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
         : item.tags.toString().replaceAll('[', '').replaceAll(']', '');
     final String state = item.state ?? '';
     final String dateCreated = DateFormat('dd.MM.yyyy hh:mm')
-        .format(DateTime.fromMillisecondsSinceEpoch(item.created * 1000));
+        .format(DateTime.fromMillisecondsSinceEpoch(item.created! * 1000));
 
     final Icon icon = (item.type == RecordingModel.image_type)
         ? Icon(
