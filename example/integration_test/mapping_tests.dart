@@ -85,13 +85,21 @@ void main() {
       // Emulate a tap on the floating action button.
       await tester.tap(fab);
 
-      final gesture = await tester
-          .startGesture(Offset(0, 300)); //Position of the scrollview
-      await gesture.moveBy(Offset(0, -300)); //How much to scroll by
-      await tester.pump();
+      final listFinder = find.byType(Scrollable);
+      final itemFinder = find.byKey(ValueKey('shouldCloseAfterSuccessfulScan: '));
+
+      // Scroll until the item to be found appears.
+      await tester.scrollUntilVisible(
+        itemFinder,
+        50.0,
+        scrollable: listFinder,
+      );
 
       // Trigger a frame.
       await tester.pumpAndSettle();
+      await binding.takeScreenshot('test-screenshot');
+
+      expect(itemFinder, findsOneWidget);
       await binding.takeScreenshot('test-screenshot');
       expect(find.text('shouldUseWifiOnly$shouldUseWifiOnly'), findsOneWidget);
       expect(find.text('syncInterval$syncInterval'), findsOneWidget);
@@ -112,18 +120,13 @@ void main() {
       // Emulate a tap on the floating action button.
       await tester.tap(fab);
 
-      // final gesture = await tester
-      //     .startGesture(Offset(0, 300)); //Position of the scrollview
-      // await gesture.moveBy(Offset(0, -300)); //How much to scroll by
-      // await tester.pump();
-
       final listFinder = find.byType(Scrollable);
       final itemFinder = find.byKey(ValueKey('shouldCloseAfterSuccessfulScan: '));
 
       // Scroll until the item to be found appears.
       await tester.scrollUntilVisible(
         itemFinder,
-        500.0,
+        50.0,
         scrollable: listFinder,
       );
 
@@ -157,7 +160,7 @@ void main() {
       // Scroll until the item to be found appears.
       await tester.scrollUntilVisible(
         itemFinder,
-        500.0,
+        50.0,
         scrollable: listFinder,
       );
 
@@ -208,7 +211,7 @@ void main() {
       // Scroll until the item to be found appears.
       await tester.scrollUntilVisible(
         itemFinder,
-        500.0,
+        50.0,
         scrollable: listFinder,
       );
 
@@ -243,7 +246,7 @@ void main() {
       // Scroll until the item to be found appears.
       await tester.scrollUntilVisible(
         itemFinder,
-        500.0,
+        50.0,
         scrollable: listFinder,
       );
 
