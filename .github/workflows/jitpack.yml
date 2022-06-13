@@ -4,6 +4,9 @@ on: [ push, pull_request ]
 jobs:
   drive_android:
     runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: ./example
     strategy:
       matrix:
         api-level: [ 23 ]
@@ -19,6 +22,7 @@ jobs:
         with:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
+          working-directory: ./example
           arch: x86_64
           profile: Nexus 6
           script: "flutter drive --driver=example/test_driver/mapping_for_tests.dart --target=example/integration_test/mapping_tests.dart"
