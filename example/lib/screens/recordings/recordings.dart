@@ -206,7 +206,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       recordings.addAll(recordingsVideo);
       recordings.addAll(recordingsImages);
       recordings.addAll(recordingsAudio);
-      recordings.sort((b, a) => a.created!.compareTo(b.created ?? 0));
+      recordings.sort((b, a) => a.created!.compareTo(b.created!));
       setState(() {
         this.isLoading = false;
         this.recordings = recordings;
