@@ -9,7 +9,7 @@ jobs:
         working-directory: ./example
     strategy:
       matrix:
-        api-level: [ 31 ]
+        api-level: [ 23 ]
         target: [ default ]
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
           working-directory: ./example
-          arch: x86_64
-          profile: Nexus 6
+#          arch: x86_64
+          profile: Nexus 4
           script: "flutter drive --driver=test_driver/mapping_for_tests.dart --target=integration_test/mapping_tests.dart"
 
