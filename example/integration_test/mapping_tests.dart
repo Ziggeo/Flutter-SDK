@@ -126,7 +126,7 @@ void main() {
       expect(find.text('shouldConfirmStopRecording$shouldConfirmStopRecording'),
           findsOneWidget);
 
-      final itemFiveFinder = find.byKey(ValueKey('muteOnImageDrawable: '));
+      final itemFiveFinder = find.byKey(ValueKey('negBtnText: '));
 
       // Scroll until the item to be found appears.
       await tester.scrollUntilVisible(
@@ -141,6 +141,26 @@ void main() {
 
       expect(itemFiveFinder, findsOneWidget);
 
+      expect(find.text('titleText$titleText'), findsOneWidget);
+      expect(find.text('mesText$mesText'), findsOneWidget);
+      expect(find.text('posBtnText$posBtnText'), findsOneWidget);
+      expect(find.text('negBtnText$negBtnText'), findsOneWidget);
+
+      final itemSixFinder = find.byKey(ValueKey('muteOnImageDrawable: '));
+
+      // Scroll until the item to be found appears.
+      await tester.scrollUntilVisible(
+        itemSixFinder,
+        50.0,
+        scrollable: listFinder,
+      );
+
+      // Trigger a frame.
+      await tester.pumpAndSettle();
+      await binding.takeScreenshot('test-screenshot');
+
+      expect(itemSixFinder, findsOneWidget);
+
       expect(find.text('textColor$textColor'), findsOneWidget);
       expect(find.text('controllerStyle$controllerStyle'), findsOneWidget);
       expect(find.text('unplayedColor$unplayedColor'), findsOneWidget);
@@ -153,39 +173,4 @@ void main() {
           find.text('muteOnImageDrawable$muteOnImageDrawable'), findsOneWidget);
     });
   });
-  //
-  // group('mapping_Recorder_dialog', () {
-  //   testWidgets('recorder_dialog_config_success', (WidgetTester tester) async {
-  //     app.main();
-  //     await binding.convertFlutterSurfaceToImage();
-  //     await tester.pumpAndSettle();
-  //
-  //     // Finds the floating action button to tap on.
-  //     final Finder fab = find.byTooltip('Increment');
-  //
-  //     // Emulate a tap on the floating action button.
-  //     await tester.tap(fab);
-  //
-  //     final listFinder = find.byType(Scrollable);
-  //     // final itemFinder = find.byKey(ValueKey('negBtnText: '));
-  //
-  //     // Scroll until the item to be found appears.
-  //     // await tester.scrollUntilVisible(
-  //     //   itemFinder,
-  //     //   50.0,
-  //     //   scrollable: listFinder,
-  //     // );
-  //
-  //     // Trigger a frame.
-  //     await tester.pumpAndSettle();
-  //     await binding.takeScreenshot('test-screenshot');
-  //
-  //     // expect(itemFinder, findsOneWidget);
-  //
-  //     // expect(find.text('titleText$titleText'), findsOneWidget);
-  //     // expect(find.text('mesText$mesText'), findsOneWidget);
-  //     // expect(find.text('posBtnText$posBtnText'), findsOneWidget);
-  //     // expect(find.text('negBtnText$negBtnText'), findsOneWidget);
-  //   });
-  // });
 }

@@ -240,20 +240,20 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                 result.success(
                         "{\"titleResId\": "
                                 + uploadingConfig.titleResId +
-                                ",\"titleText\": " +
-                                uploadingConfig.titleText +
+                                ",\"titleText\": " + "\"" +
+                                uploadingConfig.titleText + "\"" +
                                 ",\"mesResId\": " +
                                 uploadingConfig.mesResId +
-                                ",\"mesText\": " +
-                                uploadingConfig.mesText +
+                                ",\"mesText\": " + "\"" +
+                                uploadingConfig.mesText + "\"" +
                                 ",\"posBtnResId\": " +
                                 uploadingConfig.posBtnResId +
-                                ",\"posBtnText\": " +
-                                uploadingConfig.posBtnText +
+                                ",\"posBtnText\": " + "\"" +
+                                uploadingConfig.posBtnText + "\"" +
                                 ",\"negBtnResId\": " +
                                 uploadingConfig.negBtnResId +
-                                ",\"negBtnText\": " +
-                                uploadingConfig.negBtnText + "}");
+                                ",\"negBtnText\": " + "\"" +
+                                uploadingConfig.negBtnText + "\"" + "}");
             }
             "startQrScanner" -> ziggeo.startQrScanner()
             "setQrScannerConfig" -> {

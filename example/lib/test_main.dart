@@ -37,10 +37,10 @@ final int maxDurationRec = 100;
 final bool shouldEnableCoverShot = true;
 final bool shouldConfirmStopRecording = true;
 //recorder dialog config params
-final Characters titleText = Characters("aa");
-final Characters mesText = Characters("qq");
-final Characters posBtnText = Characters("ss");
-final Characters negBtnText = Characters("qwert");
+final titleText = "aa";
+final mesText = "qq";
+final posBtnText = "ss";
+final negBtnText = "qwert";
 //player style config params
 final int controllerStyle = PlayerStyle.MODERN;
 final int textColor = 123;
@@ -109,10 +109,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool? _shouldEnableCoverShot;
   bool? _shouldConfirmStopRecording;
 
-  Characters? _titleText;
-  Characters? _mesText;
-  Characters? _posBtnText;
-  Characters? _negBtnText;
+  String? _titleText;
+  String? _mesText;
+  String? _posBtnText;
+  String? _negBtnText;
 
   int? _controllerStyle;
   int? _textColor;
@@ -213,14 +213,14 @@ class _MyHomePageState extends State<MyHomePage> {
     var _shouldConfirmStopRecordingTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldConfirmStopRecording;
 
-    //test uploading config
-    // widget.ziggeo.stopRecordingConfirmationDialogConfig =
-    //     StopRecordingConfirmationDialogConfig(
-    //   titleText: titleText,
-    //   mesText: mesText,
-    //   posBtnText: posBtnText,
-    //   negBtnText: negBtnText,
-    // );
+    // test uploading config
+    widget.ziggeo.stopRecordingConfirmationDialogConfig =
+        StopRecordingConfirmationDialogConfig(
+      titleText: titleText,
+      mesText: mesText,
+      posBtnText: posBtnText,
+      negBtnText: negBtnText,
+    );
     var _titleTextTest =
         (await widget.ziggeo.getRecordingConfirmationDialogConfig())?.titleText;
     var _mesTextTest =

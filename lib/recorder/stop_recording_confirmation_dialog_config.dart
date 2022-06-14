@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class StopRecordingConfirmationDialogConfig {
   int? titleResId;
-  Characters? titleText;
+  String? titleText;
   int? mesResId;
-  Characters? mesText;
+  String? mesText;
   int? posBtnResId;
-  Characters? posBtnText;
+  String? posBtnText;
   int? negBtnResId;
-  Characters? negBtnText;
+  String? negBtnText;
 
   StopRecordingConfirmationDialogConfig({
     this.titleResId,
