@@ -1,6 +1,8 @@
 import 'package:ziggeo/common/base_config.dart';
 import 'package:ziggeo/recorder/recorder_listener.dart';
 
+import 'stop_recording_confirmation_dialog_config.dart';
+
 class RecorderConfig extends BaseConfig {
   static const defaultStartDelay = 3; // seconds
   static const qualityHigh = 0;
@@ -21,7 +23,8 @@ class RecorderConfig extends BaseConfig {
   var facing = 0;
   var maxDuration = 0;
   var shouldEnableCoverShot = true;
-  var shouldConfirmStopRecording = false;
+  var shouldConfirmStopRecording = true;
+  StopRecordingConfirmationDialogConfig? stopRecordingConfirmationDialogConfig;
 
   RecorderEventsListener? eventsListener;
 
@@ -40,6 +43,8 @@ class RecorderConfig extends BaseConfig {
     map["maxDuration"] = maxDuration;
     map["shouldEnableCoverShot"] = shouldEnableCoverShot;
     map["shouldConfirmStopRecording"] = shouldConfirmStopRecording;
+    map["stopRecordingConfirmationDialogConfig"] =
+        stopRecordingConfirmationDialogConfig;
     return map;
   }
 }

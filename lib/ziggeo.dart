@@ -6,6 +6,7 @@ import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/player/player_config.dart';
 import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
+import 'package:ziggeo/sensor_manager/sensor_manager_listener.dart';
 import 'package:ziggeo/uploading/uploading_config.dart';
 
 import 'api/images.dart';
@@ -21,6 +22,7 @@ class Ziggeo {
   static const _plChannel = const MethodChannel('ziggeo_pl_callback');
   static const _qrChannel = const MethodChannel('ziggeo_qr_callback');
   static const _zvChannel = const MethodChannel('z_video_view');
+  static const _smChannel = const MethodChannel('ziggeo_sensor_manager');
 
   Ziggeo(String? token) {
     setAppToken(token);
@@ -41,6 +43,7 @@ class Ziggeo {
   UploadingConfig? _uploadingConfig;
   FileSelectorConfig? _fileSelectorConfig;
   PlayerConfig? _playerConfig;
+  SensorManagerEventsListener? _smEventListener;
 
   VideosApi get videos => _videosApi;
 
@@ -90,6 +93,12 @@ class Ziggeo {
     _recorderConfig = value;
     _ziggeoChannel.invokeMethod(
         'setRecorderConfig', recorderConfig?.convertToMap());
+    _ziggeoChannel.invokeMethod('setRecordingConfirmationDialogConfig',
+        recorderConfig?.stopRecordingConfirmationDialogConfig?.convertToMap());
+  }
+
+  set setSensorManager(SensorManagerEventsListener? value) {
+    _smEventListener = value;
   }
 
   Future<String?> get appToken async {
@@ -201,6 +210,7 @@ class Ziggeo {
     listenToUplChannel();
     listenToPlChannel();
     listenToQrChannel();
+    listenToSensorManagerChannel();
   }
 
   void listenToRecChannel() {
@@ -376,6 +386,19 @@ class Ziggeo {
           break;
         case 'playing':
           _playerConfig?.eventsListener?.onPlaying?.call();
+          break;
+        default:
+          print(
+              "$_defaultChannelError Channel:$_plChannel, call:${call.method}");
+      }
+    });
+  }
+
+  void listenToSensorManagerChannel() {
+    _smChannel.setMethodCallHandler((MethodCall call) async {
+      switch (call.method) {
+        case 'lightSensorLevel':
+          _smEventListener?.lightSensorLevel?.call(call.arguments);
           break;
         default:
           print(

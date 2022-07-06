@@ -39,7 +39,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 6
-        versionName "1.0.5"
+        versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         setProperty("archivesBaseName", "androidFlutter-v" + versionName + "_" + getDate())
@@ -109,4 +109,5 @@ repositories {
 static def getDate() {
     return new Date().format('HH.mm.ss_dd-MM-YYYY')
 }
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
+//uncomment for release
