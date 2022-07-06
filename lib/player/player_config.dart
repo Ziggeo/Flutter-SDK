@@ -17,6 +17,17 @@ class PlayerConfig extends BaseConfig {
     return map;
   }
 
+  PlayerConfig convertFromMap(Map<String, dynamic> map) {
+    shouldShowSubtitles = map["shouldShowSubtitles"];
+    isMuted = map["isMuted"];
+    playerStyle = map["playerStyle"];
+    return PlayerConfig(
+      shouldShowSubtitles: shouldShowSubtitles,
+      isMuted: isMuted,
+      playerStyle: playerStyle,
+    );
+  }
+
   PlayerConfig({
     this.shouldShowSubtitles = false,
     this.isMuted = false,

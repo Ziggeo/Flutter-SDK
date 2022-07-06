@@ -6,11 +6,11 @@ typedef void ZVideoPlayerCreatedCallback(VideoPlayerController controller);
 
 class ZVideoPlayer extends StatefulWidget {
   const ZVideoPlayer({
-    Key key,
+    Key? key,
     this.onTVideoPlayerCreated,
   }) : super(key: key);
 
-  final ZVideoPlayerCreatedCallback onTVideoPlayerCreated;
+  final ZVideoPlayerCreatedCallback? onTVideoPlayerCreated;
 
   @override
   State<StatefulWidget> createState() => _ZVideoPlayerState();
@@ -32,7 +32,7 @@ class _ZVideoPlayerState extends State<ZVideoPlayer> {
     if (widget.onTVideoPlayerCreated == null) {
       return;
     }
-    widget.onTVideoPlayerCreated(new VideoPlayerController._(id));
+    widget.onTVideoPlayerCreated!(new VideoPlayerController._(id));
   }
 }
 

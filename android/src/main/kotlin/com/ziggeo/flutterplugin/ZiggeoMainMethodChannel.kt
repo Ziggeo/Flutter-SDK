@@ -129,7 +129,13 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["extraArgs"] as? HashMap<String, String>)?.let { value ->
                         config.extraArgs = value
                     }
+                    (it["isPausedMode"] as? Boolean)?.let { value ->
+                        config.setIsPausedMode(value)
+                    }
                 }
+            }
+            "getRecorderConfig" -> {
+                result.success(ziggeo.recorderConfig.stringValueConfig());
             }
             "setRecordingConfirmationDialogConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -161,6 +167,11 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     ziggeo.recorderConfig.stopRecordingConfirmationDialogConfig = stopDialogConfig.build()
                 }
             }
+            "getStopRecordingConfirmationDialogConfig" -> {
+                result.success(
+                        ziggeo.recorderConfig.stopRecordingConfirmationDialogConfig
+                                .stringValueConfig());
+            }
             "startQrScanner" -> ziggeo.startQrScanner()
             "setQrScannerConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -169,6 +180,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                         config.shouldCloseAfterSuccessfulScan = value
                     }
                 }
+            }
+            "getQrScannerConfig" -> {
+                result.success(ziggeo.qrScannerConfig.stringValueConfig());
             }
             "setUploadingConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -184,6 +198,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                 }
             }
+            "getUploadingConfig" -> {
+                result.success(ziggeo.uploadingConfig.stringValueConfig());
+            }
             "setFileSelectorConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
                     val config = ziggeo.fileSelectorConfig
@@ -196,10 +213,10 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["shouldAllowMultipleSelection"] as? Boolean)?.let { value ->
                         config.shouldAllowMultipleSelection = value
                     }
-                    (it["mediaType"] as? Int)?.let { value ->
-                        config.mediaType = value
-                    }
                 }
+            }
+            "getFileSelectorConfig" -> {
+                result.success(ziggeo.fileSelectorConfig.stringValueConfig());
             }
             "setPlayerConfig" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
@@ -212,6 +229,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                 }
             }
+            "getPlayerConfig" -> {
+                result.success(ziggeo.playerConfig.stringValueConfig());
+            }
             "setPlayerStyle" -> {
                 (call.arguments as? HashMap<*, *>)?.let {
                     val style = ziggeo.playerConfig.style
@@ -220,6 +240,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     }
                     (it["textColor"] as? Int)?.let { value ->
                         style.textColor = value
+                    }
+                    (it["playedColor"] as? Int)?.let { value ->
+                        style.playedColor = value
                     }
                     (it["unplayedColor"] as? Int)?.let { value ->
                         style.unplayedColor = value
@@ -237,6 +260,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                         style.muteOnImageDrawable = value
                     }
                 }
+            }
+            "getPlayerStyle" -> {
+                result.success(ziggeo.playerConfig.style.stringValueConfig());
             }
             "sendReport" -> {
                 var list: List<String>? = null

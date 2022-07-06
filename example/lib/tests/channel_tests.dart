@@ -4,7 +4,7 @@ import 'package:ziggeo/ziggeo.dart';
 ///There is no way to test it using standard approaches
 class ChannelTest {
   static final _testToken = "tt";
-  Ziggeo _ziggeo;
+  late Ziggeo _ziggeo;
 
   ChannelTest(Ziggeo ziggeo) {
     this._ziggeo = ziggeo;

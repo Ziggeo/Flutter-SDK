@@ -114,8 +114,12 @@ class _AppDrawerState extends State<AppDrawer> {
             )));
   }
 
-  Widget _createDrawerItem(
-      {IconData icon, String text, GestureTapCallback onTap, bool isSelected}) {
+  Widget _createDrawerItem({
+    IconData? icon,
+    required String text,
+    required GestureTapCallback onTap,
+    required bool isSelected,
+  }) {
     return ListTile(
       selected: isSelected,
       title: TextLocalized(text),
@@ -163,28 +167,28 @@ class _AppDrawerState extends State<AppDrawer> {
 }
 
 class DrawerState with ChangeNotifier {
-  StatefulWidget selectedRoute;
-  String selectedRouteName;
-  Ziggeo _ziggeo;
+  StatefulWidget? selectedRoute;
+  String? selectedRouteName;
+  Ziggeo? _ziggeo;
 
-  set ziggeo(Ziggeo value) {
+  set ziggeo(Ziggeo? value) {
     _ziggeo = value;
     selectRoute(selectedRouteName);
   }
 
-  Ziggeo get ziggeo => _ziggeo;
+  Ziggeo? get ziggeo => _ziggeo ;
 
   DrawerState() {
     selectRoute(Routes.recordings);
   }
 
-  selectRoute(String value) {
+  selectRoute(String? value) {
     switch (value) {
       case Routes.video_editor:
         selectedRoute = VideoEditorScreen();
         break;
       case Routes.settings:
-        selectedRoute = SettingsScreen(_ziggeo);
+        selectedRoute = SettingsScreen(_ziggeo ?? Ziggeo(null));
         break;
       case Routes.sdks:
         selectedRoute = AvailableSdksScreen();
@@ -199,14 +203,14 @@ class DrawerState with ChangeNotifier {
         selectedRoute = AboutScreen();
         break;
       case Routes.log:
-        selectedRoute = LogScreen(_ziggeo);
+        selectedRoute = LogScreen(_ziggeo ?? Ziggeo(null));
         break;
       case Routes.recordings:
       default:
-        selectedRoute = RecordingsScreen(_ziggeo);
+        selectedRoute = RecordingsScreen(_ziggeo ?? Ziggeo(null));
     }
     selectedRouteName = value;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       notifyListeners();
     });
   }

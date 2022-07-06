@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:ziggeo/api/audio.dart';
 import 'package:ziggeo/api/streams.dart';
@@ -6,7 +8,9 @@ import 'package:ziggeo/file_selector/file_selector_config.dart';
 import 'package:ziggeo/player/player_config.dart';
 import 'package:ziggeo/qr/qr_scanner_config.dart';
 import 'package:ziggeo/recorder/recorder_config.dart';
+import 'package:ziggeo/recorder/stop_recording_confirmation_dialog_config.dart';
 import 'package:ziggeo/sensor_manager/sensor_manager_listener.dart';
+import 'package:ziggeo/styles/player.dart';
 import 'package:ziggeo/uploading/uploading_config.dart';
 
 import 'api/images.dart';
@@ -55,6 +59,23 @@ class Ziggeo {
 
   PlayerConfig? get playerConfig => _playerConfig;
 
+  Future<PlayerConfig?> getPlayerConfig() async {
+    return _playerConfig?.convertFromMap(
+        json.decode((await _ziggeoChannel.invokeMethod('getPlayerConfig')))
+            as Map<String, dynamic>);
+  }
+
+  Future<PlayerStyle?> getPlayerStyle() async {
+    return _playerConfig?.playerStyle?.convertFromMap(
+        json.decode((await _ziggeoChannel.invokeMethod('getPlayerStyle')))
+            as Map<String, dynamic>);
+  }
+
+  set playerStyle(PlayerStyle? value) {
+    _playerConfig?.playerStyle = value;
+    _ziggeoChannel.invokeMethod('setPlayerStyle', value?.convertToMap());
+  }
+
   set playerConfig(PlayerConfig? value) {
     _playerConfig = value;
     _ziggeoChannel.invokeMethod(
@@ -64,6 +85,12 @@ class Ziggeo {
   }
 
   FileSelectorConfig? get fileSelectorConfig => _fileSelectorConfig;
+
+  Future<FileSelectorConfig?> getFileSelectorConfig() async {
+    return _fileSelectorConfig?.convertFromMap(json.decode(
+            (await _ziggeoChannel.invokeMethod('getFileSelectorConfig')))
+        as Map<String, dynamic>);
+  }
 
   set fileSelectorConfig(FileSelectorConfig? value) {
     _fileSelectorConfig = value;
@@ -79,12 +106,24 @@ class Ziggeo {
         'setQrScannerConfig', _qrScannerConfig?.convertToMap());
   }
 
+  Future<QrScannerConfig?> getQrScannerConfig() async {
+    return _qrScannerConfig?.convertFromMap(
+        json.decode((await _ziggeoChannel.invokeMethod('getQrScannerConfig')))
+            as Map<String, dynamic>);
+  }
+
   UploadingConfig? get uploadingConfig => _uploadingConfig;
 
   set uploadingConfig(UploadingConfig? value) {
     _uploadingConfig = value;
     _ziggeoChannel.invokeMethod(
         'setUploadingConfig', _uploadingConfig?.convertToMap());
+  }
+
+  Future<UploadingConfig?> getUploadingConfig() async {
+    return _uploadingConfig?.convertFromMap(
+        json.decode((await _ziggeoChannel.invokeMethod('getUploadingConfig')))
+            as Map<String, dynamic>);
   }
 
   RecorderConfig? get recorderConfig => _recorderConfig;
@@ -95,6 +134,25 @@ class Ziggeo {
         'setRecorderConfig', recorderConfig?.convertToMap());
     _ziggeoChannel.invokeMethod('setRecordingConfirmationDialogConfig',
         recorderConfig?.stopRecordingConfirmationDialogConfig?.convertToMap());
+  }
+
+  set stopRecordingConfirmationDialogConfig(StopRecordingConfirmationDialogConfig? value) {
+    _recorderConfig?.stopRecordingConfirmationDialogConfig = value;
+    _ziggeoChannel.invokeMethod('setRecordingConfirmationDialogConfig', value?.convertToMap());
+  }
+
+  Future<RecorderConfig?> getRecorderConfig() async {
+    return _recorderConfig?.convertFromMap(
+        json.decode((await _ziggeoChannel.invokeMethod('getRecorderConfig')))
+            as Map<String, dynamic>);
+  }
+
+  Future<StopRecordingConfirmationDialogConfig?>
+      getRecordingConfirmationDialogConfig() async {
+    return _recorderConfig?.stopRecordingConfirmationDialogConfig
+        ?.convertFromMap(json.decode((await _ziggeoChannel
+                .invokeMethod('getStopRecordingConfirmationDialogConfig')))
+            as Map<String, dynamic>);
   }
 
   set setSensorManager(SensorManagerEventsListener? value) {

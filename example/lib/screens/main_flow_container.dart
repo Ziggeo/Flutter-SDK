@@ -29,8 +29,8 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
         drawer: AppDrawer(appToken, ziggeo),
         appBar: AppBar(
-          title: TextLocalized(drawerState.selectedRouteName),
+          title: TextLocalized(drawerState.selectedRouteName ?? ''),
         ),
-        body: SafeArea(child: drawerState.selectedRoute));
+        body: SafeArea(child: drawerState.selectedRoute ?? Container()));
   }
 }

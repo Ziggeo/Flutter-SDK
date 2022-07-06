@@ -7,7 +7,7 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 
 class ZCameraRecorderFactory(private val zVideoView: CameraView) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-    override fun create(context: Context, id: Int, o: Any?): PlatformView {
+    override fun create(context: Context?, id: Int, o: Any?): PlatformView {
         return ZCameraRecorderFlutter(zVideoView)
     }
 }

@@ -11,14 +11,14 @@ class RecordingModel {
   static const String audio_type = "AUDIO";
   static const String image_type = "IMAGE";
 
-  String type;
-  String token;
-  String key;
-  String state;
-  String title;
-  String description;
-  List<String> tags;
-  int created;
+  String? type;
+  String? token;
+  String? key;
+  String? state;
+  String? title;
+  String? description;
+  List<String>? tags;
+  int? created = 0;
 
   RecordingModel(
       {this.type,
@@ -28,7 +28,7 @@ class RecordingModel {
       this.title,
       this.description,
       this.tags,
-      this.created});
+      this.created = 0});
 
   factory RecordingModel.fromJson(Map<String, dynamic> json, String type) {
     return RecordingModel(

@@ -5,7 +5,7 @@ class AudiosApi {
 
   AudiosApi();
 
-  Future<String> index(Map<String, String> args) async {
+  Future<String> index(Map<String, String>? args) async {
     return await _imagesChannel.invokeMethod('index', {'args': args});
   }
 

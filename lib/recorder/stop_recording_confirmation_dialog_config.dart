@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class StopRecordingConfirmationDialogConfig {
   int? titleResId;
-  Characters? titleText;
+  String? titleText;
   int? mesResId;
-  Characters? mesText;
+  String? mesText;
   int? posBtnResId;
-  Characters? posBtnText;
+  String? posBtnText;
   int? negBtnResId;
-  Characters? negBtnText;
+  String? negBtnText;
 
   StopRecordingConfirmationDialogConfig({
     this.titleResId,
@@ -20,6 +20,28 @@ class StopRecordingConfirmationDialogConfig {
     this.negBtnResId,
     this.negBtnText,
   });
+
+  StopRecordingConfirmationDialogConfig convertFromMap(
+      Map<String, dynamic> map) {
+    titleResId = map["titleResId"];
+    titleText = map["titleText"];
+    mesResId = map["mesResId"];
+    mesText = map["mesText"];
+    posBtnResId = map["posBtnResId"];
+    posBtnText = map["posBtnText"];
+    negBtnResId = map["negBtnResId"];
+    negBtnText = map["negBtnText"];
+    return StopRecordingConfirmationDialogConfig(
+      titleResId: titleResId,
+      titleText: titleText,
+      mesResId: mesResId,
+      mesText: mesText,
+      posBtnResId: posBtnResId,
+      posBtnText: posBtnText,
+      negBtnResId: negBtnResId,
+      negBtnText: negBtnText,
+    );
+  }
 
   Map<String, dynamic> convertToMap() {
     var map = Map<String, dynamic>();

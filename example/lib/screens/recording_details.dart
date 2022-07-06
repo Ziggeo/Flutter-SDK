@@ -30,7 +30,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
   RecordingModel recordingModel;
   bool isInEditMode = false;
   bool isLoading = false;
-  String previewPath;
+  String? previewPath;
   AppLocalizations localize = AppLocalizations.instance;
 
   _RecordingDetailsState(this.ziggeo, this.recordingModel);
@@ -46,14 +46,14 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       isLoading = true;
     });
     if (recordingModel.type == RecordingModel.video_type) {
-      await ziggeo.videos.getImageUrl(recordingModel.token).then((value) {
+      await ziggeo.videos.getImageUrl(recordingModel.token!).then((value) {
         setState(() {
           previewPath = value;
           isLoading = false;
         });
       }, onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.image_type) {
-      await ziggeo.images.getImageUrl(recordingModel.token).then((value) {
+      await ziggeo.images.getImageUrl(recordingModel.token!).then((value) {
         setState(() {
           previewPath = value;
           isLoading = false;
@@ -76,8 +76,8 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       ziggeo.videos.update(recordingModel.toJson()).then((value) {
         setState(() {
           isLoading = false;
-          recordingModel =
-              RecordingModel.fromJson(json.decode(value), recordingModel.type);
+          recordingModel = RecordingModel.fromJson(
+              json.decode(value ?? ''), recordingModel.type!);
           isInEditMode = false;
         });
       }, onError: (error) => handleError(error));
@@ -87,7 +87,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
         setState(() {
           isLoading = false;
           recordingModel =
-              RecordingModel.fromJson(json.decode(value), recordingModel.type);
+              RecordingModel.fromJson(json.decode(value), recordingModel.type!);
           isInEditMode = false;
         });
       }, onError: (error) => handleError(error));
@@ -97,7 +97,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
         setState(() {
           isLoading = false;
           recordingModel =
-              RecordingModel.fromJson(json.decode(value), recordingModel.type);
+              RecordingModel.fromJson(json.decode(value), recordingModel.type!);
           isInEditMode = false;
         });
       }, onError: (error) => handleError(error));
@@ -109,15 +109,15 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
       isLoading = true;
     });
     if (recordingModel.type == RecordingModel.video_type) {
-      ziggeo.videos.destroy(recordingModel.token).then(
+      ziggeo.videos.destroy(recordingModel.token!).then(
           (value) => Navigator.of(context).pop(),
           onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.audio_type) {
-      ziggeo.audios.destroy(recordingModel.token).then(
+      ziggeo.audios.destroy(recordingModel.token!).then(
           (value) => Navigator.of(context).pop(),
           onError: (error) => handleError(error));
     } else if (recordingModel.type == RecordingModel.image_type) {
-      ziggeo.images.destroy(recordingModel.token).then(
+      ziggeo.images.destroy(recordingModel.token!).then(
           (value) => Navigator.of(context).pop(),
           onError: (error) => handleError(error));
     }
@@ -189,7 +189,7 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
                               alignment: Alignment.center,
                               children: <Widget>[
                                 Image.network(
-                                  previewPath,
+                                  previewPath!,
                                   height: preview_height,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
@@ -273,20 +273,20 @@ class _RecordingDetailsState extends State<RecordingDetailsScreen> {
     if (recordingModel.type == RecordingModel.video_type) {
       await SharedPreferences.getInstance().then((value) {
         if (value.containsKey(Utils.keyCustomPlayerMode) &&
-            value.getBool(Utils.keyCustomPlayerMode)) {
+            (value.getBool(Utils.keyCustomPlayerMode) ?? false)) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) =>
                   VideoPlayerScreen(ziggeo, recordingModel.token, null)));
         } else {
-          ziggeo.startPlayerFromToken([recordingModel.token]);
+          ziggeo.startPlayerFromToken([recordingModel.token!]);
         }
       });
     }
     if (recordingModel.type == RecordingModel.audio_type) {
-      ziggeo.startAudioPlayerByToken(recordingModel.token);
+      ziggeo.startAudioPlayerByToken(recordingModel.token!);
     }
     if (recordingModel.type == RecordingModel.image_type) {
-      ziggeo.showImageByToken(recordingModel.token);
+      ziggeo.showImageByToken(recordingModel.token!);
     }
   }
 }

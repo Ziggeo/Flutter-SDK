@@ -5,7 +5,7 @@ import 'package:ziggeo_example/screens/recordings/recording_model.dart';
 class AudioRecordingModel {
   RecordingModel audio;
 
-  AudioRecordingModel({this.audio});
+  AudioRecordingModel({required this.audio});
 
   factory AudioRecordingModel.fromJson(Map<String, dynamic> json) {
     return AudioRecordingModel(

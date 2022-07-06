@@ -12,6 +12,12 @@ class FileSelectorConfig extends BaseConfig {
 
   FileSelectorEventsListener? eventsListener;
 
+  FileSelectorConfig({
+    this.maxDuration = 0,
+    this.shouldAllowMultipleSelection = false,
+    this.mediaType = videoMediaType,
+  });
+
   @override
   Map<String, dynamic> convertToMap() {
     var map = super.convertToMap();
@@ -19,5 +25,16 @@ class FileSelectorConfig extends BaseConfig {
     map["shouldAllowMultipleSelection"] = shouldAllowMultipleSelection;
     map["mediaType"] = mediaType;
     return map;
+  }
+
+  FileSelectorConfig convertFromMap(Map<String, dynamic> map) {
+    maxDuration = map["maxDuration"];
+    shouldAllowMultipleSelection = map["shouldAllowMultipleSelection"];
+    mediaType = map["mediaType"];
+    return FileSelectorConfig(
+      maxDuration: maxDuration,
+      shouldAllowMultipleSelection: shouldAllowMultipleSelection,
+      mediaType: mediaType,
+    );
   }
 }

@@ -30,6 +30,27 @@ class PlayerStyle extends BaseStyle {
     this.muteOnImageDrawable,
   });
 
+  PlayerStyle convertFromMap(Map<String, dynamic> map) {
+    controllerStyle = map["controllerStyle"];
+    textColor = map["textColor"];
+    unplayedColor = map["unplayedColor"];
+    playedColor = map["playedColor"];
+    bufferedColor = map["bufferedColor"];
+    tintColor = map["tintColor"];
+    muteOffImageDrawable = map["muteOffImageDrawable"];
+    muteOnImageDrawable = map["muteOnImageDrawable"];
+    return PlayerStyle(
+      controllerStyle: controllerStyle,
+      textColor: textColor,
+      unplayedColor: unplayedColor,
+      playedColor: playedColor,
+      bufferedColor: bufferedColor,
+      tintColor: tintColor,
+      muteOffImageDrawable: muteOffImageDrawable,
+      muteOnImageDrawable: muteOnImageDrawable,
+    );
+  }
+
   Map<String, dynamic> convertToMap() {
     var map = super.convertToMap();
     map["controllerStyle"] = controllerStyle;
