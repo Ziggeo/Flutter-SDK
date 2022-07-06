@@ -23,6 +23,7 @@ class RecorderConfig extends BaseConfig {
   int? maxDuration;
   bool? shouldEnableCoverShot;
   bool? shouldConfirmStopRecording;
+  bool? isPausedMode;
   StopRecordingConfirmationDialogConfig? stopRecordingConfirmationDialogConfig;
   RecorderEventsListener? eventsListener;
 
@@ -39,6 +40,7 @@ class RecorderConfig extends BaseConfig {
     this.maxDuration = 0,
     this.shouldEnableCoverShot = true,
     this.shouldConfirmStopRecording = true,
+    this.isPausedMode = true,
     StopRecordingConfirmationDialogConfig?
         stopRecordingConfirmationDialogConfig,
     RecorderEventsListener? eventsListener,
@@ -59,6 +61,7 @@ class RecorderConfig extends BaseConfig {
     shouldConfirmStopRecording = map["shouldConfirmStopRecording"];
     stopRecordingConfirmationDialogConfig =
         map["stopRecordingConfirmationDialogConfig"];
+    isPausedMode = map["isPausedMode"];
     return RecorderConfig(
       shouldShowFaceOutline: shouldShowFaceOutline,
       isLiveStreaming: isLiveStreaming,
@@ -74,6 +77,7 @@ class RecorderConfig extends BaseConfig {
       shouldConfirmStopRecording: shouldConfirmStopRecording,
       stopRecordingConfirmationDialogConfig:
           stopRecordingConfirmationDialogConfig,
+      isPausedMode: isPausedMode,
     );
   }
 
@@ -94,6 +98,7 @@ class RecorderConfig extends BaseConfig {
     map["shouldConfirmStopRecording"] = shouldConfirmStopRecording;
     map["stopRecordingConfirmationDialogConfig"] =
         stopRecordingConfirmationDialogConfig;
+    map["isPausedMode"] = isPausedMode;
     return map;
   }
 }

@@ -76,7 +76,7 @@ void main() {
               'shouldCloseAfterSuccessfulScan$shouldCloseAfterSuccessfulScan'),
           findsOneWidget);
 
-      final itemThreeFinder = find.byKey(ValueKey('shouldSendImmediately: '));
+      final itemThreeFinder = find.byKey(ValueKey('isPausedMode: '));
 
       // Scroll until the item to be found appears.
       await tester.scrollUntilVisible(
@@ -99,6 +99,8 @@ void main() {
       expect(find.text('startDelay$startDelay'), findsOneWidget);
       expect(find.text('blurMode$blurMode'), findsOneWidget);
       expect(find.text('shouldSendImmediately$shouldSendImmediately'),
+          findsOneWidget);
+      expect(find.text('isPausedMode$isPausedMode'),
           findsOneWidget);
 
       final itemFourFinder =

@@ -129,6 +129,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["extraArgs"] as? HashMap<String, String>)?.let { value ->
                         config.extraArgs = value
                     }
+                    (it["isPausedMode"] as? Boolean)?.let { value ->
+                        config.setIsPausedMode(value)
+                    }
                 }
             }
             "getRecorderConfig" -> {

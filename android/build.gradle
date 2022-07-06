@@ -46,7 +46,7 @@ android {
 }
 
 dependencies {
-    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.6.1:flutterblur@aar") {
+    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.6.3:flutterblur@aar") {
         transitive = true
     }
 //    implementation project(':sdk') // for internal development

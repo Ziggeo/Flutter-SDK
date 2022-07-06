@@ -36,6 +36,7 @@ final int facing = 1;
 final int maxDurationRec = 100;
 final bool shouldEnableCoverShot = true;
 final bool shouldConfirmStopRecording = true;
+final bool isPausedMode = false;
 //recorder dialog config params
 final titleText = "aa";
 final mesText = "qq";
@@ -108,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int? _maxDurationRec;
   bool? _shouldEnableCoverShot;
   bool? _shouldConfirmStopRecording;
+  bool? _isPausedMode;
 
   String? _titleText;
   String? _mesText;
@@ -184,6 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
         maxDuration: maxDurationRec,
         shouldEnableCoverShot: shouldEnableCoverShot,
         shouldConfirmStopRecording: shouldConfirmStopRecording,
+        isPausedMode: isPausedMode,
         stopRecordingConfirmationDialogConfig:
             StopRecordingConfirmationDialogConfig(
           titleText: titleText,
@@ -212,6 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
         (await widget.ziggeo.getRecorderConfig())?.shouldEnableCoverShot;
     var _shouldConfirmStopRecordingTest =
         (await widget.ziggeo.getRecorderConfig())?.shouldConfirmStopRecording;
+    var _isPausedModeTest = (await widget.ziggeo.getRecorderConfig())?.isPausedMode;
 
     // test uploading config
     widget.ziggeo.stopRecordingConfirmationDialogConfig =
@@ -284,6 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _maxDurationRec = _maxDurationRecTest;
       _shouldEnableCoverShot = _shouldEnableCoverShotTest;
       _shouldConfirmStopRecording = _shouldConfirmStopRecordingTest;
+      _isPausedMode = _isPausedModeTest;
 
       _titleText = _titleTextTest;
       _mesText = _mesTextTest;
@@ -379,6 +384,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 'shouldEnableCoverShot$_shouldEnableCoverShot'),
             buildItemWidget('shouldConfirmStopRecording: ',
                 'shouldConfirmStopRecording$_shouldConfirmStopRecording'),
+            buildItemWidget('isPausedMode: ',
+                'isPausedMode$_isPausedMode'),
             const Text(
               'RecorderDialogConfig:',
             ),
