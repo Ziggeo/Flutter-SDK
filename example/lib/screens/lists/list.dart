@@ -41,5 +41,5 @@ class ListDataObject {
   String url;
   String imagePath;
 
-  ListDataObject({this.url, this.imagePath});
+  ListDataObject({required this.url, required this.imagePath});
 }

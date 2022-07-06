@@ -14,10 +14,10 @@ import 'localization.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // uncomment for release
-  await Firebase.initializeApp();
-  if (kDebugMode) {
-    FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-  }
+  // await Firebase.initializeApp();
+  // if (kDebugMode) {
+  //   FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  // }
   runApp(ZiggeoDemoApp());
 }
 

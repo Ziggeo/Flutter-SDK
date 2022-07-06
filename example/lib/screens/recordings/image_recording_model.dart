@@ -5,7 +5,7 @@ import 'package:ziggeo_example/screens/recordings/recording_model.dart';
 class ImageRecordingModel {
   RecordingModel image;
 
-  ImageRecordingModel({this.image});
+  ImageRecordingModel({required this.image});
 
   factory ImageRecordingModel.fromJson(Map<String, dynamic> json) {
     return ImageRecordingModel(

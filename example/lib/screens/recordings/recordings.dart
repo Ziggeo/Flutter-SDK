@@ -38,9 +38,9 @@ class RecordingsScreen extends StatefulWidget {
 }
 
 class _RecordingsScreenState extends State<RecordingsScreen> {
-  List<RecordingModel> recordings;
-  Ziggeo ziggeo;
-  ScrollController scrollController;
+  List<RecordingModel>? recordings;
+  late Ziggeo ziggeo;
+  late ScrollController scrollController;
   bool dialVisible = true;
   bool isLoading = false;
 
@@ -55,7 +55,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
     scrollController = ScrollController()
@@ -83,7 +83,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : recordings != null && recordings.length >= 0
+            : recordings != null && recordings!.isNotEmpty
                 ? ListView(
                     controller: scrollController,
                     children: getListChildren(),
@@ -136,10 +136,9 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   onStartCameraRecorderPressed() async {
     await SharedPreferences.getInstance().then((value) {
       if (value.getBool(Utils.keyCustomCameraMode) != null &&
-          value.getBool(Utils.keyCustomCameraMode)) {
+          (value.getBool(Utils.keyCustomCameraMode) ?? false)) {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                CameraRecorderScreen(ziggeo)));
+            builder: (context) => CameraRecorderScreen(ziggeo)));
       } else {
         ziggeo.startCameraRecorder();
       }
@@ -163,7 +162,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   init() async {
-    var recordings = new List<RecordingModel>();
+    var recordings = List.empty() as List<RecordingModel>;
 
     isLoading = true;
     setState(() {
@@ -174,14 +173,14 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       initCallbacks();
     }
 
-    var recordingsVideo = new List<RecordingModel>();
-    var recordingsAudio = new List<RecordingModel>();
-    var recordingsImages = new List<RecordingModel>();
+    var recordingsVideo = List.empty() as List<RecordingModel>;
+    var recordingsAudio = List.empty() as List<RecordingModel>;
+    var recordingsImages = List.empty() as List<RecordingModel>;
 
     Future.wait([
       (() async => recordingsVideo = await ziggeo.videos.index(null).then(
               (value) => json
-                  .decode(value)
+                  .decode(value!)
                   .cast<Map<String, dynamic>>()
                   .map<RecordingModel>((json) =>
                       RecordingModel.fromJson(json, RecordingModel.video_type))
@@ -207,7 +206,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       recordings.addAll(recordingsVideo);
       recordings.addAll(recordingsImages);
       recordings.addAll(recordingsAudio);
-      recordings.sort((b, a) => a.created.compareTo(b.created));
+      recordings.sort((b, a) => a.created!.compareTo(b.created!));
       setState(() {
         this.isLoading = false;
         this.recordings = recordings;
@@ -218,19 +217,19 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   getListChildren() {
     isLoading = true;
-    return List.generate(recordings.length, (index) {
-      return buildItemWidget(recordings[index]);
+    return List.generate(recordings!.length, (index) {
+      return buildItemWidget(recordings![index]);
     });
   }
 
   Widget buildItemWidget(RecordingModel item) {
-    final String token = item.token == null ? '' : item.token;
+    final String token = item.token ?? '';
     final String tags = item.tags == null
         ? ''
         : item.tags.toString().replaceAll('[', '').replaceAll(']', '');
-    final String state = item.state == null ? '' : item.state;
+    final String state = item.state ?? '';
     final String dateCreated = DateFormat('dd.MM.yyyy hh:mm')
-        .format(DateTime.fromMillisecondsSinceEpoch(item.created * 1000));
+        .format(DateTime.fromMillisecondsSinceEpoch(item.created! * 1000));
 
     final Icon icon = (item.type == RecordingModel.image_type)
         ? Icon(
@@ -278,7 +277,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
                                   child: Text(tags),
                                   alignment: Alignment.bottomLeft,
                                 )
-                              : null
+                              : Container(),
                         ].where((element) => element != null).toList(),
                       ),
                     ),
@@ -329,7 +328,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   initFileSelectorCallback() {
     ziggeo.fileSelectorConfig = FileSelectorConfig();
-    ziggeo.fileSelectorConfig.eventsListener = FileSelectorEventsListener(
+    ziggeo.fileSelectorConfig?.eventsListener = FileSelectorEventsListener(
       onUploadSelected: (pathsList) =>
           addLogEvent('ev_fs_uploadSelected', details: pathsList.toString()),
       onLoaded: () => addLogEvent('ev_fs_loaded'),
@@ -344,7 +343,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   initPlayerCallback() {
     ziggeo.playerConfig = PlayerConfig(playerStyle: PlayerStyle());
-    ziggeo.playerConfig.eventsListener = PlayerEventsListener(
+    ziggeo.playerConfig?.eventsListener = PlayerEventsListener(
       onLoaded: () => addLogEvent('ev_pl_loaded'),
       onCanceledByUser: () => addLogEvent('ev_pl_canceledByUser'),
       onAccessForbidden: (permissions) =>
@@ -363,7 +362,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   initRecorderCallback() {
     if (ziggeo.recorderConfig == null) ziggeo.recorderConfig = RecorderConfig();
-    ziggeo.recorderConfig.eventsListener = RecorderEventsListener(
+    ziggeo.recorderConfig?.eventsListener = RecorderEventsListener(
       onError: (exception) =>
           addLogEvent('ev_rec_error', details: exception.toString()),
       onLoaded: () => addLogEvent('ev_rec_loaded'),
@@ -393,7 +392,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
 
   initUploaderCallback() {
     ziggeo.uploadingConfig = UploadingConfig();
-    ziggeo.uploadingConfig.eventsListener = UploadingEventsListener(
+    ziggeo.uploadingConfig?.eventsListener = UploadingEventsListener(
       onError: (exception) =>
           addLogEvent('ev_upl_error', details: exception.toString()),
       onUploadingStarted: (videoToken) =>
@@ -412,7 +411,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
     );
   }
 
-  addLogEvent(String nameTag, {String details}) {
+  addLogEvent(String nameTag, {String? details}) {
     var model = LogModel(name: localize.text(nameTag), details: details);
     logBuffer.add(model);
   }

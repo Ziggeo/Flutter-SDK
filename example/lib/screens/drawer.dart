@@ -114,8 +114,12 @@ class _AppDrawerState extends State<AppDrawer> {
             )));
   }
 
-  Widget _createDrawerItem(
-      {IconData icon, String text, GestureTapCallback onTap, bool isSelected}) {
+  Widget _createDrawerItem({
+    IconData? icon,
+    required String text,
+    required GestureTapCallback onTap,
+    required bool isSelected,
+  }) {
     return ListTile(
       selected: isSelected,
       title: TextLocalized(text),
@@ -163,9 +167,9 @@ class _AppDrawerState extends State<AppDrawer> {
 }
 
 class DrawerState with ChangeNotifier {
-  StatefulWidget selectedRoute;
-  String selectedRouteName;
-  Ziggeo _ziggeo;
+  StatefulWidget? selectedRoute;
+  String? selectedRouteName;
+  late Ziggeo _ziggeo;
 
   set ziggeo(Ziggeo value) {
     _ziggeo = value;
@@ -178,7 +182,7 @@ class DrawerState with ChangeNotifier {
     selectRoute(Routes.recordings);
   }
 
-  selectRoute(String value) {
+  selectRoute(String? value) {
     switch (value) {
       case Routes.video_editor:
         selectedRoute = VideoEditorScreen();
@@ -206,7 +210,7 @@ class DrawerState with ChangeNotifier {
         selectedRoute = RecordingsScreen(_ziggeo);
     }
     selectedRouteName = value;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       notifyListeners();
     });
   }
