@@ -46,6 +46,8 @@ android {
 }
 
 dependencies {
+    //todo
+    implementation ('com.google.android.exoplayer:exoplayer:2.17.0')
     implementation("com.github.ZiggeoJitpackService:Android-SDK:2.6.3:flutterblur@aar") {
         transitive = true
     }
