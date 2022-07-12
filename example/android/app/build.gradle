@@ -66,12 +66,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    packagingOptions {
-        pickFirst 'lib/arm64-v8a/libmediapipe_jni.so'
-        pickFirst 'lib/armeabi-v7a/libmediapipe_jni.so'
-        pickFirst 'lib/x86/libmediapipe_jni.so'
-        pickFirst 'lib/x86_64/libmediapipe_jni.so'
-    } //todo
+    ndkVersion '22.0.7026061'
 }
 
 flutter {
@@ -109,5 +104,5 @@ repositories {
 static def getDate() {
     return new Date().format('HH.mm.ss_dd-MM-YYYY')
 }
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 //uncomment for release
