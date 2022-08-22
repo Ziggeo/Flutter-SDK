@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     var drawerState = Provider.of<DrawerState>(context);
-    if (drawerState.ziggeo?.appToken == null) {
+    if (drawerState.ziggeo.appToken == null) {
       drawerState.ziggeo = this.ziggeo;
     }
     return Scaffold(
