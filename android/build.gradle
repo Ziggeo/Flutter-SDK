@@ -55,7 +55,8 @@ android {
 }
 
 dependencies {
-    implementation ('com.github.ZiggeoJitpackService:android-sdk-flutterblur:2.6.4.2') {
+    implementation ('com.google.android.exoplayer:exoplayer:2.17.0')
+    implementation ('com.github.Ziggeo:android-sdk-flutterblur:2.6.5') {
         transitive = true
     }
 

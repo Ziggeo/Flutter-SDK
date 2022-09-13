@@ -169,14 +169,14 @@ class _AppDrawerState extends State<AppDrawer> {
 class DrawerState with ChangeNotifier {
   StatefulWidget? selectedRoute;
   String? selectedRouteName;
-  late Ziggeo _ziggeo;
+  Ziggeo? _ziggeo;
 
-  set ziggeo(Ziggeo value) {
+  set ziggeo(Ziggeo? value) {
     _ziggeo = value;
     selectRoute(selectedRouteName);
   }
 
-  Ziggeo get ziggeo => _ziggeo;
+  Ziggeo? get ziggeo => _ziggeo ;
 
   DrawerState() {
     selectRoute(Routes.recordings);
@@ -188,7 +188,7 @@ class DrawerState with ChangeNotifier {
         selectedRoute = VideoEditorScreen();
         break;
       case Routes.settings:
-        selectedRoute = SettingsScreen(_ziggeo);
+        selectedRoute = SettingsScreen(_ziggeo ?? Ziggeo(null));
         break;
       case Routes.sdks:
         selectedRoute = AvailableSdksScreen();
@@ -203,11 +203,11 @@ class DrawerState with ChangeNotifier {
         selectedRoute = AboutScreen();
         break;
       case Routes.log:
-        selectedRoute = LogScreen(_ziggeo);
+        selectedRoute = LogScreen(_ziggeo ?? Ziggeo(null));
         break;
       case Routes.recordings:
       default:
-        selectedRoute = RecordingsScreen(_ziggeo);
+        selectedRoute = RecordingsScreen(_ziggeo ?? Ziggeo(null));
     }
     selectedRouteName = value;
     WidgetsBinding.instance?.addPostFrameCallback((_) {

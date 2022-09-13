@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var ziggeo = Ziggeo(appToken);
     if (appToken?.isNotEmpty ?? false) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => MainScreen(appToken!, ziggeo)));
+          builder: (context) => MainScreen(appToken??'', ziggeo)));
     } else {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => AuthScreen()));

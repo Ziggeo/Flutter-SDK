@@ -10,5 +10,4 @@ class ZCameraRecorderFactory(private val zVideoView: CameraView) : PlatformViewF
     override fun create(context: Context?, id: Int, o: Any?): PlatformView {
         return ZCameraRecorderFlutter(zVideoView)
     }
-
 }

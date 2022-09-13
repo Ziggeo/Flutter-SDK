@@ -196,6 +196,9 @@ class ZiggeoMainMethodChannel(private val ziggeo: IZiggeo,
                     (it["shouldTurnOffUploader"] as? Boolean)?.let { value ->
                         config.shouldTurnOffUploader = value
                     }
+                    (it["lostConnectionAction"] as? Int)?.let { value ->
+                        config.lostConnectionAction = value
+                    }
                 }
             }
             "getUploadingConfig" -> {

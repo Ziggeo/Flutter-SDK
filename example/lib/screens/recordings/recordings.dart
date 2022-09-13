@@ -162,7 +162,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   init() async {
-    var recordings = List.empty() as List<RecordingModel>;
+    var recordings = List<RecordingModel>.empty(growable: true);
 
     isLoading = true;
     setState(() {
@@ -173,9 +173,9 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
       initCallbacks();
     }
 
-    var recordingsVideo = List.empty() as List<RecordingModel>;
-    var recordingsAudio = List.empty() as List<RecordingModel>;
-    var recordingsImages = List.empty() as List<RecordingModel>;
+    var recordingsVideo = List<RecordingModel>.empty(growable: true);
+    var recordingsAudio = List<RecordingModel>.empty(growable: true);
+    var recordingsImages = List<RecordingModel>.empty(growable: true);
 
     Future.wait([
       (() async => recordingsVideo = await ziggeo.videos.index(null).then(
@@ -216,7 +216,7 @@ class _RecordingsScreenState extends State<RecordingsScreen> {
   }
 
   getListChildren() {
-    isLoading = true;
+    // isLoading = true;
     return List.generate(recordings!.length, (index) {
       return buildItemWidget(recordings![index]);
     });

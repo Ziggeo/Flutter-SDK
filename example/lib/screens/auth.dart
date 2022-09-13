@@ -18,14 +18,14 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool _enterQrManuallyMode = false;
-  late Ziggeo _ziggeo;
+  Ziggeo? _ziggeo;
   String? _inputToken;
   final _formKey = GlobalKey<FormState>();
 
   _AuthScreenState() {
     _ziggeo = Ziggeo(null);
-    _ziggeo.qrScannerConfig = QrScannerConfig();
-    _ziggeo.qrScannerConfig?.eventsListener = QrScannerEventListener(
+    _ziggeo?.qrScannerConfig = QrScannerConfig();
+    _ziggeo?.qrScannerConfig?.eventsListener = QrScannerEventListener(
       onDecoded: (value) => {this.saveTokenAndNavigateToMainScreen(value)},
     );
   }
@@ -36,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
         saveTokenAndNavigateToMainScreen(_inputToken ?? '');
       }
     } else {
-      _ziggeo.startQrScanner();
+      _ziggeo?.startQrScanner();
     }
   }
 

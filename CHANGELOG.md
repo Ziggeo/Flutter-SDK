@@ -1,3 +1,13 @@
+## 0.2.6
+----------------------------
+* Added connection error callback.
+## 0.2.5
+----------------------------
+* Migration SDK to github.
+## 0.2.4
+----------------------------
+* Added pausable mode.
+
 ## 0.2.3
 ----------------------------
 * Fixed Android 9 camera switch.
