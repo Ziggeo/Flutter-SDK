@@ -1,3 +1,6 @@
+## 0.2.6
+----------------------------
+* Added connection error callback.
 ## 0.2.5
 ----------------------------
 * Migration SDK to github.
