@@ -21,6 +21,7 @@ final int mediaType = FileSelectorConfig.audioMediaType;
 final int syncInterval = 3000;
 final bool shouldUseWifiOnly = true;
 final bool shouldTurnOffUploader = true;
+final int lostConnectionAction = UploadingConfig.UPLOADING_ERROR_ACTION_ERROR_NOTIFICATION;
 //qrScanner configs params
 final bool shouldCloseAfterSuccessfulScan = false;
 //recorder configs params
@@ -94,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int? _syncInterval;
   bool? _shouldUseWifiOnly;
   bool? _shouldTurnOffUploader;
+  int? _lostConnectionAction;
 
   bool? _shouldCloseAfterSuccessfulScan;
 
@@ -156,6 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
       syncInterval: syncInterval,
       shouldUseWifiOnly: shouldUseWifiOnly,
       shouldTurnOffUploader: shouldTurnOffUploader,
+        lostConnectionAction:lostConnectionAction,
     );
     var _syncIntervalTest =
         (await widget.ziggeo.getUploadingConfig())?.syncInterval;
@@ -163,6 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
         (await widget.ziggeo.getUploadingConfig())?.shouldUseWifiOnly;
     var _shouldTurnOffUploaderTest =
         (await widget.ziggeo.getUploadingConfig())?.shouldTurnOffUploader;
+    var _lostConnectionActionTest =
+        (await widget.ziggeo.getUploadingConfig())?.lostConnectionAction;
 
     //test qrScanner config
     widget.ziggeo.qrScannerConfig = QrScannerConfig(
@@ -273,6 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _syncInterval = _syncIntervalTest;
       _shouldUseWifiOnly = _shouldUseWifiOnlyTest;
       _shouldTurnOffUploader = _shouldTurnOffUploaderTest;
+      _lostConnectionAction = _lostConnectionActionTest;
 
       _shouldCloseAfterSuccessfulScan = _shouldCloseAfterSuccessfulScanTest;
 
@@ -348,6 +354,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 'shouldUseWifiOnly:', 'shouldUseWifiOnly$_shouldUseWifiOnly'),
             buildItemWidget('shouldTurnOffUploader: ',
                 'shouldTurnOffUploader$_shouldTurnOffUploader'),
+            buildItemWidget('lostConnectionAction: ',
+                'lostConnectionAction$_lostConnectionAction'),
+
             const Text(
               'QrScannerConfig:',
             ),

@@ -1,6 +1,9 @@
 group 'com.ziggeo.flutterplugin'
 version '1.0-SNAPSHOT'
 
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(file("github.properties")))
+
 buildscript {
     ext.kotlin_version = '1.5.31'
     repositories {
@@ -18,6 +21,12 @@ rootProject.allprojects {
     repositories {
         google()
         maven { url 'https://jitpack.io' }
+        maven {url = "https://maven.pkg.github.com/ZiggeoJitpackService/androidsdk"
+            credentials {
+                username = System.getenv('GITHUB_USER') ?: githubProperties['GITHUB_USER']
+                password = System.getenv('GITHUB_PERSONAL_ACCESS_TOKEN') ?: githubProperties['GITHUB_PERSONAL_ACCESS_TOKEN']
+            }
+        }
         jcenter()
     }
 }
@@ -46,11 +55,15 @@ android {
 }
 
 dependencies {
-    //todo
     implementation ('com.google.android.exoplayer:exoplayer:2.17.0')
-    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.6.3:flutterblur@aar") {
+    implementation ('com.github.Ziggeo:android-sdk-flutterblur:2.6.5') {
         transitive = true
     }
+
+    //todo old implementation
+//    implementation("com.github.ZiggeoJitpackService:Android-SDK:2.6.4:flutterblur@aar") {
+//        transitive = true
+//    }
 //    implementation project(':sdk') // for internal development
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation "androidx.core:core-ktx:1.6.0"

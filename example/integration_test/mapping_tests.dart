@@ -53,6 +53,7 @@ void main() {
       expect(itemFinder, findsOneWidget);
       expect(find.text('shouldUseWifiOnly$shouldUseWifiOnly'), findsOneWidget);
       expect(find.text('syncInterval$syncInterval'), findsOneWidget);
+      expect(find.text('lostConnectionAction$lostConnectionAction'), findsOneWidget);
       expect(find.text('shouldTurnOffUploader$shouldTurnOffUploader'),
           findsOneWidget);
 
