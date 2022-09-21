@@ -1,3 +1,6 @@
+## 0.2.7
+----------------------------
+* Github packages sdk dependency.
 ## 0.2.6
 ----------------------------
 * Added connection error callback.
