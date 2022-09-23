@@ -6,9 +6,6 @@ on:
 jobs:
   drive_android:
     runs-on: macos-latest
-    defaults:
-      run:
-        working-directory: ./flutter_sdk
 
     steps:
       - uses: actions/checkout@v2
