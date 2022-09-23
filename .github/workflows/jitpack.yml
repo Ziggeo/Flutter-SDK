@@ -19,5 +19,5 @@ jobs:
 
       - name: "Run Flutter Release Publish"
         run: |
-          flutter pub publish
+          flutter pub publish -f
 
